@@ -1,0 +1,67 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Data and models (large / generated)
+data/historical/*.csv
+data/historical/*.parquet
+data/backtest_results/*
+!data/backtest_results/.gitkeep
+data/trade_journal.db
+data/*.db
+models/*.pt
+models/*.pth
+models/*.onnx
+!models/.gitkeep
+logs/*.log
+logs/*.log.*
+!logs/.gitkeep
+
+# MT5 compiled binaries
+mt5_ea/*.ex5
+mt5_ea/Profiles/
+mt5_ea/MQL5/Logs/
+
+# Environment
+.env
+.env.local
+*.local
+config.local.yaml
+
+# OS
+.DS_Store
+desktop.ini
+
+# Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# Coverage
+.coverage
+coverage.xml
+*.cover
