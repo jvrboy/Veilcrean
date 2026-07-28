@@ -115,6 +115,11 @@ from .ehlers_relative_volatility import EhlersRVITool
 from .squeeze_momentum         import SqueezeMomentumTool
 from .normalized_macd          import NormalizedMACDTool
 from .range_bound_probability  import RangeBoundTool
+from .lin_reg_curve           import LinRegCurveTool
+from .range_expansion_index    import REITool
+from .fractal_dimension_index  import FDITool
+from .velocity_index           import VelocityTool
+from .hurst_confidence         import HurstConfidenceTool
 
 ALL_TOOLS = [
     MarketStructureTool,
@@ -231,6 +236,11 @@ ALL_TOOLS = [
     SqueezeMomentumTool,
     NormalizedMACDTool,
     RangeBoundTool,
+    LinRegCurveTool,
+    REITool,
+    FDITool,
+    VelocityTool,
+    HurstConfidenceTool,
 ]
 
 __all__ = [
@@ -266,5 +276,6 @@ __all__ = [
     "MAMAFAMATool", "SMITool", "TIITool", "LRFTool", "AroonSlopeTool", 
     "DMITool", "PriceCurveTool", "VolatilityPivotTool", "MarketHeatTool", 
     "TCFTool", "EhlersRVITool", "SqueezeMomentumTool", "NormalizedMACDTool", 
-    "RangeBoundTool", "ALL_TOOLS",
+    "RangeBoundTool", "LinRegCurveTool", "REITool", "FDITool", "VelocityTool", 
+    "HurstConfidenceTool", "ALL_TOOLS",
 ]
