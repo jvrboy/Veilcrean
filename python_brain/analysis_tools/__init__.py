@@ -105,6 +105,11 @@ from .mama_fama              import MAMAFAMATool
 from .stochastic_momentum_index import SMITool
 from .trend_intensity_index  import TIITool
 from .lin_reg_forecast       import LRFTool
+from .aroon_slope            import AroonSlopeTool
+from .directional_movement    import DMITool
+from .price_curve            import PriceCurveTool
+from .volatility_pivot       import VolatilityPivotTool
+from .market_heat_index      import MarketHeatTool
 
 ALL_TOOLS = [
     MarketStructureTool,
@@ -211,6 +216,11 @@ ALL_TOOLS = [
     SMITool,
     TIITool,
     LRFTool,
+    AroonSlopeTool,
+    DMITool,
+    PriceCurveTool,
+    VolatilityPivotTool,
+    MarketHeatTool,
 ]
 
 __all__ = [
@@ -243,5 +253,7 @@ __all__ = [
     "StiffnessTool", "EfficiencyRatioTool", "NormalizedVolatilityTool", 
     "FractalChaosBandsTool", "RainbowOscillatorTool", "ChaikinVolatilityTool", 
     "VIDYATool", "EhlersFisherTool", "VolatilityRatioTool", 
-    "MAMAFAMATool", "SMITool", "TIITool", "LRFTool", "ALL_TOOLS",
+    "MAMAFAMATool", "SMITool", "TIITool", "LRFTool", "AroonSlopeTool", 
+    "DMITool", "PriceCurveTool", "VolatilityPivotTool", "MarketHeatTool", 
+    "ALL_TOOLS",
 ]
