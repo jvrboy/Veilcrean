@@ -1,10 +1,11 @@
-## 🚀 Apex Evolution (V2.5)
+## 🚀 Apex Evolution (V3.0)
 
 Veilcrean has been fortified into an institutional-grade trading ecosystem:
-- **145 Analysis Tools**: From ICT/SMC to John Ehlers' DSP filters.
-- **51 Neural Networks**: A hierarchical ensemble (Transformers, Mamba SSM, GNNs, LSTMs).
-- **Direct Deriv API**: Full WebSocket support for 24/7 perpetual markets.
-- **Manus AI Compatibility**: Integrated Model Context Protocol (MCP) server.
+- **150 Analysis Tools**: From ICT/SMC and John Ehlers' DSP filters to complex geometric and statistical measures.
+- **55 Neural Networks**: A hierarchical ensemble (Transformers, Mamba SSM, GNNs, LSTMs, Neural ODEs, Bayesian Nets, and Quantum Simulators).
+- **Direct Broker Integration**: Full WebSocket support for **Deriv API** (24/7 perpetual markets) and ZMQ for **MT5**.
+- **Cross-Platform Mastery**: One-click setup for Windows, Linux, Docker, and Google Colab.
+- **Manus AI Compatibility**: Native Model Context Protocol (MCP) server integration.
 - **Multi-Agent System (MAS)**: 15 specialized agents orchestrated by a super-agent coordinator.
 
 
