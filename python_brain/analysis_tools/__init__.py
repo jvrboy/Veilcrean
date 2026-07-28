@@ -110,6 +110,11 @@ from .directional_movement    import DMITool
 from .price_curve            import PriceCurveTool
 from .volatility_pivot       import VolatilityPivotTool
 from .market_heat_index      import MarketHeatTool
+from .trend_continuation_factor import TCFTool
+from .ehlers_relative_volatility import EhlersRVITool
+from .squeeze_momentum         import SqueezeMomentumTool
+from .normalized_macd          import NormalizedMACDTool
+from .range_bound_probability  import RangeBoundTool
 
 ALL_TOOLS = [
     MarketStructureTool,
@@ -221,6 +226,11 @@ ALL_TOOLS = [
     PriceCurveTool,
     VolatilityPivotTool,
     MarketHeatTool,
+    TCFTool,
+    EhlersRVITool,
+    SqueezeMomentumTool,
+    NormalizedMACDTool,
+    RangeBoundTool,
 ]
 
 __all__ = [
@@ -255,5 +265,6 @@ __all__ = [
     "VIDYATool", "EhlersFisherTool", "VolatilityRatioTool", 
     "MAMAFAMATool", "SMITool", "TIITool", "LRFTool", "AroonSlopeTool", 
     "DMITool", "PriceCurveTool", "VolatilityPivotTool", "MarketHeatTool", 
-    "ALL_TOOLS",
+    "TCFTool", "EhlersRVITool", "SqueezeMomentumTool", "NormalizedMACDTool", 
+    "RangeBoundTool", "ALL_TOOLS",
 ]

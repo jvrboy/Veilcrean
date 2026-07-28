@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  veilcrean-brain:
+    build: .
+    container_name: veilcrean_brain
+    restart: always
+    environment:
+      - DERIV_API_TOKEN=${DERIV_API_TOKEN}
+      - GROQ_API_KEY=${GROQ_API_KEY}
+    volumes:
+      - ./data:/home/user/Veilcrean/data
+      - ./models:/home/user/Veilcrean/models
+    command: python run.py
