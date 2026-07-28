@@ -1,4 +1,12 @@
-# 🤖 Veilcrean — Adaptive AI Trading Bot
+## 🚀 Apex Evolution (V2.5)
+
+Veilcrean has been fortified into an institutional-grade trading ecosystem:
+- **145 Analysis Tools**: From ICT/SMC to John Ehlers' DSP filters.
+- **51 Neural Networks**: A hierarchical ensemble (Transformers, Mamba SSM, GNNs, LSTMs).
+- **Direct Deriv API**: Full WebSocket support for 24/7 perpetual markets.
+- **Manus AI Compatibility**: Integrated Model Context Protocol (MCP) server.
+- **Multi-Agent System (MAS)**: 15 specialized agents orchestrated by a super-agent coordinator.
+
 
 > An institutional-grade, self-learning, multi-timeframe AI trading system that combines classical technical analysis, ICT-style price action, and deep learning to make and execute trading decisions on MetaTrader 5.
 
