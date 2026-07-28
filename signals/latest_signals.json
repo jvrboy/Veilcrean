@@ -1,0 +1,494 @@
+{
+  "generated_at": "2026-07-28T08:53:33.577086+00:00",
+  "universe_size": 24,
+  "evaluation": {
+    "checked": 0,
+    "wins": 0,
+    "losses": 0,
+    "expired": 0,
+    "still_open": 0
+  },
+  "errors": {},
+  "signals": [
+    {
+      "instrument": "EURUSD",
+      "direction": "SELL",
+      "conviction": "LOW",
+      "entry": 1.1374,
+      "tp": 1.13526,
+      "sl": 1.13846,
+      "atr": 0.00071,
+      "rr": 2.0,
+      "raw_score": -0.0276,
+      "adj_score": -0.0276,
+      "confidence": 0.366,
+      "votes": {
+        "buy": 25,
+        "sell": 39,
+        "neutral": 74
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "GBPUSD",
+      "direction": "SELL",
+      "conviction": "LOW",
+      "entry": 1.33011,
+      "tp": 1.32749,
+      "sl": 1.33141,
+      "atr": 0.00087,
+      "rr": 2.0,
+      "raw_score": -0.0115,
+      "adj_score": -0.0115,
+      "confidence": 0.279,
+      "votes": {
+        "buy": 38,
+        "sell": 33,
+        "neutral": 67
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "USDCAD",
+      "direction": "SELL",
+      "conviction": "LOW",
+      "entry": 1.411,
+      "tp": 1.40755,
+      "sl": 1.41273,
+      "atr": 0.00115,
+      "rr": 2.0,
+      "raw_score": -0.0111,
+      "adj_score": -0.0111,
+      "confidence": 0.291,
+      "votes": {
+        "buy": 28,
+        "sell": 38,
+        "neutral": 72
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "XAUUSD",
+      "direction": "SELL",
+      "conviction": "NORMAL",
+      "entry": 4043.2,
+      "tp": 4010.18,
+      "sl": 4059.71,
+      "atr": 11.01,
+      "rr": 2.0,
+      "raw_score": -0.2602,
+      "adj_score": -0.2602,
+      "confidence": 1.0,
+      "votes": {
+        "buy": 15,
+        "sell": 70,
+        "neutral": 54
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "XAGUSD",
+      "direction": "SELL",
+      "conviction": "NORMAL",
+      "entry": 57.79,
+      "tp": 56.65643,
+      "sl": 58.35679,
+      "atr": 0.37786,
+      "rr": 2.0,
+      "raw_score": -0.1794,
+      "adj_score": -0.1794,
+      "confidence": 1.0,
+      "votes": {
+        "buy": 25,
+        "sell": 62,
+        "neutral": 52
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "BTCUSD",
+      "direction": "SELL",
+      "conviction": "NORMAL",
+      "entry": 63346.9,
+      "tp": 62455.2,
+      "sl": 63792.75,
+      "atr": 297.23,
+      "rr": 2.0,
+      "raw_score": -0.2469,
+      "adj_score": -0.2469,
+      "confidence": 1.0,
+      "votes": {
+        "buy": 17,
+        "sell": 70,
+        "neutral": 52
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "Volatility 10 Index",
+      "direction": "BUY",
+      "conviction": "NORMAL",
+      "entry": 4893.64,
+      "tp": 4917.18,
+      "sl": 4881.87,
+      "atr": 7.85,
+      "rr": 2.0,
+      "raw_score": 0.0616,
+      "adj_score": 0.0616,
+      "confidence": 0.509,
+      "votes": {
+        "buy": 37,
+        "sell": 35,
+        "neutral": 66
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "Volatility 15 Index",
+      "direction": "BUY",
+      "conviction": "NORMAL",
+      "entry": 94840.35,
+      "tp": 95567.58,
+      "sl": 94476.73,
+      "atr": 242.41,
+      "rr": 2.0,
+      "raw_score": 0.2304,
+      "adj_score": 0.2304,
+      "confidence": 1.0,
+      "votes": {
+        "buy": 61,
+        "sell": 18,
+        "neutral": 59
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "Volatility 50 Index",
+      "direction": "BUY",
+      "conviction": "NORMAL",
+      "entry": 111.498,
+      "tp": 114.197,
+      "sl": 110.148,
+      "atr": 0.9,
+      "rr": 2.0,
+      "raw_score": 0.3355,
+      "adj_score": 0.3355,
+      "confidence": 1.0,
+      "votes": {
+        "buy": 70,
+        "sell": 14,
+        "neutral": 54
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "Volatility 75 Index",
+      "direction": "SELL",
+      "conviction": "NORMAL",
+      "entry": 48386.05,
+      "tp": 46759.53,
+      "sl": 49199.3,
+      "atr": 542.17,
+      "rr": 2.0,
+      "raw_score": -0.2416,
+      "adj_score": -0.2416,
+      "confidence": 1.0,
+      "votes": {
+        "buy": 14,
+        "sell": 67,
+        "neutral": 57
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "Volatility 100 Index",
+      "direction": "BUY",
+      "conviction": "NORMAL",
+      "entry": 568.85,
+      "tp": 593.949,
+      "sl": 556.3,
+      "atr": 8.366,
+      "rr": 2.0,
+      "raw_score": 0.3565,
+      "adj_score": 0.3565,
+      "confidence": 1.0,
+      "votes": {
+        "buy": 74,
+        "sell": 12,
+        "neutral": 52
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "Drift Switch 10 Index",
+      "direction": "BUY",
+      "conviction": "NORMAL",
+      "entry": 3136.43,
+      "tp": 3177.26,
+      "sl": 3116.01,
+      "atr": 13.61,
+      "rr": 2.0,
+      "raw_score": 0.1416,
+      "adj_score": 0.1416,
+      "confidence": 0.902,
+      "votes": {
+        "buy": 52,
+        "sell": 25,
+        "neutral": 61
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "Drift Switch 20 Index",
+      "direction": "SELL",
+      "conviction": "LOW",
+      "entry": 2882.91,
+      "tp": 2849.07,
+      "sl": 2899.83,
+      "atr": 11.28,
+      "rr": 2.0,
+      "raw_score": -0.0139,
+      "adj_score": -0.0139,
+      "confidence": 0.317,
+      "votes": {
+        "buy": 33,
+        "sell": 43,
+        "neutral": 62
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "Drift Switch 30 Index",
+      "direction": "SELL",
+      "conviction": "NORMAL",
+      "entry": 7886.61,
+      "tp": 7828.44,
+      "sl": 7915.7,
+      "atr": 19.39,
+      "rr": 2.0,
+      "raw_score": -0.1652,
+      "adj_score": -0.1652,
+      "confidence": 1.0,
+      "votes": {
+        "buy": 21,
+        "sell": 62,
+        "neutral": 55
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "Boom 100 Index",
+      "direction": "BUY",
+      "conviction": "FORCED",
+      "entry": 94306.49,
+      "tp": 94543.77,
+      "sl": 94187.86,
+      "atr": 79.09,
+      "rr": 2.0,
+      "raw_score": -0.2893,
+      "adj_score": -0.2893,
+      "confidence": 1.0,
+      "votes": {
+        "buy": 9,
+        "sell": 73,
+        "neutral": 56
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "Boom 200 Index",
+      "direction": "BUY",
+      "conviction": "FORCED",
+      "entry": 99357.46,
+      "tp": 99584.2,
+      "sl": 99244.09,
+      "atr": 75.58,
+      "rr": 2.0,
+      "raw_score": -0.2933,
+      "adj_score": -0.2933,
+      "confidence": 1.0,
+      "votes": {
+        "buy": 10,
+        "sell": 72,
+        "neutral": 56
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "Boom 500 Index",
+      "direction": "BUY",
+      "conviction": "FORCED",
+      "entry": 4905.7,
+      "tp": 4968.93,
+      "sl": 4874.08,
+      "atr": 21.08,
+      "rr": 2.0,
+      "raw_score": -0.2078,
+      "adj_score": -0.2078,
+      "confidence": 1.0,
+      "votes": {
+        "buy": 15,
+        "sell": 66,
+        "neutral": 57
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "Boom 900 Index",
+      "direction": "BUY",
+      "conviction": "FORCED",
+      "entry": 9183.63,
+      "tp": 9271.01,
+      "sl": 9139.94,
+      "atr": 29.13,
+      "rr": 2.0,
+      "raw_score": 0.2582,
+      "adj_score": 0.2582,
+      "confidence": 1.0,
+      "votes": {
+        "buy": 71,
+        "sell": 15,
+        "neutral": 52
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "Boom 1000 Index",
+      "direction": "BUY",
+      "conviction": "FORCED",
+      "entry": 14430.35,
+      "tp": 14549.39,
+      "sl": 14370.82,
+      "atr": 39.68,
+      "rr": 2.0,
+      "raw_score": 0.0299,
+      "adj_score": 0.0299,
+      "confidence": 0.372,
+      "votes": {
+        "buy": 37,
+        "sell": 32,
+        "neutral": 69
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "Crash 100 Index",
+      "direction": "SELL",
+      "conviction": "FORCED",
+      "entry": 95372.27,
+      "tp": 95111.97,
+      "sl": 95502.42,
+      "atr": 86.77,
+      "rr": 2.0,
+      "raw_score": -0.1251,
+      "adj_score": -0.1251,
+      "confidence": 0.822,
+      "votes": {
+        "buy": 21,
+        "sell": 50,
+        "neutral": 67
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "Crash 200 Index",
+      "direction": "SELL",
+      "conviction": "FORCED",
+      "entry": 101965.82,
+      "tp": 101660.84,
+      "sl": 102118.31,
+      "atr": 101.66,
+      "rr": 2.0,
+      "raw_score": -0.2091,
+      "adj_score": -0.2091,
+      "confidence": 1.0,
+      "votes": {
+        "buy": 17,
+        "sell": 62,
+        "neutral": 59
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "Crash 500 Index",
+      "direction": "SELL",
+      "conviction": "FORCED",
+      "entry": 3080.48,
+      "tp": 3033.78,
+      "sl": 3103.83,
+      "atr": 15.57,
+      "rr": 2.0,
+      "raw_score": -0.2354,
+      "adj_score": -0.2354,
+      "confidence": 1.0,
+      "votes": {
+        "buy": 13,
+        "sell": 68,
+        "neutral": 57
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "Crash 900 Index",
+      "direction": "SELL",
+      "conviction": "FORCED",
+      "entry": 18727.78,
+      "tp": 18565.97,
+      "sl": 18808.69,
+      "atr": 53.94,
+      "rr": 2.0,
+      "raw_score": 0.1581,
+      "adj_score": 0.1581,
+      "confidence": 0.885,
+      "votes": {
+        "buy": 59,
+        "sell": 21,
+        "neutral": 58
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    },
+    {
+      "instrument": "Crash 1000 Index",
+      "direction": "SELL",
+      "conviction": "FORCED",
+      "entry": 5769.36,
+      "tp": 5726.88,
+      "sl": 5790.6,
+      "atr": 14.16,
+      "rr": 2.0,
+      "raw_score": 0.1635,
+      "adj_score": 0.1635,
+      "confidence": 0.914,
+      "votes": {
+        "buy": 56,
+        "sell": 23,
+        "neutral": 59
+      },
+      "tools_ok": 143,
+      "tools_total": 144
+    }
+  ]
+}
