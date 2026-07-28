@@ -113,24 +113,40 @@ class SupplyDemandTool(BaseTool):
         # Iterate: a bullish OB is the last bearish candle before a strong up-move
         for i in range(2, len(df) - 1):
             impulse = closes[i] - closes[i-1]
-            if impulse < min_impulse and closes[i-1] < opens[i-1]:
-                zones.append(Zone(
+            ob_candidate = None
+            if impulse > min_impulse and closes[i-1] < opens[i-1]:
+                ob_candidate = Zone(
                     tf = df.attrs.get("tf", "?"),
                     top    = highs[i-1],
                     bottom = lows[i-1],
                     is_demand = True,
                     strength = min(impulse / min_impulse, 3.0),
-                ))
-                if len(zones) > 30: break
+                )
             elif -impulse > min_impulse and closes[i-1] > opens[i-1]:
-                zones.append(Zone(
+                ob_candidate = Zone(
                     tf = df.attrs.get("tf", "?"),
                     top    = highs[i-1],
                     bottom = lows[i-1],
                     is_demand = False,
                     strength = min(-impulse / min_impulse, 3.0),
-                ))
-                if len(zones) > 30: break
+                )
+
+            if ob_candidate:
+                # Mitigation check: has price closed through this zone since it was formed?
+                mitigated = False
+                for j in range(i, len(df)):
+                    if ob_candidate.is_demand:
+                        if closes[j] < ob_candidate.bottom:
+                            mitigated = True
+                            break
+                    else:
+                        if closes[j] > ob_candidate.top:
+                            mitigated = True
+                            break
+                if not mitigated:
+                    zones.append(ob_candidate)
+            
+            if len(zones) > 30: break
         return zones
 
     def _find_fvgs(self, df: pd.DataFrame, pip: float) -> List[Zone]:
@@ -141,24 +157,41 @@ class SupplyDemandTool(BaseTool):
         opens = df["open"].values
         closes= df["close"].values
         for i in range(2, len(df)):
+            fvg_candidate = None
             # Bullish FVG: high[i-2] < low[i]
             if lows[i] - highs[i-2] > min_gap and closes[i] > opens[i]:
-                zones.append(Zone(
+                fvg_candidate = Zone(
                     tf = df.attrs.get("tf", "?"),
                     top    = lows[i],
                     bottom = highs[i-2],
                     is_demand = True,
                     strength  = (lows[i] - highs[i-2]) / min_gap,
-                ))
+                )
             # Bearish FVG: high[i] < low[i-2]
             elif highs[i-2] - lows[i] > min_gap and closes[i] < opens[i]:
-                zones.append(Zone(
+                fvg_candidate = Zone(
                     tf = df.attrs.get("tf", "?"),
-                    top    = lows[i-2],
-                    bottom = highs[i],
+                    top    = highs[i-2],
+                    bottom = lows[i],
                     is_demand = False,
                     strength  = (highs[i-2] - lows[i]) / min_gap,
-                ))
+                )
+
+            if fvg_candidate:
+                # Mitigation check: has price filled the gap?
+                mitigated = False
+                for j in range(i, len(df)):
+                    if fvg_candidate.is_demand:
+                        if lows[j] <= fvg_candidate.bottom:
+                            mitigated = True
+                            break
+                    else:
+                        if highs[j] >= fvg_candidate.top:
+                            mitigated = True
+                            break
+                if not mitigated:
+                    zones.append(fvg_candidate)
+
             if len(zones) > 30: break
         return zones
 

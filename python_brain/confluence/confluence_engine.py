@@ -45,12 +45,22 @@ class ConfluenceEngine:
 
         results: Dict[str, ToolResult] = {}
         for name, tool in self.tools.items():
+            if name == "AIReasonerTool": continue # Run AI last
             try:
                 res = tool.analyze(buffers, **ctx)
             except Exception as e:
                 res = ToolResult(tool_name=name)
                 res.errors.append(f"exception: {e}")
             results[name] = res
+
+        # Run AI Reasoner with context of other tools
+        if "AIReasonerTool" in self.tools:
+            ctx["prev_scores"] = {n: r.score for n, r in results.items()}
+            ctx["symbol"] = snapshot.symbol
+            try:
+                results["AIReasonerTool"] = self.tools["AIReasonerTool"].analyze(buffers, **ctx)
+            except Exception as e:
+                results["AIReasonerTool"] = ToolResult(tool_name="AIReasonerTool", errors=[str(e)])
 
         feature_vec = self.builder.build(results, ctx)
 

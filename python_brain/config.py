@@ -171,6 +171,35 @@ class AlertConfig:
     notify_on_errors:       bool = True
 
 # ---------------------------------------------------------------------------
+# 9. LLM / AI Reasoning
+# ---------------------------------------------------------------------------
+@dataclass
+class LLMConfig:
+    """Settings for Gemini and Groq reasoning."""
+    provider: str = os.getenv("VEIL_LLM_PROVIDER", "groq") # 'groq' or 'gemini'
+    groq_api_key: str = os.getenv("GROQ_API_KEY", "")
+    gemini_api_key: str = os.getenv("GEMINI_API_KEY", "")
+    
+    # Models
+    groq_model: str = "llama3-70b-8192"
+    gemini_model: str = "gemini-1.5-pro"
+    
+    # Cadence
+    reason_every_n_ticks: int = 50 # LLMs are slow/expensive, don't run every tick
+    enabled: bool = False # Disabled by default unless keys are provided
+
+# ---------------------------------------------------------------------------
+# 10. Deriv API Configuration
+# ---------------------------------------------------------------------------
+@dataclass
+class DerivConfig:
+    """Settings for trading directly on Deriv."""
+    app_id: int = int(os.getenv("DERIV_APP_ID", 0))
+    api_token: str = os.getenv("DERIV_API_TOKEN", "")
+    is_demo: bool = True
+    enabled: bool = False
+
+# ---------------------------------------------------------------------------
 # Bundle
 # ---------------------------------------------------------------------------
 ZMQ_CFG  = ZMQConfig()
@@ -179,3 +208,5 @@ NN_CFG   = NNConfig()
 SI_CFG   = SelfImprovementConfig()
 RISK_CFG = RiskConfig()
 ALERT_CFG = AlertConfig()
+LLM_CFG  = LLMConfig()
+DERIV_CFG = DerivConfig()

@@ -39,10 +39,11 @@ import torch
 import torch.nn.functional as F
 
 from .config import (
-    ZMQ_CFG, NN_CFG, SI_CFG, RISK_CFG, ALERT_CFG,
+    ZMQ_CFG, NN_CFG, SI_CFG, RISK_CFG, ALERT_CFG, DERIV_CFG,
     TIMEFRAMES, CANDLE_HISTORY, JOURNAL_DB, MODELS_DIR,
 )
 from .communication            import ZMQServer, DataParser
+from .communication.deriv_client import DerivClient
 from .preprocessor              import BufferManager
 from .confluence                import ConfluenceEngine
 from .neural_network            import (
@@ -53,7 +54,8 @@ from .neural_network.models.regime_classifier import REGIME_LABELS
 from .self_improvement          import (
     TradeJournal, TradeRecord, PerformanceTracker, Retrainer, ThresholdAdjuster,
 )
-from .risk_management           import PositionSizer, DrawdownGuard, ExposureManager
+from .risk_management           import PositionSizer, DrawdownGuard, ExposureManager, TrailingManager
+from .agents.coordinator_agent  import CoordinatorAgent
 from .utils                     import get_logger, Alerter, Visualizer
 from .communication.data_parser import mid_price
 
@@ -131,6 +133,10 @@ class VeilcreanBrain:
         # communication
         self.zmq = ZMQServer()
         self.zmq.start()
+        self.deriv = None
+        if DERIV_CFG.enabled:
+            self.deriv = DerivClient(DERIV_CFG.app_id, DERIV_CFG.api_token)
+            
         self.parser = DataParser()
 
         # preprocessing
@@ -140,8 +146,12 @@ class VeilcreanBrain:
         self.confluence = ConfluenceEngine()
         # input_dim is set after first run
         self.input_dim = 64
+        self.last_feature_vec: Optional[np.ndarray] = None
         self.mm = ModelManager()
         self.decision = DecisionEngine(self.input_dim, self.mm)
+        
+        # New Agent-based Coordinator
+        self.coordinator = CoordinatorAgent(self.decision)
 
         # journal / performance
         self.journal = TradeJournal()
@@ -153,6 +163,7 @@ class VeilcreanBrain:
         self.sizer    = PositionSizer()
         self.guard    = DrawdownGuard()
         self.exposure = ExposureManager()
+        self.trailing = TrailingManager()
 
         # misc
         self.vis = Visualizer()
@@ -199,31 +210,42 @@ class VeilcreanBrain:
         snapshot = self.parser.parse(raw)
         if snapshot is None:
             return
-        # 1. update buffers
+        
+        # 1. Update buffers
         self.buffer.update(snapshot.candles)
-        # 2. run confluence
-        result = self.confluence.run(snapshot, self.buffer.all())
-        feature_vec = result["feature_vector"]
+        
+        # 2. Run Agent Orchestration
+        agent_ctx = {
+            "snapshot": snapshot,
+            "buffers":  self.buffer.all(),
+        }
+        report = self.coordinator.run(agent_ctx)
+        
+        decision = report["decision"]
+        result   = report["technical_report"]
+        self.last_feature_vec = result["feature_vector"]
         self.last_feature_names = result["feature_names"]
 
-        # Lazy-init input_dim once we know the real vector size
-        if feature_vec.shape[0] != self.input_dim:
-            log.info(f"input_dim calibrated: {feature_vec.shape[0]}")
-            self.input_dim = int(feature_vec.shape[0])
-            # Re-instantiate decision engine and retrainer with correct size
+        # Lazy-init input_dim
+        if self.last_feature_vec.shape[0] != self.input_dim:
+            self.input_dim = int(self.last_feature_vec.shape[0])
             self.decision = DecisionEngine(self.input_dim, self.mm)
             self.retrainer = Retrainer(self.journal, self.mm, self.input_dim)
+            self.coordinator = CoordinatorAgent(self.decision) # Re-init with new engine
 
-        # 3. decide
-        decision = self.decision.decide(feature_vec)
         self.last_decision = decision
         ctx = result["context"]
         self._publish_status(result, decision)
 
-        # 4. risk checks
-        if not self._risk_ok(snapshot, decision):
+        # 3. Dynamic Management (Trailing)
+        self._manage_active_positions(snapshot)
+
+        # 4. Risk & Threshold Checks
+        if not report["risk_ok"]:
+            if "KILL SWITCH" in report["risk_reason"]:
+                self.zmq.send_trade_command({"action": "FLATTEN_ALL", "symbol": snapshot.symbol})
             return
-        # 5. threshold check
+
         threshold = self.threshold.update()
         if decision["action"] == "HOLD":
             return
@@ -231,16 +253,49 @@ class VeilcreanBrain:
             log.debug(f"below threshold ({decision['confidence']:.2f} < {threshold:.2f})")
             return
 
-        # 6. build & send the trade command
+        # 5. Build & send command
         cmd = self._build_trade_command(snapshot, decision, ctx)
         if cmd is None:
             return
-        log.info(f"📤 TRADE_COMMAND: {cmd}")
+        
+        log.info(f"📤 AGENT-APPROVED TRADE: {cmd}")
         sent = self.zmq.send_trade_command(cmd)
         if sent:
             self._journal_open(snapshot, decision, ctx, cmd)
-        else:
-            log.warning("EA did not accept command")
+
+    def _manage_active_positions(self, snapshot) -> None:
+        """Dynamic management of open trades (trailing stops, etc.)"""
+        if not snapshot.positions:
+            return
+
+        for pos in snapshot.positions:
+            # We only manage positions for the current symbol
+            if pos.symbol != snapshot.symbol:
+                continue
+
+            current_price = (snapshot.tick.bid + snapshot.tick.ask) / 2.0
+            new_sl = self.trailing.compute_trailing_stop(
+                pos.symbol, pos.type, current_price, pos.price_open, self.buffer.all()
+            )
+
+            if new_sl:
+                # Basic check: only move SL in our favor
+                if pos.type == "BUY" and new_sl > pos.sl + 0.0001:
+                    log.info(f"Trailing SL for {pos.symbol} to {new_sl:.5f}")
+                    self.zmq.send_trade_command({
+                        "action": "MODIFY",
+                        "ticket": pos.ticket,
+                        "sl": round(new_sl, 5),
+                        "tp": pos.tp
+                    })
+                elif pos.type == "SELL" and new_sl < pos.sl - 0.0001:
+                    log.info(f"Trailing SL for {pos.symbol} to {new_sl:.5f}")
+                    self.zmq.send_trade_command({
+                        "action": "MODIFY",
+                        "ticket": pos.ticket,
+                        "sl": round(new_sl, 5),
+                        "tp": pos.tp
+                    })
 
     # ------------------------------------------------------------------ helpers
     def _risk_ok(self, snapshot, decision) -> bool:
@@ -331,10 +386,9 @@ class VeilcreanBrain:
 
     def decision_input_to_list(self) -> list:
         """Helper to fetch last feature vector as plain list (for journal)."""
-        # We don't store the vector separately; we store the last decision's
-        # confidence + regime + score as a quick stand-in until the next
-        # version stores the full vector.
-        return []
+        if self.last_feature_vec is None:
+            return []
+        return self.last_feature_vec.tolist()
 
     # ------------------------------------------------------------------ maintenance
     def _heartbeat_check(self) -> None:

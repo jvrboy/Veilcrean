@@ -80,26 +80,51 @@ class MarketStructureTool(BaseTool):
 
     # -------------------------------------------------------------- internal
     def _analyze_one_tf(self, df: pd.DataFrame) -> float:
+        # 1. Identify swing points
         highs = self._swing_points(df["high"], is_high=True)
         lows  = self._swing_points(df["low"],  is_high=False)
-        if len(highs) < 2 or len(lows) < 2:
+        if len(highs) < 3 or len(lows) < 3:
             return 0.0
 
-        last_high = highs[-1].price
-        prev_high = highs[-2].price
-        last_low  = lows[-1].price
-        prev_low  = lows[-2].price
+        closes = df["close"].values
+        last_close = closes[-1]
 
-        hh = last_high > prev_high
-        hl = last_low  > prev_low
-        lh = last_high < prev_high
-        ll = last_low  < prev_low
+        # 2. Track current trend and structure
+        # A BOS (Break of Structure) is price closing beyond the most recent swing in the trend direction
+        # A CHoCH (Change of Character) is price closing beyond the most recent swing in the opposite direction
+        
+        last_h = highs[-1].price
+        prev_h = highs[-2].price
+        last_l = lows[-1].price
+        prev_l = lows[-2].price
 
-        if hh and hl:   return  1.0
-        if lh and ll:   return -1.0
-        if hh and ll:   return  0.5   # expanding
-        if hl and lh:   return -0.5   # contracting
-        return 0.0
+        # Basic trend based on last 2 swings
+        uptrend   = last_h > prev_h and last_l > prev_l
+        downtrend = last_h < prev_h and last_l < prev_l
+
+        score = 0.0
+        if uptrend:   score = 0.5
+        if downtrend: score = -0.5
+
+        # 3. Check for BOS/CHoCH in the last few candles
+        # We look at the last N candles to see if any closed above/below structure
+        lookback = 10
+        for i in range(len(closes) - lookback, len(closes)):
+            c = closes[i]
+            # Uptrending BOS: Close above last swing high
+            if uptrend and c > last_h:
+                score = 1.0 # Strong continuation
+            # Downtrending BOS: Close below last swing low
+            if downtrend and c < last_l:
+                score = -1.0
+            
+            # CHoCH: Change of character
+            if uptrend and c < last_l:
+                score = -0.7 # Potential reversal to downside
+            if downtrend and c > last_h:
+                score = 0.7 # Potential reversal to upside
+
+        return score
 
     def _swing_points(self, series: pd.Series, is_high: bool) -> List[SwingPoint]:
         n = self.lookback
