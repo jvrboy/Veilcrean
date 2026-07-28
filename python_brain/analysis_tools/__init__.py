@@ -120,6 +120,16 @@ from .herrick_payoff_index      import HPITool
 from .vervoort_zero_lag_ema     import VervoortZeroLagTool
 from .gapo_index               import GapOIndexTool
 from .vhf_slope                import VHFSlopeTool
+from .trend_continuation_factor import TCFTool
+from .ehlers_relative_volatility import EhlersRVITool
+from .squeeze_momentum         import SqueezeMomentumTool
+from .normalized_macd          import NormalizedMACDTool
+from .range_bound_probability  import RangeBoundTool
+from .polarized_fractal_efficiency import PFETool
+from .trend_trigger_factor      import TTFTool
+from .sve_zlr_bands             import SVEZLRBandsTool
+from .directional_trend_index    import DTITool
+from .universal_oscillator      import UniversalOscillatorTool
 
 ALL_TOOLS = [
     MarketStructureTool,
@@ -246,6 +256,16 @@ ALL_TOOLS = [
     VervoortZeroLagTool,
     GapOIndexTool,
     VHFSlopeTool,
+    TCFTool,
+    EhlersRVITool,
+    SqueezeMomentumTool,
+    NormalizedMACDTool,
+    RangeBoundTool,
+    PFETool,
+    TTFTool,
+    SVEZLRBandsTool,
+    DTITool,
+    UniversalOscillatorTool,
 ]
 
 __all__ = [
