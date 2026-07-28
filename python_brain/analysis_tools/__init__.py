@@ -135,6 +135,11 @@ from .ehlers_decycler           import DecyclerTool
 from .ehlers_sine_wave          import SineWaveTool
 from .ehlers_trendflex          import TrendflexTool
 from .ehlers_roofing_filter     import RoofingFilterTool
+from .ehlers_supersmoother     import SuperSmootherTool
+from .ehlers_butterworth       import ButterworthTool
+from .ehlers_stochastic        import EhlersStochTool
+from .ehlers_leading_indicator import LeadingIndicatorTool
+from .volatility_stop          import VolatilityStopTool
 
 ALL_TOOLS = [
     MarketStructureTool,
@@ -276,6 +281,11 @@ ALL_TOOLS = [
     SineWaveTool,
     TrendflexTool,
     RoofingFilterTool,
+    SuperSmootherTool,
+    ButterworthTool,
+    EhlersStochTool,
+    LeadingIndicatorTool,
+    VolatilityStopTool,
 ]
 
 __all__ = [
