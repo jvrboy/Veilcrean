@@ -130,6 +130,11 @@ from .trend_trigger_factor      import TTFTool
 from .sve_zlr_bands             import SVEZLRBandsTool
 from .directional_trend_index    import DTITool
 from .universal_oscillator      import UniversalOscillatorTool
+from .ehlers_cyber_cycle       import CyberCycleTool
+from .ehlers_decycler           import DecyclerTool
+from .ehlers_sine_wave          import SineWaveTool
+from .ehlers_trendflex          import TrendflexTool
+from .ehlers_roofing_filter     import RoofingFilterTool
 
 ALL_TOOLS = [
     MarketStructureTool,
@@ -266,6 +271,11 @@ ALL_TOOLS = [
     SVEZLRBandsTool,
     DTITool,
     UniversalOscillatorTool,
+    CyberCycleTool,
+    DecyclerTool,
+    SineWaveTool,
+    TrendflexTool,
+    RoofingFilterTool,
 ]
 
 __all__ = [
