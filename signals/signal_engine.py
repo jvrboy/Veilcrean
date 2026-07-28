@@ -137,7 +137,9 @@ def analyse(name: str, buffers: Dict[str, pd.DataFrame], price: float,
         conviction = "LOW"
 
     # ---- levels ----------------------------------------------------------- #
-    atr = _atr(buffers.get("H1", buffers["M15"]))
+    # ATR from the fast ("M15") slot -> hourly for swing, 5-minute for scalp,
+    # so scalp targets are naturally tight.
+    atr = _atr(buffers.get("M15", buffers.get("H1")))
     k_sl = params.get("k_sl", 1.5)
     rr = params.get("rr", 2.0)
     sl_dist = k_sl * atr
