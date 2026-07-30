@@ -1,4 +1,4 @@
-"""The 150 analysis tools. Each is a stateless object that takes a buffer
+"""The 153 analysis tools (150 technical + 3 neurosense cognitive). Each is a stateless object that takes a buffer
 snapshot and returns a *ToolResult* with a score in [-1, 1] and metadata."""
 from .base_tool            import BaseTool, ToolResult
 from .market_structure     import MarketStructureTool
@@ -11,6 +11,9 @@ from .candlestick          import CandlestickTool
 from .mtf_alignment        import MTFAlignmentTool
 from .news_filter           import NewsFilterTool
 from .ai_reasoner           import AIReasonerTool
+from .cognitive_reasoner    import CognitiveReasonerTool
+from .pattern_memory        import PatternMemoryTool
+from .adaptive_threshold    import AdaptiveThresholdTool
 from .dxy_correlation       import DXYCorrelationTool
 from .volume_profile         import VolumeProfileTool
 from .smt_divergence         import SMTDivergenceTool
@@ -150,7 +153,7 @@ from .trader_skill_stack    import TraderSkillStackTool, AdvancedPatternSkillToo
 ALL_TOOLS = [
     MarketStructureTool, SupplyDemandTool, LiquidityTool, MomentumVolumeTool,
     KeyLevelsTool, SessionTimeTool, CandlestickTool, MTFAlignmentTool,
-    NewsFilterTool, AIReasonerTool, TraderSkillStackTool, AdvancedPatternSkillTool,
+    NewsFilterTool, AIReasonerTool, CognitiveReasonerTool, PatternMemoryTool, AdaptiveThresholdTool, TraderSkillStackTool, AdvancedPatternSkillTool,
     InstitutionalFlowSkillTool, RiskPlanningSkillTool, DXYCorrelationTool, VolumeProfileTool,
     SMTDivergenceTool, FractalAlignmentTool, FibonacciTool, CorrelationMatrixTool,
     VolatilityBandsTool, MicroTrendTool, ADRFilterTool, LiquidityVoidTool,
@@ -225,5 +228,5 @@ __all__ = [
     "ButterworthTool", "EhlersStochTool", "LeadingIndicatorTool", "VolatilityStopTool",
     "LinRegAngleTool", "DYMITool", "STARCBandsTool", "ChaikinADTool", "CTITool",
     "TraderSkillStackTool", "AdvancedPatternSkillTool", "InstitutionalFlowSkillTool",
-    "RiskPlanningSkillTool", "ALL_TOOLS",
+    "RiskPlanningSkillTool", "CognitiveReasonerTool", "PatternMemoryTool", "AdaptiveThresholdTool", "ALL_TOOLS",
 ]

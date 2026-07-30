@@ -1,14 +1,25 @@
-"""Audio sensing helpers."""
-from .features import AudioFeatures, EarFeatureExtractor, extract_audio_features, frame_audio, normalize_audio
-from .audio import AudioSensor, mix, tone
+"""Ears — the auditory perception system. Pure numpy sound understanding."""
+
+from .audio import Ear, AudioPercept, load_wav
+from .features import (
+    spectrum,
+    spectrogram,
+    spectral_centroid,
+    zero_crossing_rate,
+    detect_pitch,
+    detect_onsets,
+    audio_signature,
+)
 
 __all__ = [
-    "AudioFeatures",
-    "EarFeatureExtractor",
-    "normalize_audio",
-    "frame_audio",
-    "extract_audio_features",
-    "AudioSensor",
-    "tone",
-    "mix",
+    "Ear",
+    "AudioPercept",
+    "load_wav",
+    "spectrum",
+    "spectrogram",
+    "spectral_centroid",
+    "zero_crossing_rate",
+    "detect_pitch",
+    "detect_onsets",
+    "audio_signature",
 ]

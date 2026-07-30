@@ -1,48 +1,89 @@
-"""Leaky integrate-and-fire spiking neurons."""
-from __future__ import annotations
+"""Spiking neurons — leaky integrate-and-fire model.
 
-from dataclasses import dataclass, field
-from typing import Iterable, List
+The most biologically realistic neuron model in the library: membrane
+potential integrates input current, leaks over time, and fires a spike
+when it crosses threshold, followed by a refractory period.
+"""
+
+from __future__ import annotations
 
 import numpy as np
 
 
-def poisson_encode(values: Iterable[float], steps: int = 10, max_rate: float = 1.0, seed: int | None = None) -> np.ndarray:
-    """Encode values in ``[0, 1]`` as Poisson spike trains."""
-    vals = np.clip(np.asarray(list(values), dtype=float), 0.0, 1.0)
-    rng = np.random.default_rng(seed)
-    return (rng.random((steps, vals.size)) < vals * max_rate).astype(float)
+class SpikingNeuron:
+    """A single leaky integrate-and-fire neuron.
 
+    >>> n = SpikingNeuron()
+    >>> spikes = [n.step(current=1.6) for _ in range(100)]
+    """
 
-@dataclass
-class LIFNeuron:
-    threshold: float = 1.0
-    decay: float = 0.9
-    reset: float = 0.0
-    potential: float = 0.0
+    def __init__(self, threshold: float = 1.0, leak: float = 0.9,
+                 rest: float = 0.0, refractory_steps: int = 3):
+        self.threshold = threshold
+        self.leak = leak
+        self.rest = rest
+        self.refractory_steps = refractory_steps
+        self.potential = rest
+        self._refractory = 0
+        self.spike_count = 0
 
-    def step(self, current: float) -> int:
-        self.potential = self.decay * self.potential + float(current)
+    def step(self, current: float) -> bool:
+        """Advance one timestep with input current. Returns True on spike."""
+        if self._refractory > 0:
+            self._refractory -= 1
+            self.potential = self.rest
+            return False
+        self.potential = self.leak * self.potential + current
         if self.potential >= self.threshold:
-            self.potential = self.reset
-            return 1
-        return 0
+            self.potential = self.rest
+            self._refractory = self.refractory_steps
+            self.spike_count += 1
+            return True
+        return False
 
-    def reset_state(self) -> None:
-        self.potential = self.reset
+    def reset(self) -> None:
+        self.potential = self.rest
+        self._refractory = 0
+        self.spike_count = 0
 
 
-@dataclass
 class SpikingNetwork:
-    neurons: List[LIFNeuron] = field(default_factory=list)
+    """A recurrently connected population of spiking neurons with STDP-like
+    plasticity: synapses that helped cause a spike are strengthened.
 
-    def step(self, currents: Iterable[float]) -> np.ndarray:
-        currents = list(currents)
-        if not self.neurons:
-            self.neurons = [LIFNeuron() for _ in currents]
-        if len(currents) != len(self.neurons):
-            raise ValueError("current count must match neuron count")
-        return np.array([neuron.step(current) for neuron, current in zip(self.neurons, currents)], dtype=int)
+    >>> net = SpikingNetwork(n_neurons=50, seed=0)
+    >>> for t in range(200):
+    ...     spikes = net.step(external=stimulus_vector)
+    """
 
-    def run(self, current_sequence: Iterable[Iterable[float]]) -> np.ndarray:
-        return np.stack([self.step(currents) for currents in current_sequence], axis=0)
+    def __init__(self, n_neurons: int, connectivity: float = 0.2,
+                 plasticity: float = 0.005, seed: int | None = None):
+        rng = np.random.default_rng(seed)
+        self.n = n_neurons
+        mask = rng.random((n_neurons, n_neurons)) < connectivity
+        np.fill_diagonal(mask, False)
+        self.W = np.where(mask, rng.normal(0.3, 0.1, (n_neurons, n_neurons)), 0.0)
+        self.neurons = [SpikingNeuron() for _ in range(n_neurons)]
+        self.plasticity = plasticity
+        self._last_spikes = np.zeros(n_neurons, dtype=bool)
+
+    def step(self, external: np.ndarray | None = None) -> np.ndarray:
+        """One timestep: propagate spikes, integrate, fire, adapt synapses."""
+        recurrent = self.W @ self._last_spikes.astype(np.float64)
+        drive = recurrent + (np.asarray(external, dtype=np.float64)
+                             if external is not None else 0.0)
+        spikes = np.array([n.step(float(c))
+                           for n, c in zip(self.neurons, drive)])
+        # STDP-like: strengthen synapse pre->post when pre fired last step
+        # and post fired now; mild decay everywhere for stability.
+        if self._last_spikes.any() and spikes.any():
+            self.W[np.ix_(spikes, self._last_spikes)] += self.plasticity
+        self.W *= (1.0 - self.plasticity * 0.01)
+        np.clip(self.W, -2.0, 2.0, out=self.W)
+        self._last_spikes = spikes
+        return spikes
+
+    def firing_rates(self, steps_run: int) -> np.ndarray:
+        """Average firing rate of each neuron over the run so far."""
+        return np.array([n.spike_count / max(steps_run, 1)
+                         for n in self.neurons])

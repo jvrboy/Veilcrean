@@ -1,68 +1,86 @@
-"""Tiny reinforcement-learning utilities."""
+"""Reinforcement learning — learning from consequences.
+
+Tabular Q-learning with epsilon-greedy exploration and decay.
+The brain uses this to learn which actions lead to good outcomes.
+"""
+
 from __future__ import annotations
 
-from collections import deque
-from dataclasses import dataclass, field
-from typing import Any, Deque, Hashable, Iterable
-
-import numpy as np
+import json
+import random
+from collections import defaultdict
 
 
-def epsilon_greedy(values: Iterable[float], epsilon: float = 0.1, seed: int | None = None) -> int:
-    values = np.asarray(list(values), dtype=float)
-    if values.size == 0:
-        raise ValueError("values must be non-empty")
-    rng = np.random.default_rng(seed)
-    if rng.random() < epsilon:
-        return int(rng.integers(0, values.size))
-    return int(np.argmax(values))
+class QLearner:
+    """Tabular Q-learning agent for any hashable state / action space.
 
+    >>> agent = QLearner(actions=["left", "right"])
+    >>> a = agent.choose(state)
+    >>> agent.learn(state, a, reward, next_state)
+    """
 
-@dataclass
-class ReplayBuffer:
-    capacity: int = 1000
-    data: Deque[Any] = field(default_factory=deque, init=False)
+    def __init__(self, actions: list, lr: float = 0.1, gamma: float = 0.95,
+                 epsilon: float = 1.0, epsilon_min: float = 0.05,
+                 epsilon_decay: float = 0.995, seed: int | None = None):
+        self.actions = list(actions)
+        self.lr = lr
+        self.gamma = gamma
+        self.epsilon = epsilon
+        self.epsilon_min = epsilon_min
+        self.epsilon_decay = epsilon_decay
+        self._rng = random.Random(seed)
+        self.Q: dict = defaultdict(lambda: {a: 0.0 for a in self.actions})
+        self.total_updates = 0
 
-    def push(self, transition: Any) -> None:
-        if len(self.data) >= self.capacity:
-            self.data.popleft()
-        self.data.append(transition)
+    # ------------------------------------------------------------------ #
+    def choose(self, state, explore: bool = True):
+        """Pick an action: epsilon-greedy exploration vs exploitation."""
+        if explore and self._rng.random() < self.epsilon:
+            return self._rng.choice(self.actions)
+        return self.best_action(state)
 
-    append = push
+    def best_action(self, state):
+        values = self.Q[self._key(state)]
+        best = max(values.values())
+        candidates = [a for a, v in values.items() if v == best]
+        return self._rng.choice(candidates)
 
-    def sample(self, batch_size: int, seed: int | None = None) -> list[Any]:
-        rng = np.random.default_rng(seed)
-        n = min(batch_size, len(self.data))
-        if n <= 0:
-            return []
-        idx = rng.choice(len(self.data), n, replace=False)
-        items = list(self.data)
-        return [items[int(i)] for i in idx]
+    # ------------------------------------------------------------------ #
+    def learn(self, state, action, reward: float, next_state,
+              done: bool = False) -> float:
+        """Q-learning update. Returns the new Q(s, a)."""
+        key, next_key = self._key(state), self._key(next_state)
+        future = 0.0 if done else max(self.Q[next_key].values())
+        target = reward + self.gamma * future
+        self.Q[key][action] += self.lr * (target - self.Q[key][action])
+        self.total_updates += 1
+        if done:
+            self.epsilon = max(self.epsilon_min,
+                               self.epsilon * self.epsilon_decay)
+        return self.Q[key][action]
 
-    def __len__(self) -> int:
-        return len(self.data)
+    def value_of(self, state) -> float:
+        return max(self.Q[self._key(state)].values())
 
+    @staticmethod
+    def _key(state):
+        if isinstance(state, (list,)):
+            return tuple(state)
+        try:
+            hash(state)
+            return state
+        except TypeError:
+            return str(state)
 
-@dataclass
-class QLearningAgent:
-    actions: list[Hashable]
-    alpha: float = 0.1
-    gamma: float = 0.95
-    epsilon: float = 0.1
-    q: dict[tuple[Hashable, Hashable], float] = field(default_factory=dict)
+    # ------------------------------------------------------------------ #
+    def save(self, path: str) -> None:
+        with open(path, "w") as f:
+            json.dump({"actions": self.actions, "epsilon": self.epsilon,
+                       "Q": {str(k): v for k, v in self.Q.items()}}, f)
 
-    def values(self, state: Hashable) -> np.ndarray:
-        return np.array([self.q.get((state, action), 0.0) for action in self.actions], dtype=float)
-
-    def act(self, state: Hashable, seed: int | None = None) -> Hashable:
-        idx = epsilon_greedy(self.values(state), self.epsilon, seed=seed)
-        return self.actions[idx]
-
-    def update(self, state: Hashable, action: Hashable, reward: float, next_state: Hashable, done: bool = False) -> float:
-        old = self.q.get((state, action), 0.0)
-        target = float(reward) if done else float(reward) + self.gamma * float(np.max(self.values(next_state)))
-        new = old + self.alpha * (target - old)
-        self.q[(state, action)] = new
-        return new
-
-    learn = update
+    def load_table(self, path: str) -> None:
+        with open(path) as f:
+            data = json.load(f)
+        self.epsilon = data["epsilon"]
+        for k, v in data["Q"].items():
+            self.Q[k] = v

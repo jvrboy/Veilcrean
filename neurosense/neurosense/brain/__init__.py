@@ -1,17 +1,7 @@
-"""Brain-level coordination primitives."""
-from .attention import AttentionMechanism, FocusState, soft_attention, top_k
-from .memory import MemoryItem, MemoryStore
-from .brain import Brain, NeuroSenseAgent, SensorySignal, Thought
+"""Brain — the central cognitive orchestrator: memory, attention, thought."""
 
-__all__ = [
-    "AttentionMechanism",
-    "FocusState",
-    "soft_attention",
-    "top_k",
-    "MemoryItem",
-    "MemoryStore",
-    "Brain",
-    "NeuroSenseAgent",
-    "SensorySignal",
-    "Thought",
-]
+from .brain import Brain
+from .memory import WorkingMemory, EpisodicMemory, Episode
+from .attention import Attention
+
+__all__ = ["Brain", "WorkingMemory", "EpisodicMemory", "Episode", "Attention"]

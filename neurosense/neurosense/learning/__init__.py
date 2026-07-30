@@ -1,14 +1,6 @@
-"""Learning algorithms."""
-from .unsupervised import KMeans, PCA, cosine_similarity, kmeans, normalize
-from .reinforcement import QLearningAgent, ReplayBuffer, epsilon_greedy
+"""Learning — reinforcement and unsupervised learning systems."""
 
-__all__ = [
-    "normalize",
-    "cosine_similarity",
-    "PCA",
-    "KMeans",
-    "kmeans",
-    "epsilon_greedy",
-    "ReplayBuffer",
-    "QLearningAgent",
-]
+from .reinforcement import QLearner
+from .unsupervised import KMeans, SelfOrganizingMap
+
+__all__ = ["QLearner", "KMeans", "SelfOrganizingMap"]

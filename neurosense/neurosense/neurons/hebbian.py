@@ -1,48 +1,78 @@
-"""Hebbian and Oja learning utilities."""
-from __future__ import annotations
+"""Hebbian learning — 'neurons that fire together, wire together'.
 
-from dataclasses import dataclass, field
+Biologically inspired unsupervised weight adaptation (Oja's rule),
+useful for learning correlations and principal components online.
+"""
+
+from __future__ import annotations
 
 import numpy as np
 
 
-def hebbian_update(weights: np.ndarray, pre: np.ndarray, post: np.ndarray, lr: float = 0.01) -> np.ndarray:
-    """Classic Hebbian outer-product update."""
-    weights = np.asarray(weights, dtype=float)
-    return weights + lr * np.outer(np.asarray(pre, dtype=float), np.asarray(post, dtype=float))
+class HebbianLayer:
+    """A layer that self-organizes with Oja's normalized Hebbian rule.
+
+    After exposure to many input patterns, each output neuron converges
+    toward a principal direction of the input distribution.
+
+    >>> layer = HebbianLayer(n_in=10, n_out=3)
+    >>> for pattern in data:
+    ...     layer.observe(pattern)
+    >>> response = layer.respond(new_pattern)
+    """
+
+    def __init__(self, n_in: int, n_out: int, lr: float = 0.01,
+                 seed: int | None = None):
+        rng = np.random.default_rng(seed)
+        self.W = rng.normal(0, 0.1, size=(n_out, n_in))
+        self.lr = lr
+        self.exposures = 0
+
+    def respond(self, x: np.ndarray) -> np.ndarray:
+        """Neuron activations for an input pattern."""
+        return self.W @ np.asarray(x, dtype=np.float64)
+
+    def observe(self, x: np.ndarray) -> np.ndarray:
+        """See a pattern and adapt weights (Oja's rule). Returns response."""
+        x = np.asarray(x, dtype=np.float64)
+        y = self.W @ x
+        # Oja's rule: dW = lr * y * (x - y * W), keeps weights bounded
+        self.W += self.lr * (np.outer(y, x) - (y**2)[:, None] * self.W)
+        self.exposures += 1
+        return y
+
+    def strongest_association(self, x: np.ndarray) -> int:
+        """Index of the neuron that responds most strongly to x."""
+        return int(np.argmax(np.abs(self.respond(x))))
 
 
-def oja_update(weights: np.ndarray, pre: np.ndarray, post: np.ndarray, lr: float = 0.01) -> np.ndarray:
-    """Oja's normalized Hebbian update."""
-    weights = np.asarray(weights, dtype=float)
-    pre = np.asarray(pre, dtype=float)
-    post = np.asarray(post, dtype=float)
-    return weights + lr * (np.outer(pre, post) - weights * np.square(post))
+class AssociativeMemory:
+    """Hopfield-style associative memory: store patterns, recall from noise.
 
+    Patterns are bipolar vectors (+1 / -1). Recall converges to the
+    stored pattern nearest the noisy cue — content-addressable memory,
+    like remembering a whole face from half of it.
+    """
 
-@dataclass
-class HebbianSynapse:
-    weight: float = 0.0
-    lr: float = 0.01
+    def __init__(self, size: int):
+        self.size = size
+        self.W = np.zeros((size, size))
+        self.stored = 0
 
-    def learn(self, pre: float, post: float) -> float:
-        self.weight += self.lr * float(pre) * float(post)
-        return self.weight
+    def store(self, pattern: np.ndarray) -> None:
+        p = np.sign(np.asarray(pattern, dtype=np.float64))
+        p[p == 0] = 1
+        self.W += np.outer(p, p) / self.size
+        np.fill_diagonal(self.W, 0)
+        self.stored += 1
 
-
-@dataclass
-class HebbianNetwork:
-    input_size: int
-    output_size: int
-    lr: float = 0.01
-    weights: np.ndarray = field(init=False)
-
-    def __post_init__(self) -> None:
-        self.weights = np.zeros((self.input_size, self.output_size), dtype=float)
-
-    def activate(self, x: np.ndarray) -> np.ndarray:
-        return np.asarray(x, dtype=float) @ self.weights
-
-    def learn(self, x: np.ndarray, y: np.ndarray) -> np.ndarray:
-        self.weights = hebbian_update(self.weights, x, y, self.lr)
-        return self.weights
+    def recall(self, cue: np.ndarray, max_steps: int = 50) -> np.ndarray:
+        s = np.sign(np.asarray(cue, dtype=np.float64))
+        s[s == 0] = 1
+        for _ in range(max_steps):
+            new = np.sign(self.W @ s)
+            new[new == 0] = 1
+            if np.array_equal(new, s):
+                break
+            s = new
+        return s

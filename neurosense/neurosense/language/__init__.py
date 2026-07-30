@@ -1,4 +1,5 @@
-"""Text and language helpers."""
-from .text import TextSensor, TextVectorizer, bag_of_words, sentiment, summarize, tokenize
+"""Language — statistical natural-language understanding without any APIs."""
 
-__all__ = ["tokenize", "bag_of_words", "sentiment", "summarize", "TextVectorizer", "TextSensor"]
+from .text import LanguageCortex, tokenize, sentence_split
+
+__all__ = ["LanguageCortex", "tokenize", "sentence_split"]

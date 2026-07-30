@@ -1,88 +1,143 @@
-"""Sequential neural network implemented with NumPy."""
+"""NeuralNetwork — a complete trainable feed-forward network from scratch.
+
+Backpropagation, mini-batches, multiple losses and optimizers,
+save/load to JSON. No frameworks, only numpy.
+"""
+
 from __future__ import annotations
 
-from dataclasses import dataclass, field
-from typing import Iterable, List
+import json
 
 import numpy as np
 
+from .layers import Dense, Activation, Dropout, Layer
 from .activations import softmax
-from .layers import DenseLayer
+from .optimizers import Adam, Optimizer
 
 
-def mse_loss(y_pred: np.ndarray, y_true: np.ndarray) -> tuple[float, np.ndarray]:
-    y_pred = np.asarray(y_pred, dtype=float)
-    y_true = np.asarray(y_true, dtype=float)
-    diff = y_pred - y_true
-    return float(np.mean(diff * diff)), 2.0 * diff / max(1, diff.size)
+# ---------------------------- losses ---------------------------------- #
+
+def mse_loss(pred: np.ndarray, target: np.ndarray) -> tuple[float, np.ndarray]:
+    diff = pred - target
+    return float(np.mean(diff**2)), 2 * diff / diff.size
 
 
-def cross_entropy_loss(logits: np.ndarray, labels: np.ndarray) -> tuple[float, np.ndarray]:
-    logits = np.asarray(logits, dtype=float)
-    probs = softmax(logits, axis=-1)
-    labels = np.asarray(labels)
-    if labels.ndim == 1:
-        onehot = np.zeros_like(probs)
-        onehot[np.arange(len(labels)), labels.astype(int)] = 1.0
-    else:
-        onehot = labels.astype(float)
-    loss = -float(np.mean(np.sum(onehot * np.log(probs + 1e-12), axis=-1)))
-    grad = (probs - onehot) / max(1, logits.shape[0])
+def cross_entropy_loss(logits: np.ndarray,
+                       target: np.ndarray) -> tuple[float, np.ndarray]:
+    """Softmax cross-entropy. target is one-hot (batch x classes)."""
+    probs = softmax(logits)
+    eps = 1e-12
+    loss = -float(np.mean(np.sum(target * np.log(probs + eps), axis=1)))
+    grad = (probs - target) / len(logits)
     return loss, grad
 
 
-@dataclass
+LOSSES = {"mse": mse_loss, "cross_entropy": cross_entropy_loss}
+
+
+# ---------------------------- network --------------------------------- #
+
 class NeuralNetwork:
-    """A tiny sequential neural network."""
+    """Build, train, and use a feed-forward neural network.
 
-    layers: List[object] = field(default_factory=list)
+    >>> net = NeuralNetwork([4, 16, 3], activation="relu", output="softmax")
+    >>> net.train(X, Y_onehot, epochs=200)
+    >>> net.predict_class(x)
+    """
 
-    def add(self, layer: object) -> "NeuralNetwork":
-        self.layers.append(layer)
-        return self
+    def __init__(self, layer_sizes: list[int] | None = None,
+                 activation: str = "relu", output: str = "softmax",
+                 seed: int | None = None):
+        self.rng = np.random.default_rng(seed)
+        self.layers: list[Layer] = []
+        self.output_kind = output
+        self.loss_name = "cross_entropy" if output == "softmax" else "mse"
+        self._sizes = layer_sizes or []
+        self._activation = activation
+        if layer_sizes:
+            for i in range(len(layer_sizes) - 1):
+                self.layers.append(Dense(layer_sizes[i], layer_sizes[i + 1],
+                                         rng=self.rng))
+                if i < len(layer_sizes) - 2:
+                    self.layers.append(Activation(activation))
+                elif output not in ("softmax", "linear"):
+                    self.layers.append(Activation(output))
 
+    # ------------------------------------------------------------------ #
     def forward(self, x: np.ndarray) -> np.ndarray:
-        out = np.asarray(x, dtype=float)
+        x = np.atleast_2d(np.asarray(x, dtype=np.float64))
         for layer in self.layers:
-            out = layer.forward(out)
+            x = layer.forward(x)
+        return x
+
+    def predict(self, x: np.ndarray) -> np.ndarray:
+        out = self.forward(x)
+        if self.output_kind == "softmax":
+            out = softmax(out)
         return out
 
-    predict = forward
-    __call__ = forward
+    def predict_class(self, x: np.ndarray) -> int:
+        return int(np.argmax(self.predict(x), axis=1)[0])
 
-    def backward(self, grad: np.ndarray, lr: float = 0.01) -> np.ndarray:
-        for layer in reversed(self.layers):
-            if hasattr(layer, "backward"):
-                grad, grads = layer.backward(grad)
-                if hasattr(layer, "apply_gradients"):
-                    layer.apply_gradients(grads, lr)
-        return grad
-
-    def train_step(self, x: np.ndarray, y: np.ndarray, lr: float = 0.01, loss: str = "mse") -> float:
-        pred = self.forward(x)
-        if loss == "mse":
-            value, grad = mse_loss(pred, y)
-        elif loss in {"ce", "cross_entropy"}:
-            value, grad = cross_entropy_loss(pred, y)
-        else:
-            raise ValueError("loss must be 'mse' or 'cross_entropy'")
-        self.backward(grad, lr=lr)
-        return value
-
-    def fit(self, x: np.ndarray, y: np.ndarray, epochs: int = 100, lr: float = 0.01, loss: str = "mse") -> list[float]:
-        history: list[float] = []
-        for _ in range(epochs):
-            history.append(self.train_step(x, y, lr=lr, loss=loss))
+    # ------------------------------------------------------------------ #
+    def train(self, X: np.ndarray, Y: np.ndarray, epochs: int = 100,
+              batch_size: int = 32, optimizer: Optimizer | None = None,
+              loss: str | None = None, verbose: bool = False,
+              shuffle: bool = True) -> list[float]:
+        """Train with mini-batch gradient descent. Returns loss history."""
+        X = np.atleast_2d(np.asarray(X, dtype=np.float64))
+        Y = np.atleast_2d(np.asarray(Y, dtype=np.float64))
+        opt = optimizer or Adam(lr=0.005)
+        loss_fn = LOSSES[loss or self.loss_name]
+        history = []
+        n = len(X)
+        for epoch in range(epochs):
+            if shuffle:
+                order = self.rng.permutation(n)
+                X, Y = X[order], Y[order]
+            epoch_loss = 0.0
+            batches = 0
+            for start in range(0, n, batch_size):
+                xb, yb = X[start:start + batch_size], Y[start:start + batch_size]
+                pred = self.forward(xb)
+                loss_value, grad = loss_fn(pred, yb)
+                epoch_loss += loss_value
+                batches += 1
+                for layer in reversed(self.layers):
+                    grad = layer.backward(grad)
+                for layer in self.layers:
+                    if layer.params:
+                        opt.step(layer.params, layer.grads)
+            history.append(epoch_loss / max(batches, 1))
+            if verbose and (epoch % max(1, epochs // 10) == 0 or epoch == epochs - 1):
+                print(f"epoch {epoch:4d}  loss {history[-1]:.6f}")
         return history
 
+    def set_training(self, training: bool) -> None:
+        for layer in self.layers:
+            if isinstance(layer, Dropout):
+                layer.training = training
+
+    # ------------------------------------------------------------------ #
+    def save(self, path: str) -> None:
+        state = {
+            "sizes": self._sizes,
+            "activation": self._activation,
+            "output": self.output_kind,
+            "weights": [[p.tolist() for p in layer.params]
+                        for layer in self.layers if layer.params],
+        }
+        with open(path, "w") as f:
+            json.dump(state, f)
+
     @classmethod
-    def from_sizes(cls, sizes: Iterable[int], activation: str = "relu", output_activation: str = "linear", seed: int | None = None) -> "NeuralNetwork":
-        sizes = list(sizes)
-        if len(sizes) < 2:
-            raise ValueError("at least input and output sizes are required")
-        network = cls()
-        rng = np.random.default_rng(seed)
-        for idx, (a, b) in enumerate(zip(sizes, sizes[1:])):
-            act = output_activation if idx == len(sizes) - 2 else activation
-            network.add(DenseLayer(a, b, activation=act, seed=int(rng.integers(0, 2**31 - 1))))
-        return network
+    def load(cls, path: str) -> "NeuralNetwork":
+        with open(path) as f:
+            state = json.load(f)
+        net = cls(state["sizes"], activation=state["activation"],
+                  output=state["output"])
+        dense_layers = [l for l in net.layers if l.params]
+        for layer, saved in zip(dense_layers, state["weights"]):
+            layer.W[...] = np.array(saved[0])
+            layer.b[...] = np.array(saved[1])
+        return net

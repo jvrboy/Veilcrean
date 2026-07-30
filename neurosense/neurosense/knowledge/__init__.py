@@ -1,5 +1,6 @@
-"""Knowledge graph and inference helpers."""
-from .graph import KnowledgeGraph, Triple
+"""Knowledge — semantic memory: a graph of facts plus logical inference."""
+
+from .graph import KnowledgeGraph, Fact
 from .inference import InferenceEngine, Rule
 
-__all__ = ["KnowledgeGraph", "Triple", "InferenceEngine", "Rule"]
+__all__ = ["KnowledgeGraph", "Fact", "InferenceEngine", "Rule"]

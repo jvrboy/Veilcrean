@@ -1,69 +1,63 @@
-"""Small optimizers for NumPy parameter arrays."""
-from __future__ import annotations
+"""Gradient-descent optimizers implemented from scratch."""
 
-from dataclasses import dataclass, field
-from typing import Iterable, MutableMapping, Sequence
+from __future__ import annotations
 
 import numpy as np
 
 
-def _iter_param_grad(params, grads):
-    if isinstance(params, MutableMapping):
-        for key, param in params.items():
-            yield key, param, grads[key]
-    else:
-        for idx, (param, grad) in enumerate(zip(params, grads)):
-            yield idx, param, grad
+class Optimizer:
+    def step(self, params: list[np.ndarray], grads: list[np.ndarray]) -> None:
+        raise NotImplementedError
 
 
-@dataclass
-class SGD:
-    lr: float = 0.01
-    momentum: float = 0.0
-    _velocity: dict = field(default_factory=dict, init=False, repr=False)
+class SGD(Optimizer):
+    """Plain stochastic gradient descent."""
 
-    def step(self, params, grads=None) -> None:
-        """Update arrays in-place.
+    def __init__(self, lr: float = 0.01):
+        self.lr = lr
 
-        Accepts either ``step({name: array}, {name: grad})`` or
-        ``step([(array, grad), ...])``.
-        """
-        if grads is None:
-            pairs = [(idx, p, g) for idx, (p, g) in enumerate(params)]
-        else:
-            pairs = list(_iter_param_grad(params, grads))
-        for key, param, grad in pairs:
-            if self.momentum:
-                v = self._velocity.get(key, np.zeros_like(param))
-                v = self.momentum * v + grad
-                self._velocity[key] = v
-                grad = v
-            param -= self.lr * grad
+    def step(self, params, grads):
+        for p, g in zip(params, grads):
+            p -= self.lr * g
 
 
-@dataclass
-class Adam:
-    lr: float = 0.001
-    beta1: float = 0.9
-    beta2: float = 0.999
-    eps: float = 1e-8
-    _m: dict = field(default_factory=dict, init=False, repr=False)
-    _v: dict = field(default_factory=dict, init=False, repr=False)
-    _t: int = field(default=0, init=False, repr=False)
+class Momentum(Optimizer):
+    """SGD with classical momentum."""
 
-    def step(self, params, grads=None) -> None:
-        if grads is None:
-            pairs = [(idx, p, g) for idx, (p, g) in enumerate(params)]
-        else:
-            pairs = list(_iter_param_grad(params, grads))
+    def __init__(self, lr: float = 0.01, beta: float = 0.9):
+        self.lr = lr
+        self.beta = beta
+        self._v: dict[int, np.ndarray] = {}
+
+    def step(self, params, grads):
+        for p, g in zip(params, grads):
+            key = id(p)
+            v = self._v.setdefault(key, np.zeros_like(p))
+            v *= self.beta
+            v -= self.lr * g
+            p += v
+
+
+class Adam(Optimizer):
+    """Adaptive moment estimation (Adam)."""
+
+    def __init__(self, lr: float = 0.001, beta1: float = 0.9,
+                 beta2: float = 0.999, eps: float = 1e-8):
+        self.lr, self.beta1, self.beta2, self.eps = lr, beta1, beta2, eps
+        self._m: dict[int, np.ndarray] = {}
+        self._v: dict[int, np.ndarray] = {}
+        self._t = 0
+
+    def step(self, params, grads):
         self._t += 1
-        for key, param, grad in pairs:
-            m = self._m.get(key, np.zeros_like(param))
-            v = self._v.get(key, np.zeros_like(param))
-            m = self.beta1 * m + (1.0 - self.beta1) * grad
-            v = self.beta2 * v + (1.0 - self.beta2) * (grad * grad)
-            self._m[key] = m
-            self._v[key] = v
-            m_hat = m / (1.0 - self.beta1**self._t)
-            v_hat = v / (1.0 - self.beta2**self._t)
-            param -= self.lr * m_hat / (np.sqrt(v_hat) + self.eps)
+        for p, g in zip(params, grads):
+            key = id(p)
+            m = self._m.setdefault(key, np.zeros_like(p))
+            v = self._v.setdefault(key, np.zeros_like(p))
+            m *= self.beta1
+            m += (1 - self.beta1) * g
+            v *= self.beta2
+            v += (1 - self.beta2) * g**2
+            m_hat = m / (1 - self.beta1**self._t)
+            v_hat = v / (1 - self.beta2**self._t)
+            p -= self.lr * m_hat / (np.sqrt(v_hat) + self.eps)
