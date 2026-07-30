@@ -1,0 +1,26 @@
+{
+  "TRENDING": {
+    "threshold": 0.65,
+    "updates": 74
+  },
+  "RANGING": {
+    "threshold": 0.65,
+    "updates": 79
+  },
+  "VOLATILE": {
+    "threshold": 0.65,
+    "updates": 0
+  },
+  "CHOPPY": {
+    "threshold": 0.65,
+    "updates": 0
+  },
+  "BREAKOUT": {
+    "threshold": 0.65,
+    "updates": 0
+  },
+  "UNKNOWN": {
+    "threshold": 0.65,
+    "updates": 0
+  }
+}
