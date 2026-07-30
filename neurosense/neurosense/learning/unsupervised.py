@@ -1,94 +1,127 @@
-"""Unsupervised learning algorithms implemented with NumPy."""
-from __future__ import annotations
+"""Unsupervised learning — discovering structure without a teacher.
 
-from dataclasses import dataclass, field
+KMeans clustering and a Self-Organizing Map (Kohonen network),
+both from scratch with numpy.
+"""
+
+from __future__ import annotations
 
 import numpy as np
 
 
-def normalize(x: np.ndarray, axis: int = 0, eps: float = 1e-12) -> np.ndarray:
-    x = np.asarray(x, dtype=float)
-    mean = x.mean(axis=axis, keepdims=True)
-    std = x.std(axis=axis, keepdims=True)
-    return (x - mean) / (std + eps)
-
-
-def cosine_similarity(a: np.ndarray, b: np.ndarray) -> float:
-    a = np.asarray(a, dtype=float).reshape(-1)
-    b = np.asarray(b, dtype=float).reshape(-1)
-    denom = float(np.linalg.norm(a) * np.linalg.norm(b))
-    return 0.0 if denom <= 1e-12 else float(np.dot(a, b) / denom)
-
-
-@dataclass
-class PCA:
-    n_components: int = 2
-    mean_: np.ndarray | None = field(default=None, init=False)
-    components_: np.ndarray | None = field(default=None, init=False)
-    explained_variance_: np.ndarray | None = field(default=None, init=False)
-
-    def fit(self, x: np.ndarray) -> "PCA":
-        x = np.asarray(x, dtype=float)
-        if x.ndim != 2:
-            raise ValueError("PCA expects a 2-D array")
-        self.mean_ = x.mean(axis=0)
-        centered = x - self.mean_
-        _, s, vt = np.linalg.svd(centered, full_matrices=False)
-        self.components_ = vt[: self.n_components]
-        denom = max(1, x.shape[0] - 1)
-        self.explained_variance_ = (s[: self.n_components] ** 2) / denom
-        return self
-
-    def transform(self, x: np.ndarray) -> np.ndarray:
-        if self.mean_ is None or self.components_ is None:
-            raise RuntimeError("fit must be called before transform")
-        return (np.asarray(x, dtype=float) - self.mean_) @ self.components_.T
-
-    def fit_transform(self, x: np.ndarray) -> np.ndarray:
-        return self.fit(x).transform(x)
-
-
-@dataclass
 class KMeans:
-    n_clusters: int = 2
-    max_iter: int = 100
-    seed: int | None = None
-    centers_: np.ndarray | None = field(default=None, init=False)
-    labels_: np.ndarray | None = field(default=None, init=False)
+    """K-means clustering with k-means++ initialization.
 
-    def fit(self, x: np.ndarray) -> "KMeans":
-        x = np.asarray(x, dtype=float)
-        if x.ndim != 2:
-            raise ValueError("KMeans expects a 2-D array")
-        if not 1 <= self.n_clusters <= len(x):
-            raise ValueError("n_clusters must be between 1 and number of samples")
-        rng = np.random.default_rng(self.seed)
-        centers = x[rng.choice(len(x), self.n_clusters, replace=False)].copy()
-        labels = np.zeros(len(x), dtype=int)
-        for _ in range(self.max_iter):
-            dist = np.linalg.norm(x[:, None, :] - centers[None, :, :], axis=-1)
-            new_labels = np.argmin(dist, axis=1)
-            if np.array_equal(new_labels, labels) and self.centers_ is not None:
+    >>> km = KMeans(k=3).fit(X)
+    >>> km.predict(x)
+    """
+
+    def __init__(self, k: int, max_iters: int = 200, tol: float = 1e-6,
+                 seed: int | None = None):
+        self.k = k
+        self.max_iters = max_iters
+        self.tol = tol
+        self.rng = np.random.default_rng(seed)
+        self.centroids: np.ndarray | None = None
+        self.inertia_: float = float("inf")
+
+    def fit(self, X: np.ndarray) -> "KMeans":
+        X = np.atleast_2d(np.asarray(X, dtype=np.float64))
+        self.centroids = self._init_pp(X)
+        for _ in range(self.max_iters):
+            labels = self._assign(X)
+            new_centroids = np.array([
+                X[labels == i].mean(axis=0) if (labels == i).any()
+                else X[self.rng.integers(len(X))]
+                for i in range(self.k)
+            ])
+            shift = float(np.linalg.norm(new_centroids - self.centroids))
+            self.centroids = new_centroids
+            if shift < self.tol:
                 break
-            labels = new_labels
-            for k in range(self.n_clusters):
-                if np.any(labels == k):
-                    centers[k] = x[labels == k].mean(axis=0)
-        self.centers_ = centers
-        self.labels_ = labels
+        labels = self._assign(X)
+        self.inertia_ = float(sum(
+            np.linalg.norm(X[labels == i] - self.centroids[i], axis=1).sum()
+            for i in range(self.k)))
         return self
 
-    def predict(self, x: np.ndarray) -> np.ndarray:
-        if self.centers_ is None:
-            raise RuntimeError("fit must be called before predict")
-        x = np.asarray(x, dtype=float)
-        dist = np.linalg.norm(x[:, None, :] - self.centers_[None, :, :], axis=-1)
-        return np.argmin(dist, axis=1)
+    def _init_pp(self, X: np.ndarray) -> np.ndarray:
+        """k-means++ seeding: spread initial centroids far apart."""
+        centroids = [X[self.rng.integers(len(X))]]
+        for _ in range(1, self.k):
+            d2 = np.min([np.sum((X - c) ** 2, axis=1) for c in centroids],
+                        axis=0)
+            total = d2.sum()
+            probs = d2 / total if total > 0 else np.full(len(X), 1 / len(X))
+            centroids.append(X[self.rng.choice(len(X), p=probs)])
+        return np.array(centroids)
 
-    def fit_predict(self, x: np.ndarray) -> np.ndarray:
-        return self.fit(x).labels_
+    def _assign(self, X: np.ndarray) -> np.ndarray:
+        dists = np.linalg.norm(X[:, None, :] - self.centroids[None, :, :],
+                               axis=2)
+        return np.argmin(dists, axis=1)
+
+    def predict(self, x: np.ndarray) -> int:
+        x = np.asarray(x, dtype=np.float64)
+        return int(np.argmin(np.linalg.norm(self.centroids - x, axis=1)))
 
 
-def kmeans(x: np.ndarray, n_clusters: int = 2, seed: int | None = None) -> tuple[np.ndarray, np.ndarray]:
-    model = KMeans(n_clusters=n_clusters, seed=seed).fit(x)
-    return model.centers_, model.labels_
+class SelfOrganizingMap:
+    """Kohonen SOM: a 2-D sheet of neurons that topologically organizes
+    high-dimensional input — a computational model of cortical maps.
+
+    >>> som = SelfOrganizingMap(width=8, height=8, dim=16)
+    >>> som.fit(X, epochs=20)
+    >>> som.locate(x)   # -> (row, col) of the best-matching neuron
+    """
+
+    def __init__(self, width: int, height: int, dim: int,
+                 seed: int | None = None):
+        self.width, self.height, self.dim = width, height, dim
+        rng = np.random.default_rng(seed)
+        self.weights = rng.random((height, width, dim))
+        rows, cols = np.mgrid[0:height, 0:width]
+        self._grid = np.stack([rows, cols], axis=-1).astype(np.float64)
+
+    def locate(self, x: np.ndarray) -> tuple[int, int]:
+        """Best-matching unit for an input vector."""
+        d = np.linalg.norm(self.weights - np.asarray(x, dtype=np.float64),
+                           axis=2)
+        idx = np.unravel_index(np.argmin(d), d.shape)
+        return int(idx[0]), int(idx[1])
+
+    def fit(self, X: np.ndarray, epochs: int = 20, lr0: float = 0.5,
+            radius0: float | None = None) -> "SelfOrganizingMap":
+        X = np.atleast_2d(np.asarray(X, dtype=np.float64))
+        radius0 = radius0 or max(self.width, self.height) / 2
+        total_steps = epochs * len(X)
+        step = 0
+        rng = np.random.default_rng()
+        for _ in range(epochs):
+            for i in rng.permutation(len(X)):
+                x = X[i]
+                progress = step / max(total_steps, 1)
+                lr = lr0 * np.exp(-3 * progress)
+                radius = max(radius0 * np.exp(-3 * progress), 0.5)
+                bmu = np.array(self.locate(x), dtype=np.float64)
+                dist2 = np.sum((self._grid - bmu) ** 2, axis=-1)
+                influence = np.exp(-dist2 / (2 * radius**2))
+                self.weights += (lr * influence[..., None]
+                                 * (x - self.weights))
+                step += 1
+        return self
+
+    def umatrix(self) -> np.ndarray:
+        """Average distance of each neuron to its neighbors — reveals
+        cluster boundaries as ridges."""
+        u = np.zeros((self.height, self.width))
+        for r in range(self.height):
+            for c in range(self.width):
+                dists = []
+                for dr, dc in ((-1, 0), (1, 0), (0, -1), (0, 1)):
+                    nr, nc = r + dr, c + dc
+                    if 0 <= nr < self.height and 0 <= nc < self.width:
+                        dists.append(np.linalg.norm(
+                            self.weights[r, c] - self.weights[nr, nc]))
+                u[r, c] = np.mean(dists) if dists else 0.0
+        return u
