@@ -1,95 +1,141 @@
-"""Feature extraction for one-dimensional audio signals."""
-from __future__ import annotations
+"""Low-level auditory feature extraction — the cochlea.
 
-from dataclasses import asdict, dataclass
-from typing import Any, Dict, Iterable
+FFT-based spectral analysis, pitch detection via autocorrelation,
+onset detection, and compact audio signatures. numpy only.
+"""
+
+from __future__ import annotations
 
 import numpy as np
 
 
-@dataclass(frozen=True)
-class AudioFeatures:
-    rms: float
-    peak: float
-    zero_crossing_rate: float
-    spectral_centroid: float
-    spectral_bandwidth: float
-    dominant_frequency: float
-    duration: float
-    sample_rate: int
-
-    def as_dict(self) -> Dict[str, float]:
-        return asdict(self)
+def spectrum(samples: np.ndarray, rate: int) -> tuple[np.ndarray, np.ndarray]:
+    """Return (frequencies, magnitudes) of the signal's frequency content."""
+    samples = np.asarray(samples, dtype=np.float64)
+    n = len(samples)
+    windowed = samples * np.hanning(n)
+    mags = np.abs(np.fft.rfft(windowed))
+    freqs = np.fft.rfftfreq(n, d=1.0 / rate)
+    return freqs, mags
 
 
-def normalize_audio(samples: Any) -> np.ndarray:
-    """Return mono audio normalized to ``[-1, 1]``."""
-    arr = np.asarray(samples, dtype=float)
-    if arr.size == 0:
-        raise ValueError("audio must contain at least one sample")
-    if arr.ndim > 1:
-        arr = arr.mean(axis=-1)
-    arr = np.nan_to_num(arr, copy=False)
-    peak = float(np.max(np.abs(arr)))
-    if peak <= 1e-12:
-        return np.zeros_like(arr, dtype=float)
-    return arr / peak
+def spectrogram(samples: np.ndarray, rate: int, frame_size: int = 1024,
+                hop: int = 512) -> np.ndarray:
+    """Short-time Fourier transform magnitude matrix (frames x bins)."""
+    samples = np.asarray(samples, dtype=np.float64)
+    window = np.hanning(frame_size)
+    frames = []
+    for start in range(0, len(samples) - frame_size + 1, hop):
+        frame = samples[start:start + frame_size] * window
+        frames.append(np.abs(np.fft.rfft(frame)))
+    if not frames:
+        return np.zeros((0, frame_size // 2 + 1))
+    return np.array(frames)
 
 
-def frame_audio(samples: Any, frame_size: int, hop_size: int | None = None) -> np.ndarray:
-    """Slice audio into overlapping frames."""
-    audio = normalize_audio(samples)
-    if frame_size <= 0:
-        raise ValueError("frame_size must be positive")
-    hop_size = frame_size if hop_size is None else hop_size
-    if hop_size <= 0:
-        raise ValueError("hop_size must be positive")
-    if len(audio) < frame_size:
-        padded = np.zeros(frame_size, dtype=float)
-        padded[: len(audio)] = audio
-        return padded[None, :]
-    starts = range(0, len(audio) - frame_size + 1, hop_size)
-    return np.stack([audio[start : start + frame_size] for start in starts], axis=0)
+def spectral_centroid(samples: np.ndarray, rate: int) -> float:
+    """The 'center of mass' of the spectrum — perceptual brightness in Hz."""
+    freqs, mags = spectrum(samples, rate)
+    total = mags.sum()
+    if total == 0:
+        return 0.0
+    return float((freqs * mags).sum() / total)
 
 
-def extract_audio_features(samples: Any, sample_rate: int = 16_000) -> AudioFeatures:
-    """Extract amplitude, zero-crossing, and spectral features."""
-    if sample_rate <= 0:
-        raise ValueError("sample_rate must be positive")
-    audio = normalize_audio(samples)
-    rms = float(np.sqrt(np.mean(np.square(audio))))
-    peak = float(np.max(np.abs(audio)))
-    signs = np.signbit(audio)
-    zcr = float(np.mean(signs[1:] != signs[:-1])) if len(audio) > 1 else 0.0
-    spectrum = np.abs(np.fft.rfft(audio))
-    freqs = np.fft.rfftfreq(len(audio), d=1.0 / sample_rate)
-    total = float(spectrum.sum())
-    if total <= 1e-12:
-        centroid = bandwidth = dominant = 0.0
-    else:
-        centroid = float((freqs * spectrum).sum() / total)
-        bandwidth = float(np.sqrt((((freqs - centroid) ** 2) * spectrum).sum() / total))
-        dominant = float(freqs[int(np.argmax(spectrum))])
-    return AudioFeatures(
-        rms=rms,
-        peak=peak,
-        zero_crossing_rate=zcr,
-        spectral_centroid=centroid,
-        spectral_bandwidth=bandwidth,
-        dominant_frequency=dominant,
-        duration=float(len(audio) / sample_rate),
-        sample_rate=int(sample_rate),
-    )
+def zero_crossing_rate(samples: np.ndarray) -> float:
+    """Fraction of sign changes — high for noise/fricatives, low for tones."""
+    samples = np.asarray(samples, dtype=np.float64)
+    if len(samples) < 2:
+        return 0.0
+    return float(np.mean(np.abs(np.diff(np.signbit(samples).astype(int)))))
 
 
-class EarFeatureExtractor:
-    """State-less audio feature extractor class."""
+def detect_pitch(samples: np.ndarray, rate: int,
+                 fmin: float = 50.0, fmax: float = 2000.0) -> float:
+    """Fundamental frequency estimation via normalized autocorrelation.
 
-    def __init__(self, sample_rate: int = 16_000) -> None:
-        self.sample_rate = sample_rate
+    Returns pitch in Hz, or 0.0 if no clear pitch is found.
+    """
+    samples = np.asarray(samples, dtype=np.float64)
+    samples = samples - samples.mean()
+    if len(samples) < int(rate / fmin) or not samples.any():
+        return 0.0
+    corr = np.correlate(samples, samples, mode="full")[len(samples) - 1:]
+    if corr[0] <= 0:
+        return 0.0
+    corr = corr / corr[0]
+    lag_min = max(1, int(rate / fmax))
+    lag_max = min(len(corr) - 1, int(rate / fmin))
+    if lag_max <= lag_min:
+        return 0.0
+    segment = corr[lag_min:lag_max]
+    peak = int(np.argmax(segment)) + lag_min
+    if corr[peak] < 0.3:  # weak periodicity => unvoiced / noise
+        return 0.0
+    return float(rate / peak)
 
-    def transform(self, samples: Any) -> Dict[str, float]:
-        return extract_audio_features(samples, self.sample_rate).as_dict()
 
-    def batch_transform(self, signals: Iterable[Any]) -> list[Dict[str, float]]:
-        return [self.transform(signal) for signal in signals]
+def detect_onsets(samples: np.ndarray, rate: int, frame_size: int = 1024,
+                  hop: int = 512, sensitivity: float = 1.5) -> list[float]:
+    """Detect event start times (seconds) via spectral-flux peak picking."""
+    spec = spectrogram(samples, rate, frame_size, hop)
+    if len(spec) < 3:
+        return []
+    flux = np.maximum(np.diff(spec, axis=0), 0).sum(axis=1)
+    threshold = flux.mean() + sensitivity * flux.std()
+    onsets = []
+    for i in range(1, len(flux) - 1):
+        if flux[i] > threshold and flux[i] >= flux[i - 1] and flux[i] >= flux[i + 1]:
+            onsets.append(float((i + 1) * hop / rate))
+    return onsets
+
+
+def mel_filterbank(n_filters: int, n_fft_bins: int, rate: int) -> np.ndarray:
+    """Triangular mel-scale filterbank matrix (n_filters x n_fft_bins)."""
+    def hz_to_mel(hz):
+        return 2595.0 * np.log10(1.0 + hz / 700.0)
+
+    def mel_to_hz(mel):
+        return 700.0 * (10.0 ** (mel / 2595.0) - 1.0)
+
+    mel_points = np.linspace(hz_to_mel(0), hz_to_mel(rate / 2), n_filters + 2)
+    hz_points = mel_to_hz(mel_points)
+    bins = np.floor((n_fft_bins - 1) * 2 * hz_points / rate).astype(int)
+    bins = np.clip(bins, 0, n_fft_bins - 1)
+    bank = np.zeros((n_filters, n_fft_bins))
+    for i in range(n_filters):
+        left, center, right = bins[i], bins[i + 1], bins[i + 2]
+        for j in range(left, center):
+            if center > left:
+                bank[i, j] = (j - left) / (center - left)
+        for j in range(center, right):
+            if right > center:
+                bank[i, j] = (right - j) / (right - center)
+    return bank
+
+
+def audio_signature(samples: np.ndarray, rate: int,
+                    n_filters: int = 20) -> np.ndarray:
+    """Compact, comparable feature vector for any sound.
+
+    Mel-band energies + centroid + ZCR + pitch + loudness.
+    Length = n_filters + 4.
+    """
+    samples = np.asarray(samples, dtype=np.float64)
+    spec = spectrogram(samples, rate)
+    if len(spec) == 0:
+        return np.zeros(n_filters + 4)
+    bank = mel_filterbank(n_filters, spec.shape[1], rate)
+    mel_energy = np.log1p(spec @ bank.T).mean(axis=0)
+    norm = np.linalg.norm(mel_energy)
+    if norm > 0:
+        mel_energy = mel_energy / norm
+    return np.concatenate([
+        mel_energy,
+        [
+            spectral_centroid(samples, rate) / (rate / 2),
+            zero_crossing_rate(samples),
+            detect_pitch(samples, rate) / 2000.0,
+            float(np.sqrt(np.mean(samples**2))),
+        ],
+    ])

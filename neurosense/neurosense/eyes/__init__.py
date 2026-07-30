@@ -1,15 +1,26 @@
-"""Visual sensing helpers."""
-from .features import VisualFeatures, EyeFeatureExtractor, edge_magnitude, extract_visual_features, normalize_image, to_grayscale
-from .vision import VisionSensor, detect_motion, summarize_scene
+"""Eyes — the visual perception system. Pure numpy image understanding."""
+
+from .vision import Eye, VisualPercept
+from .features import (
+    to_grayscale,
+    convolve2d,
+    sobel_edges,
+    gaussian_blur,
+    image_histogram,
+    detect_corners,
+    find_blobs,
+    image_signature,
+)
 
 __all__ = [
-    "VisualFeatures",
-    "EyeFeatureExtractor",
+    "Eye",
+    "VisualPercept",
     "to_grayscale",
-    "normalize_image",
-    "edge_magnitude",
-    "extract_visual_features",
-    "VisionSensor",
-    "detect_motion",
-    "summarize_scene",
+    "convolve2d",
+    "sobel_edges",
+    "gaussian_blur",
+    "image_histogram",
+    "detect_corners",
+    "find_blobs",
+    "image_signature",
 ]
