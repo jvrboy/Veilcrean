@@ -12,6 +12,7 @@ from ..risk_management.exposure_manager import ExposureManager
 from ..config import RISK_CFG
 
 class RiskOfficerAgent(BaseAgent):
+    skill_role = "risk_officer"
     name = "risk_officer"
 
     def __init__(self):

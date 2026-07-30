@@ -10,6 +10,7 @@ from .base_agent import BaseAgent
 import time
 
 class CircuitBreakerAgent(BaseAgent):
+    skill_role = "risk_officer"
     name = "circuit_breaker"
 
     def __init__(self, max_losses: int = 5, window_sec: int = 3600):

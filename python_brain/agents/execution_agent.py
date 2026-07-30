@@ -9,6 +9,7 @@ from typing import Any, Dict
 from .base_agent import BaseAgent
 
 class ExecutionAgent(BaseAgent):
+    skill_role = "execution"
     name = "execution_agent"
 
     def run(self, context: Dict[str, Any]) -> Dict[str, Any]:

@@ -11,6 +11,7 @@ from typing import Any, Dict
 from .base_agent import BaseAgent
 
 class DataIntegrationAgent(BaseAgent):
+    skill_role = "data_integration"
     name = "data_integration"
 
     def run(self, context: Dict[str, Any]) -> Dict[str, Any]:

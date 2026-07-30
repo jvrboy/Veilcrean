@@ -11,6 +11,7 @@ import pandas as pd
 from .base_agent import BaseAgent
 
 class ResearchAgent(BaseAgent):
+    skill_role = "research"
     name = "research_agent"
 
     def run(self, context: Dict[str, Any]) -> Dict[str, Any]:

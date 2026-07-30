@@ -10,6 +10,7 @@ import time
 from .base_agent import BaseAgent
 
 class MonitoringAgent(BaseAgent):
+    skill_role = "monitoring"
     name = "monitoring_agent"
 
     def run(self, context: Dict[str, Any]) -> Dict[str, Any]:

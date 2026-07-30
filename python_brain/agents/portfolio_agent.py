@@ -9,6 +9,7 @@ from typing import Any, Dict
 from .base_agent import BaseAgent
 
 class PortfolioAgent(BaseAgent):
+    skill_role = "portfolio"
     name = "portfolio_agent"
 
     def run(self, context: Dict[str, Any]) -> Dict[str, Any]:

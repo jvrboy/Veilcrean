@@ -145,11 +145,13 @@ from .dynamic_momentum_index   import DYMITool
 from .starc_bands              import STARCBandsTool
 from .chaikin_acc_dist         import ChaikinADTool
 from .ehlers_cti               import CTITool
+from .trader_skill_stack    import TraderSkillStackTool, AdvancedPatternSkillTool, InstitutionalFlowSkillTool, RiskPlanningSkillTool
 
 ALL_TOOLS = [
     MarketStructureTool, SupplyDemandTool, LiquidityTool, MomentumVolumeTool,
     KeyLevelsTool, SessionTimeTool, CandlestickTool, MTFAlignmentTool,
-    NewsFilterTool, AIReasonerTool, DXYCorrelationTool, VolumeProfileTool,
+    NewsFilterTool, AIReasonerTool, TraderSkillStackTool, AdvancedPatternSkillTool,
+    InstitutionalFlowSkillTool, RiskPlanningSkillTool, DXYCorrelationTool, VolumeProfileTool,
     SMTDivergenceTool, FractalAlignmentTool, FibonacciTool, CorrelationMatrixTool,
     VolatilityBandsTool, MicroTrendTool, ADRFilterTool, LiquidityVoidTool,
     TickUrgencyTool, HurstExponentTool, MarketProfileTool, StdevProjectionTool,
@@ -222,5 +224,6 @@ __all__ = [
     "SineWaveTool", "TrendflexTool", "RoofingFilterTool", "SuperSmootherTool", 
     "ButterworthTool", "EhlersStochTool", "LeadingIndicatorTool", "VolatilityStopTool",
     "LinRegAngleTool", "DYMITool", "STARCBandsTool", "ChaikinADTool", "CTITool",
-    "ALL_TOOLS",
+    "TraderSkillStackTool", "AdvancedPatternSkillTool", "InstitutionalFlowSkillTool",
+    "RiskPlanningSkillTool", "ALL_TOOLS",
 ]

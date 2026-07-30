@@ -8,6 +8,7 @@ from typing import Any, Dict
 from .base_agent import BaseAgent
 
 class MarketRegimeAgent(BaseAgent):
+    skill_role = "regime"
     name = "regime_agent"
 
     def run(self, context: Dict[str, Any]) -> Dict[str, Any]:

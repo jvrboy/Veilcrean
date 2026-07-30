@@ -12,6 +12,7 @@ from .base_agent import BaseAgent
 from ..config import DERIV_CFG
 
 class BrokerAgent(BaseAgent):
+    skill_role = "broker"
     name = "broker_agent"
 
     def run(self, context: Dict[str, Any]) -> Dict[str, Any]:

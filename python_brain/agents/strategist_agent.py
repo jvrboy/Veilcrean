@@ -14,6 +14,7 @@ from ..strategies.mean_reversion import MeanReversionStrategy
 from ..strategies.perpetual_scalper import PerpetualScalperStrategy
 
 class StrategistAgent(BaseAgent):
+    skill_role = "strategist"
     name = "strategist_agent"
 
     def __init__(self, decision_engine):
