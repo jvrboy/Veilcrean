@@ -12,6 +12,7 @@ from .base_agent import BaseAgent
 from ..config import SI_CFG
 
 class OptimizationAgent(BaseAgent):
+    skill_role = "optimization"
     name = "optimization_agent"
 
     def run(self, context: Dict[str, Any]) -> Dict[str, Any]:

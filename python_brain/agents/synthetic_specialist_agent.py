@@ -11,6 +11,7 @@ from typing import Any, Dict
 from .base_agent import BaseAgent
 
 class SyntheticSpecialistAgent(BaseAgent):
+    skill_role = "analyst"
     name = "synthetic_specialist"
 
     def run(self, context: Dict[str, Any]) -> Dict[str, Any]:

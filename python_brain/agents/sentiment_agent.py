@@ -8,6 +8,7 @@ from typing import Any, Dict
 from .base_agent import BaseAgent
 
 class SentimentAgent(BaseAgent):
+    skill_role = "sentiment"
     name = "sentiment_agent"
 
     def run(self, context: Dict[str, Any]) -> Dict[str, Any]:

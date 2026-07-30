@@ -13,6 +13,7 @@ import pandas as pd
 from .base_agent import BaseAgent
 
 class SimulationAgent(BaseAgent):
+    skill_role = "simulation"
     name = "simulation_agent"
 
     def run(self, context: Dict[str, Any]) -> Dict[str, Any]:

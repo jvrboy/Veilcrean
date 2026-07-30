@@ -11,6 +11,7 @@ from .base_agent import BaseAgent
 from ..confluence.confluence_engine import ConfluenceEngine
 
 class AnalystAgent(BaseAgent):
+    skill_role = "analyst"
     name = "analyst_agent"
 
     def __init__(self):

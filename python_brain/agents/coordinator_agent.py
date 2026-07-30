@@ -22,9 +22,11 @@ from .optimization_agent import OptimizationAgent
 from .broker_agent import BrokerAgent
 from .data_integration_agent import DataIntegrationAgent
 from .synthetic_specialist_agent import SyntheticSpecialistAgent
+from .skill_agent import SkillAgent
 import numpy as np
 
 class CoordinatorAgent(BaseAgent):
+    skill_role = "coordinator"
     name = "coordinator"
 
     def __init__(self, decision_engine):
@@ -44,6 +46,7 @@ class CoordinatorAgent(BaseAgent):
         self.broker    = BrokerAgent()
         self.data_int  = DataIntegrationAgent()
         self.synthetic = SyntheticSpecialistAgent()
+        self.skills    = SkillAgent()
 
     def run(self, context: Dict[str, Any]) -> Dict[str, Any]:
         # 0. Data Integration
@@ -53,6 +56,10 @@ class CoordinatorAgent(BaseAgent):
         # 1. Analyst Agent - Get technicals
         analysis = self.analyst.run(context)
         context.update(analysis)
+
+        # 1b. Skill Agent - Run project trader skills for all sub-agent roles
+        skills = self.skills.run(context)
+        context.update(skills)
         
         # 2. Synthetic Specialist - Focus on DSI
         synthetic = self.synthetic.run(context)
@@ -134,5 +141,6 @@ class CoordinatorAgent(BaseAgent):
             "simulation": simulation,
             "optimization": optimization,
             "broker": broker_info,
-            "synthetic": synthetic
+            "synthetic": synthetic,
+            "skills": skills.get("skill_report", {})
         }
