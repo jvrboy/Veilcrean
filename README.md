@@ -1,15 +1,16 @@
-## 🚀 Apex Evolution (V3.0)
+## 🚀 Apex Evolution (V3.1)
 
 Veilcrean has been fortified into an institutional-grade trading ecosystem:
-- **150 Analysis Tools**: From ICT/SMC and John Ehlers' DSP filters to complex geometric and statistical measures.
+- **153 Analysis Tools**: 150 technical tools (ICT/SMC, John Ehlers' DSP filters, geometric and statistical measures) + 3 NeuroSense cognitive tools (semantic reasoning, pattern memory, adaptive thresholds).
 - **55 Neural Networks**: A hierarchical ensemble (Transformers, Mamba SSM, GNNs, LSTMs, Neural ODEs, Bayesian Nets, and Quantum Simulators).
+- **NeuroSense v1.0.0 Cognitive Engine**: A fully self-contained cognitive architecture (eyes, ears, brain, neurons, knowledge graph, learning, language) powering the new cognitive analysis tools.
 - **Direct Broker Integration**: Full WebSocket support for **Deriv API** (24/7 perpetual markets) and ZMQ for **MT5**.
 - **Cross-Platform Mastery**: One-click setup for Windows, Linux, Docker, and Google Colab.
-- **Manus AI Compatibility**: Native Model Context Protocol (MCP) server integration.
+- **MCP Server (15 Tools)**: Native Model Context Protocol server exposing analysis, cognitive reasoning, pattern recall, adaptive thresholds, brain cognition, and classifier training to external AI agents.
 - **Multi-Agent System (MAS)**: 15 specialized agents orchestrated by a super-agent coordinator.
 
 
-> An institutional-grade, self-learning, multi-timeframe AI trading system that combines classical technical analysis, ICT-style price action, and deep learning to make and execute trading decisions on MetaTrader 5.
+> An institutional-grade, self-learning, multi-timeframe AI trading system that combines classical technical analysis, ICT-style price action, deep learning, and cognitive reasoning to make and execute trading decisions on MetaTrader 5.
 
 ---
 
@@ -26,25 +27,56 @@ A ZeroMQ socket links them. The EA is *dumb* — it does no analysis. The Python
 
 ---
 
+## 🧠 NeuroSense Cognitive Engine (v1.0.0)
+
+Veilcrean now includes **NeuroSense** — an original, fully self-contained cognitive architecture for Python. No AI API providers, no pretrained models, no emotions. Everything is computed locally from first principles using only `numpy`.
+
+| Module | Biological Analogue | What It Does |
+|---|---|---|
+| `neurosense.eyes` | Retina + visual cortex | Edge detection (Sobel), Harris corners, blob detection, Gaussian blur, image signatures, one-shot recognition |
+| `neurosense.ears` | Cochlea + auditory cortex | FFT spectra, spectrograms, mel filterbanks, pitch detection, onset detection, note naming, WAV loading |
+| `neurosense.neurons` | Neurons + synapses | Backprop networks, Hebbian learning (Oja's rule), Hopfield associative memory, spiking (LIF) networks with STDP |
+| `neurosense.brain` | Prefrontal cortex + hippocampus | Working memory, episodic memory, attention (novelty + habituation), Brain orchestrator |
+| `neurosense.knowledge` | Semantic memory | Knowledge graph with confidence, spreading activation, path finding, forward-chaining inference engine |
+| `neurosense.learning` | Basal ganglia | Tabular Q-learning, KMeans (k-means++), Self-Organizing Maps |
+| `neurosense.language` | Language cortex | TF-IDF similarity, co-occurrence association, n-gram generation, fact extraction from English |
+
+### New Cognitive Analysis Tools
+
+1. **CognitiveReasonerTool** — Translates technical scores into English facts, feeds them to the knowledge graph, and uses the inference engine to derive conclusions about market behavior.
+2. **PatternMemoryTool** — Records completed trades as episodic memories and recalls similar past setups to score the current one by historical win rate.
+3. **AdaptiveThresholdTool** — Uses Q-learning to discover the optimal confidence threshold per market regime, learning from trade outcomes.
+
+---
+
 ## 🏗️ Architecture at a Glance
 
 ```
 ┌──────────┐    ZMQ    ┌──────────────────────┐
 │  MT5 EA  │ ◄──────► │     Python Brain     │
-│  (MQL5)  │  JSON     │  • 8 Analysis Tools  │
+│  (MQL5)  │  JSON     │  • 153 Analysis Tools│
 │  Muscle  │ packets   │  • Confluence Engine │
 └──────────┘           │  • 3 Neural Networks │
+                       │  • NeuroSense Brain  │
                        │  • Self-Improver     │
                        └──────────────────────┘
+                              │
+                              ▼
+                    ┌──────────────────┐
+                    │   MCP Server     │
+                    │   15 Tools       │
+                    │  (stdio JSON-RPC) │
+                    └──────────────────┘
 ```
 
-### The Python Brain has 5 main modules
+### The Python Brain has 6 main modules
 
 1. **Data Receiver & Preprocessor** — JSON → DataFrame, cleans, normalizes, buffers
-2. **Analysis Engine** — 8 specialized tools each emitting a score
+2. **Analysis Engine** — 153 specialized tools each emitting a score
 3. **Confluence Engine** — Combines all scores into a feature vector
 4. **Neural Network Engine** — 3 networks decide direction, risk, and regime
-5. **Self-Improvement Loop** — Journals every trade, retrains, adapts thresholds
+5. **NeuroSense Cognitive Engine** — Semantic reasoning, pattern memory, adaptive thresholds
+6. **Self-Improvement Loop** — Journals every trade, retrains, adapts thresholds
 
 ---
 
@@ -56,13 +88,25 @@ Veilcrean/
 ├── python_brain/            # The mind
 │   ├── communication/       # ZMQ server + data parser
 │   ├── preprocessor/        # Cleaner, normalizer, buffer
-│   ├── analysis_tools/      # 8 analysis tools
+│   ├── analysis_tools/      # 153 analysis tools (150 technical + 3 cognitive)
 │   ├── confluence/          # Feature vector builder
 │   ├── neural_network/      # PyTorch models
 │   ├── self_improvement/    # Journaling + retraining
 │   ├── risk_management/     # Hard safety controls
 │   ├── database/            # SQLite journal
 │   └── utils/               # Logger, alerts, visualizer
+├── neurosense/              # Cognitive architecture (v1.0.0)
+│   ├── neurosense/
+│   │   ├── eyes/            # Visual perception
+│   │   ├── ears/            # Auditory perception
+│   │   ├── neurons/         # Neural networks from scratch
+│   │   ├── brain/           # Memory, attention, orchestration
+│   │   ├── knowledge/       # Knowledge graph + inference
+│   │   ├── learning/        # Q-learning, KMeans, SOM
+│   │   └── language/        # NLP, fact extraction, generation
+│   ├── tests/               # 32-test cognitive suite
+│   └── examples/            # 4 demo scripts
+├── mcp_server.py            # MCP server (15 tools)
 ├── models/                  # Saved NN weights
 ├── data/                    # Journal DB + historical data
 ├── logs/                    # Rotating log files
@@ -83,7 +127,21 @@ source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 2. Install the MT5 EA
+### 2. Install NeuroSense
+
+```bash
+cd neurosense
+pip install .
+```
+
+### 3. Run NeuroSense Tests
+
+```bash
+cd neurosense
+python tests/test_all.py
+```
+
+### 4. Install the MT5 EA
 
 1. Open MetaTrader 5 → `File → Open Data Folder`
 2. Copy the contents of `mt5_ea/` into `MQL5/Experts/Veilcrean/`
@@ -91,10 +149,16 @@ pip install -r requirements.txt
 4. Drag onto a chart, enable `Allow Algo Trading`
 5. Make sure the ZMQ DLL is configured (see `docs/MQ5_ZMQ_SETUP.md`)
 
-### 3. Run the Python Brain
+### 5. Run the Python Brain
 
 ```bash
 python -m python_brain.main
+```
+
+### 6. Run the MCP Server
+
+```bash
+python mcp_server.py
 ```
 
 ---
@@ -122,6 +186,7 @@ Veilcrean enforces **hard limits** that the neural networks can never override:
 6. **Modular.** Each tool runs and is tested independently.
 7. **Versioned.** Every model save is rollback-able.
 8. **Logged.** Every decision is fully traceable.
+9. **Cognitive.** NeuroSense adds semantic reasoning and memory to the analysis.
 
 ---
 
@@ -130,12 +195,15 @@ Veilcrean enforces **hard limits** that the neural networks can never override:
 | Phase | Description | Status |
 |-------|-------------|--------|
 | 1 | Foundation — EA + ZMQ + Python receiver | ✅ |
-| 2 | Analysis Tools — all 8 | ✅ |
+| 2 | Analysis Tools — all 150 technical | ✅ |
 | 3 | Neural Networks — 3 networks | ✅ |
 | 4 | Trade Execution loop | ✅ |
 | 5 | Self-Improvement cycle | ✅ |
-| 6 | Testing & hardening | ⏳ |
-| 7 | Live deployment | ⏳ |
+| 6 | NeuroSense cognitive engine (v1.0.0) | ✅ |
+| 7 | 3 cognitive analysis tools | ✅ |
+| 8 | MCP server (15 tools) | ✅ |
+| 9 | Testing & hardening | ⏳ |
+| 10 | Live deployment | ⏳ |
 
 ---
 
@@ -146,6 +214,7 @@ Veilcrean enforces **hard limits** that the neural networks can never override:
 - `docs/MQ5_ZMQ_SETUP.md` — ZMQ DLL installation
 - `docs/SELF_IMPROVEMENT.md` — How the bot learns over time
 - `docs/SAFETY.md` — Risk controls reference
+- `neurosense/README.md` — NeuroSense cognitive architecture docs
 
 ---
 
