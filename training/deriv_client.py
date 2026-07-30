@@ -18,6 +18,21 @@ MAX_CANDLES_PER_REQUEST = 5000
 RATE_LIMIT_DELAY = 0.5
 
 
+# All 9 timeframes requested, mapped to Deriv granularity in seconds.
+# Deriv supports: 60,120,180,300,600,900,1800,3600,7200,14400,28800,86400
+TIMEFRAMES = {
+    "1m": 60,
+    "2m": 120,
+    "5m": 300,
+    "15m": 900,
+    "30m": 1800,
+    "1h": 3600,
+    "4h": 14400,
+    "8h": 28800,
+    "24h": 86400,
+}
+
+
 INSTRUMENTS = {
     "forex": {
         "majors": [
@@ -80,13 +95,18 @@ INSTRUMENTS = {
             ("stpRNG", "Step Range Break"),
         ],
         "drift_switch": [
-            ("frxGBPNZD", "GBP/NZD"),
+            ("DRSI10", "Drift Switch 10"),
+            ("DRSI25", "Drift Switch 25"),
+            ("DRSI50", "Drift Switch 50"),
+            ("DRSI75", "Drift Switch 75"),
+            ("DRSI100", "Drift Switch 100"),
         ],
     },
 }
 
 
 def get_all_instruments() -> list[dict]:
+    """Return every instrument across all markets and submarkets."""
     result = []
     for market, submarkets in INSTRUMENTS.items():
         for submarket, symbols in submarkets.items():
@@ -98,6 +118,11 @@ def get_all_instruments() -> list[dict]:
                     "submarket": submarket,
                 })
     return result
+
+
+def get_all_timeframes() -> list[str]:
+    """Return all configured timeframe labels."""
+    return list(TIMEFRAMES.keys())
 
 
 class DerivClient:
@@ -159,6 +184,11 @@ class DerivClient:
 
     async def fetch_all_history(self, symbol: str, granularity: int = 60,
                                  max_batches: int = 20) -> list[dict]:
+        """Fetch as much history as Deriv will return.
+
+        max_batches=20 x 5000 candles = up to 100k candles per symbol/timeframe.
+        For 1m candles that's ~69 days; for 24h candles that's ~274 years.
+        """
         all_candles: list[dict] = []
         end = "latest"
         for batch_num in range(max_batches):
