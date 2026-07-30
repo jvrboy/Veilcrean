@@ -1,4 +1,4 @@
-"""The 153 analysis tools (150 technical + 3 neurosense cognitive). Each is a stateless object that takes a buffer
+"""The 159 analysis tools (156 technical + 3 neurosense cognitive). Each is a stateless object that takes a buffer
 snapshot and returns a *ToolResult* with a score in [-1, 1] and metadata."""
 from .base_tool            import BaseTool, ToolResult
 from .market_structure     import MarketStructureTool
@@ -149,6 +149,12 @@ from .starc_bands              import STARCBandsTool
 from .chaikin_acc_dist         import ChaikinADTool
 from .ehlers_cti               import CTITool
 from .trader_skill_stack    import TraderSkillStackTool, AdvancedPatternSkillTool, InstitutionalFlowSkillTool, RiskPlanningSkillTool
+from .kalman_trend             import KalmanTrendTool
+from .shannon_entropy          import ShannonEntropyTool
+from .rsi_divergence           import RSIDivergenceTool
+from .zscore_reversion         import ZScoreReversionTool
+from .volatility_forecast      import VolatilityForecastTool
+from .trend_exhaustion         import TrendExhaustionTool
 
 ALL_TOOLS = [
     MarketStructureTool, SupplyDemandTool, LiquidityTool, MomentumVolumeTool,
@@ -188,6 +194,8 @@ ALL_TOOLS = [
     SineWaveTool, TrendflexTool, RoofingFilterTool, SuperSmootherTool,
     ButterworthTool, EhlersStochTool, LeadingIndicatorTool, VolatilityStopTool,
     LinRegAngleTool, DYMITool, STARCBandsTool, ChaikinADTool, CTITool,
+    KalmanTrendTool, ShannonEntropyTool, RSIDivergenceTool,
+    ZScoreReversionTool, VolatilityForecastTool, TrendExhaustionTool,
 ]
 
 __all__ = [
@@ -228,5 +236,7 @@ __all__ = [
     "ButterworthTool", "EhlersStochTool", "LeadingIndicatorTool", "VolatilityStopTool",
     "LinRegAngleTool", "DYMITool", "STARCBandsTool", "ChaikinADTool", "CTITool",
     "TraderSkillStackTool", "AdvancedPatternSkillTool", "InstitutionalFlowSkillTool",
-    "RiskPlanningSkillTool", "CognitiveReasonerTool", "PatternMemoryTool", "AdaptiveThresholdTool", "ALL_TOOLS",
+    "RiskPlanningSkillTool", "CognitiveReasonerTool", "PatternMemoryTool", "AdaptiveThresholdTool",
+    "KalmanTrendTool", "ShannonEntropyTool", "RSIDivergenceTool",
+    "ZScoreReversionTool", "VolatilityForecastTool", "TrendExhaustionTool", "ALL_TOOLS",
 ]
