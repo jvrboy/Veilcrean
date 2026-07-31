@@ -255,10 +255,15 @@ def generate_signal(candles: list[dict], pip_size: float = 0.0001,
     if len(candles) < min_history:
         return None
 
-    closes = np.array([c["close"] for c in candles], dtype=float)
-    highs = np.array([c["high"] for c in candles], dtype=float)
-    lows = np.array([c["low"] for c in candles], dtype=float)
-    volumes = np.array([c.get("volume", 0) for c in candles], dtype=float)
+    # All implemented indicators use <= 50 bars of lookback, so keep a bounded
+    # rolling analysis window while the outer trainer still walks every real
+    # historical candle from oldest to newest. This makes full multi-run Deriv
+    # training practical without changing indicator semantics.
+    analysis_candles = candles[-80:]
+    closes = np.array([c["close"] for c in analysis_candles], dtype=float)
+    highs = np.array([c["high"] for c in analysis_candles], dtype=float)
+    lows = np.array([c["low"] for c in analysis_candles], dtype=float)
+    volumes = np.array([c.get("volume", 0) for c in analysis_candles], dtype=float)
 
     current_price = closes[-1]
     regime = _volatility_regime(highs, lows, closes)
@@ -357,15 +362,15 @@ def generate_signal(candles: list[dict], pip_size: float = 0.0001,
 
     # 18. Candle body
     if len(closes) >= 2:
-        body = closes[-1] - candles[-1]["open"]
+        body = closes[-1] - analysis_candles[-1]["open"]
         scores["candle_body"] = float(np.clip(body / (atr_val + 1e-10), -1, 1))
     else:
         scores["candle_body"] = 0.0
 
     # 19. Wick rejection
     if len(highs) >= 1:
-        upper_wick = highs[-1] - max(closes[-1], candles[-1]["open"])
-        lower_wick = min(closes[-1], candles[-1]["open"]) - lows[-1]
+        upper_wick = highs[-1] - max(closes[-1], analysis_candles[-1]["open"])
+        lower_wick = min(closes[-1], analysis_candles[-1]["open"]) - lows[-1]
         scores["wick_rejection"] = float(np.clip(
             (lower_wick - upper_wick) / (atr_val + 1e-10), -1, 1))
     else:

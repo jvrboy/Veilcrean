@@ -183,11 +183,14 @@ class DerivClient:
         return resp.get("candles", [])
 
     async def fetch_all_history(self, symbol: str, granularity: int = 60,
-                                 max_batches: int = 20) -> list[dict]:
-        """Fetch as much history as Deriv will return.
+                                 max_batches: int = 20,
+                                 start_epoch: Optional[int] = None) -> list[dict]:
+        """Fetch Deriv candle history, optionally bounded by a start epoch.
 
         max_batches=20 x 5000 candles = up to 100k candles per symbol/timeframe.
         For 1m candles that's ~69 days; for 24h candles that's ~274 years.
+        When ``start_epoch`` is supplied, pagination stops once candles reach
+        that boundary and any older candles are discarded.
         """
         all_candles: list[dict] = []
         end = "latest"
@@ -199,9 +202,13 @@ class DerivClient:
             new_candles = [c for c in candles if c["epoch"] not in seen_epochs]
             if not new_candles:
                 break
+            if start_epoch is not None:
+                new_candles = [c for c in new_candles if c["epoch"] >= start_epoch]
             all_candles.extend(new_candles)
-            oldest = min(c["epoch"] for c in new_candles)
-            if len(new_candles) < 100:
+            oldest = min(c["epoch"] for c in candles)
+            if start_epoch is not None and oldest <= start_epoch:
+                break
+            if len(candles) < 100:
                 break
             end = oldest - 1
             await asyncio.sleep(RATE_LIMIT_DELAY)
