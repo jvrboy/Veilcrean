@@ -13,6 +13,7 @@ on:
       - "Dockerfile.cloudflare"
       - "wrangler.jsonc"
       - "package.json"
+      - "package-lock.json"
       - "tsconfig.json"
       - ".github/workflows/cloudflare-deploy.yml"
 
@@ -33,9 +34,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
 
       - name: Install Worker dependencies
-        run: npm install
+        run: npm ci
 
       - name: Verify Docker is available
         run: docker version
@@ -45,3 +47,41 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Upload optional Worker runtime secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY' > /tmp/veilcrean-secrets.json
+          import json
+          import os
+
+          keys = [
+              "VEIL_STATUS_API_KEY",
+              "DERIV_API_TOKEN",
+              "GROQ_API_KEY",
+              "GEMINI_API_KEY",
+              "VEIL_TG_TOKEN",
+              "VEIL_TG_CHAT",
+              "VEIL_DISCORD_HOOK",
+          ]
+          secrets = {key: os.environ[key] for key in keys if os.environ.get(key)}
+          print(json.dumps(secrets))
+          PY
+
+          if [ "$(cat /tmp/veilcrean-secrets.json)" = "{}" ]; then
+            echo "No optional runtime secrets configured in GitHub. Skipping wrangler secret bulk."
+          else
+            npx wrangler secret bulk /tmp/veilcrean-secrets.json
+          fi
+          rm -f /tmp/veilcrean-secrets.json
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          VEIL_STATUS_API_KEY: ${{ secrets.VEIL_STATUS_API_KEY }}
+          DERIV_API_TOKEN: ${{ secrets.DERIV_API_TOKEN }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          VEIL_TG_TOKEN: ${{ secrets.VEIL_TG_TOKEN }}
+          VEIL_TG_CHAT: ${{ secrets.VEIL_TG_CHAT }}
+          VEIL_DISCORD_HOOK: ${{ secrets.VEIL_DISCORD_HOOK }}
