@@ -21,6 +21,7 @@ The agent improves per signal: each failure teaches it what to avoid next time.
 """
 from __future__ import annotations
 
+import argparse
 import asyncio
 import json
 import os
@@ -291,15 +292,67 @@ def _load_engine_state() -> Optional[dict]:
     return None
 
 
-async def run_single_run(run_id: int, engine: LearningEngine,
-                         verbose: bool = True) -> tuple[LearningEngine, list[dict]]:
-    """Run one pass across all instruments x all timeframes."""
+def audit_training_scope(instruments: list[dict], timeframes: list[str]) -> dict:
+    """Build a machine-readable scope audit before any training starts."""
+    markets: dict[str, dict] = {}
+    for instrument in instruments:
+        market = instrument["market"]
+        submarket = instrument["submarket"]
+        market_bucket = markets.setdefault(market, {"count": 0, "submarkets": {}})
+        market_bucket["count"] += 1
+        sub_bucket = market_bucket["submarkets"].setdefault(submarket, [])
+        sub_bucket.append({
+            "symbol": instrument["symbol"],
+            "display_name": instrument["display_name"],
+        })
+    return {
+        "timestamp": datetime.now(UTC).isoformat(),
+        "instrument_count": len(instruments),
+        "timeframes": timeframes,
+        "timeframe_count": len(timeframes),
+        "combo_count": len(instruments) * len(timeframes),
+        "markets": markets,
+        "deriv_app_id": 1089,
+        "max_batches": MAX_BATCHES,
+        "max_candles_per_combo": MAX_CANDLES * MAX_BATCHES,
+        "min_history": MIN_HISTORY,
+        "max_hold_bars": MAX_HOLD_BARS,
+        "signal_interval": SIGNAL_INTERVAL,
+        "max_signals_per_hour": MAX_SIGNALS_PER_HOUR,
+    }
+
+
+def _write_scope_audit(instruments: list[dict], timeframes: list[str]) -> dict:
+    output_dir = os.path.join(os.path.dirname(__file__), "output")
+    os.makedirs(output_dir, exist_ok=True)
+    audit = audit_training_scope(instruments, timeframes)
+    with open(os.path.join(output_dir, "training_scope_audit.json"), "w") as f:
+        json.dump(audit, f, indent=2)
+    return audit
+
+
+def _filter_instruments(symbols: Optional[list[str]] = None, markets: Optional[list[str]] = None) -> list[dict]:
     instruments = get_all_instruments()
-    timeframes = get_all_timeframes()
+    if symbols:
+        wanted = {s.upper() for s in symbols}
+        instruments = [i for i in instruments if i["symbol"].upper() in wanted or i["display_name"].upper() in wanted]
+    if markets:
+        wanted_markets = {m.lower() for m in markets}
+        instruments = [i for i in instruments if i["market"].lower() in wanted_markets or i["submarket"].lower() in wanted_markets]
+    return instruments
+
+
+async def run_single_run(run_id: int, engine: LearningEngine,
+                         verbose: bool = True,
+                         instruments: Optional[list[dict]] = None,
+                         timeframes: Optional[list[str]] = None) -> tuple[LearningEngine, list[dict]]:
+    """Run one pass across selected instruments x selected timeframes."""
+    instruments = instruments or get_all_instruments()
+    timeframes = timeframes or get_all_timeframes()
     total_combos = len(instruments) * len(timeframes)
 
     print(f"\n{'#'*70}")
-    print(f"# RUN {run_id}/15 — {total_combos} instrument-timeframe combos")
+    print(f"# RUN {run_id} — {total_combos} instrument-timeframe combos")
     print(f"# Patterns carried in: {len(engine.patterns)} | "
           f"Signals seen: {engine.total_signals}")
     print(f"{'#'*70}")
@@ -343,21 +396,32 @@ async def run_single_run(run_id: int, engine: LearningEngine,
     return engine, all_results
 
 
-async def run_full_training(num_runs: int = 15, verbose: bool = True):
-    """Run the full 15-run forward-test training with per-run learning carry-over."""
+async def run_full_training(num_runs: int = 15, verbose: bool = True,
+                            symbols: Optional[list[str]] = None,
+                            markets: Optional[list[str]] = None,
+                            timeframes_filter: Optional[list[str]] = None,
+                            resume: bool = True):
+    """Run forward-test training with per-run learning carry-over."""
     print("=" * 70)
-    print("VEILCREAN SIGNAL TRAINING SYSTEM — FULL 15-RUN FORWARD TEST")
+    print(f"VEILCREAN SIGNAL TRAINING SYSTEM — {num_runs}-RUN FORWARD TEST")
     print(f"Started: {datetime.now(UTC).isoformat()}")
     print(f"Using Deriv Public API (app_id 1089)")
     print(f"Timeframes: {', '.join(get_all_timeframes())}")
     print(f"Signal interval: every {SIGNAL_INTERVAL} candles "
           f"(~{MAX_SIGNALS_PER_HOUR} signals/hour cap)")
     print(f"Max hold: {MAX_HOLD_BARS} candles")
+    print(f"Max batches per combo: {MAX_BATCHES}")
     print(f"Runs: {num_runs} (each carries forward learned state)")
     print("=" * 70)
 
-    instruments = get_all_instruments()
-    timeframes = get_all_timeframes()
+    instruments = _filter_instruments(symbols=symbols, markets=markets)
+    timeframes = timeframes_filter or get_all_timeframes()
+    invalid_tfs = [tf for tf in timeframes if tf not in TIMEFRAMES]
+    if invalid_tfs:
+        raise ValueError(f"Unsupported timeframes: {invalid_tfs}. Supported: {get_all_timeframes()}")
+    if not instruments:
+        raise ValueError("No instruments selected for training")
+    audit = _write_scope_audit(instruments, timeframes)
     print(f"\nTotal instruments: {len(instruments)}")
     for market in set(i["market"] for i in instruments):
         market_syms = [i for i in instruments if i["market"] == market]
@@ -366,7 +430,7 @@ async def run_full_training(num_runs: int = 15, verbose: bool = True):
     print(f"Total combos: {len(instruments) * len(timeframes)}")
 
     # Load carried-over engine state from a previous full run, if present
-    prior_state = _load_engine_state()
+    prior_state = _load_engine_state() if resume else None
     engine = LearningEngine.from_dict(prior_state) if prior_state else LearningEngine()
     if prior_state:
         print(f"\nLoaded prior learned state: {len(engine.patterns)} patterns, "
@@ -375,7 +439,8 @@ async def run_full_training(num_runs: int = 15, verbose: bool = True):
     run_summaries = []
 
     for run_id in range(1, num_runs + 1):
-        engine, results = await run_single_run(run_id, engine, verbose=verbose)
+        engine, results = await run_single_run(
+            run_id, engine, verbose=verbose, instruments=instruments, timeframes=timeframes)
 
         summary = {
             "run_id": run_id,
@@ -417,7 +482,7 @@ async def run_full_training(num_runs: int = 15, verbose: bool = True):
         }, f, indent=2)
 
     print(f"\n{'='*70}")
-    print("ALL 15 RUNS COMPLETE — FINAL CROSS-RUN SUMMARY")
+    print(f"ALL {num_runs} RUNS COMPLETE — FINAL CROSS-RUN SUMMARY")
     print(f"{'='*70}")
     print(f"{'Run':<5} {'Signals':>9} {'Wins':>7} {'Losses':>8} "
           f"{'Win%':>7} {'PnL':>11} {'Patterns':>9}")
@@ -445,5 +510,27 @@ async def run_full_training(num_runs: int = 15, verbose: bool = True):
     return engine, run_summaries
 
 
+def _parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Train Veilcrean agents on Deriv historical candles.")
+    parser.add_argument("--runs", type=int, default=15, help="Number of forward-training passes to run.")
+    parser.add_argument("--symbols", nargs="*", help="Optional Deriv symbols/display names to train, e.g. frxEURUSD R_100.")
+    parser.add_argument("--markets", nargs="*", help="Optional markets/submarkets to train, e.g. forex volatility.")
+    parser.add_argument("--timeframes", nargs="*", help="Optional timeframe labels from the configured list.")
+    parser.add_argument("--quiet", action="store_true", help="Reduce per-combo logging.")
+    parser.add_argument("--fresh-state", action="store_true", help="Start learning from an empty state instead of resuming output/learned_state.json.")
+    parser.add_argument("--max-batches", type=int, help="Override Deriv pagination depth for quick audits/smoke training.")
+    return parser.parse_args()
+
+
 if __name__ == "__main__":
-    asyncio.run(run_full_training(num_runs=15, verbose=True))
+    args = _parse_args()
+    if args.max_batches is not None:
+        MAX_BATCHES = args.max_batches
+    asyncio.run(run_full_training(
+        num_runs=args.runs,
+        verbose=not args.quiet,
+        symbols=args.symbols,
+        markets=args.markets,
+        timeframes_filter=args.timeframes,
+        resume=not args.fresh_state,
+    ))

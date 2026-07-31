@@ -1,11 +1,11 @@
 {
   "TRENDING": {
     "threshold": 0.65,
-    "updates": 74
+    "updates": 78
   },
   "RANGING": {
-    "threshold": 0.65,
-    "updates": 79
+    "threshold": 0.4,
+    "updates": 23
   },
   "VOLATILE": {
     "threshold": 0.65,

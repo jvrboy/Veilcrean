@@ -1,126 +1,25 @@
 {
-  "TRENDING_sl_too_close_bollinger-_momentum+ _market_structure+ ": {
-    "pattern_name": "TRENDING_sl_too_close_bollinger-_momentum+ _market_structure+ ",
+  "RANGING_tp_too_far_sma_cross+ _market_structure+ _candle_body-": {
+    "pattern_name": "RANGING_tp_too_far_sma_cross+ _market_structure+ _candle_body-",
     "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "sl_too_close",
+      "regime": "RANGING",
+      "failure_category": "tp_too_far",
       "strong_indicators": {
-        "rsi": -0.3183098591549162,
-        "bollinger": -1.0,
-        "stochastic": -0.7005988023953467,
-        "williams_r": 0.7005988023953464,
-        "momentum": 1.0,
-        "cci": -0.8741635326731706,
-        "market_structure": 1.0,
-        "adx": 1.0,
-        "breakout": 1.0,
+        "bollinger": 0.3289912168550494,
+        "stochastic": 0.4285714285715293,
+        "williams_r": -0.42857142857152924,
+        "market_structure": 0.8217770929638326,
         "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "candle_body": 0.9228293742829077,
-        "wick_rejection": -0.47266870390057486,
-        "sr_proximity": -0.43857493857496954
+        "candle_body": -0.7854434344487353,
+        "wick_rejection": -0.3608794158280585
       }
     },
-    "failure_category": "sl_too_close",
+    "failure_category": "tp_too_far",
     "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, widen SL to 8 pips \u2014 price spikes past tight SL before going in signal direction.",
-    "first_seen": 1782467100,
-    "last_seen": 1782467100
-  },
-  "TRENDING_wrong_direction_sma_cross+ _wick_rejection+ _adx+ ": {
-    "pattern_name": "TRENDING_wrong_direction_sma_cross+ _wick_rejection+ _adx+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "momentum": 0.37378628075246917,
-        "cci": 0.3644914756026618,
-        "market_structure": 0.3001443001457827,
-        "adx": 0.3835616438362133,
-        "sma_cross": 1.0,
-        "wick_rejection": 0.577669706617178
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782471900,
-    "last_seen": 1782471900
-  },
-  "TRENDING_sl_too_close_bollinger-_momentum+ _cci-": {
-    "pattern_name": "TRENDING_sl_too_close_bollinger-_momentum+ _cci-",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "sl_too_close",
-      "strong_indicators": {
-        "rsi": -0.7329974811082579,
-        "bollinger": -1.0,
-        "stochastic": -0.646766169154227,
-        "williams_r": 0.646766169154227,
-        "momentum": 1.0,
-        "cci": -1.0,
-        "market_structure": 0.8157248157249395,
-        "adx": 1.0,
-        "breakout": 1.0,
-        "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "candle_body": 1.0,
-        "wick_rejection": -1.0,
-        "sr_proximity": -0.3233830845771135
-      }
-    },
-    "failure_category": "sl_too_close",
-    "occurrence_count": 3,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, widen SL to 8 pips \u2014 price spikes past tight SL before going in signal direction.",
-    "first_seen": 1782478500,
-    "last_seen": 1782825300
-  },
-  "TRENDING_sl_too_close_momentum+ _sma_cross+ _candle_body+ ": {
-    "pattern_name": "TRENDING_sl_too_close_momentum+ _sma_cross+ _candle_body+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "sl_too_close",
-      "strong_indicators": {
-        "rsi": -0.32007952286279534,
-        "bollinger": -0.55746693338258,
-        "momentum": 1.0,
-        "cci": -0.31533256734326703,
-        "market_structure": 0.4432699083861958,
-        "adx": 0.5435244161357969,
-        "sma_cross": 1.0,
-        "candle_body": 0.8289472411703751
-      }
-    },
-    "failure_category": "sl_too_close",
-    "occurrence_count": 2,
-    "avg_pnl_pips": -6.32,
-    "avoidance_rule": "In TRENDING market, widen SL to 8 pips \u2014 price spikes past tight SL before going in signal direction.",
-    "first_seen": 1782482100,
-    "last_seen": 1782914700
-  },
-  "TRENDING_sl_too_close_momentum-_sma_cross+ _adx+ ": {
-    "pattern_name": "TRENDING_sl_too_close_momentum-_sma_cross+ _adx+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "sl_too_close",
-      "strong_indicators": {
-        "momentum": -1.0,
-        "market_structure": 0.6239177489176856,
-        "adx": 0.9556093623894448,
-        "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "candle_body": 0.5067023177770443
-      }
-    },
-    "failure_category": "sl_too_close",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, widen SL to 8 pips \u2014 price spikes past tight SL before going in signal direction.",
-    "first_seen": 1782488100,
-    "last_seen": 1782488100
+    "avg_pnl_pips": -7.54,
+    "avoidance_rule": "In RANGING market, when these indicators fire, reduce TP to 8 pips \u2014 price reverses before reaching full target.",
+    "first_seen": 1767758400,
+    "last_seen": 1767758400
   },
   "TRENDING_sl_too_close_momentum+ _sma_cross+ _market_structure+ ": {
     "pattern_name": "TRENDING_sl_too_close_momentum+ _sma_cross+ _market_structure+ ",
@@ -128,715 +27,66 @@
       "regime": "TRENDING",
       "failure_category": "sl_too_close",
       "strong_indicators": {
+        "stochastic": -0.46524064171123625,
+        "williams_r": 0.46524064171123625,
         "momentum": 1.0,
-        "market_structure": 0.7591377694467912,
-        "adx": 0.6027846027850503,
+        "market_structure": 0.8351940457205923,
+        "adx": 0.7672253258843427,
         "sma_cross": 1.0,
-        "pattern_hh": 0.5
+        "candle_body": 0.6110056114412669
       }
     },
     "failure_category": "sl_too_close",
     "occurrence_count": 2,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, widen SL to 8 pips \u2014 price spikes past tight SL before going in signal direction.",
-    "first_seen": 1782488700,
-    "last_seen": 1782893700
+    "avg_pnl_pips": -9.225,
+    "avoidance_rule": "In TRENDING market, widen SL to 9 pips \u2014 price spikes past tight SL before going in signal direction.",
+    "first_seen": 1767765600,
+    "last_seen": 1772010000
   },
-  "TRENDING_wrong_direction_momentum-_adx+ _sma_cross+ ": {
-    "pattern_name": "TRENDING_wrong_direction_momentum-_adx+ _sma_cross+ ",
+  "TRENDING_wrong_direction_adx+ _sma_cross+ _rsi+ ": {
+    "pattern_name": "TRENDING_wrong_direction_adx+ _sma_cross+ _rsi+ ",
     "conditions": {
       "regime": "TRENDING",
       "failure_category": "wrong_direction",
       "strong_indicators": {
-        "rsi": 0.49321266968321453,
-        "momentum": -1.0,
+        "rsi": 0.5104477611940991,
+        "stochastic": 0.40540540540542397,
+        "williams_r": -0.40540540540542397,
+        "momentum": -0.41086950269376543,
         "adx": 1.0,
         "sma_cross": 1.0,
         "pattern_hh": 0.5,
-        "candle_body": 0.31557367995849844,
-        "sr_proximity": 0.3076923076922822
+        "sr_proximity": 0.3903133903133996
       }
     },
     "failure_category": "wrong_direction",
     "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
+    "avg_pnl_pips": -5.52,
     "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782493500,
-    "last_seen": 1782493500
+    "first_seen": 1767844800,
+    "last_seen": 1767844800
   },
-  "TRENDING_sl_too_close_adx+ _sma_cross+ _market_structure+ ": {
-    "pattern_name": "TRENDING_sl_too_close_adx+ _sma_cross+ _market_structure+ ",
+  "TRENDING_sl_too_close_sma_cross+ _wick_rejection+ _market_structure+ ": {
+    "pattern_name": "TRENDING_sl_too_close_sma_cross+ _wick_rejection+ _market_structure+ ",
     "conditions": {
       "regime": "TRENDING",
       "failure_category": "sl_too_close",
       "strong_indicators": {
-        "rsi": 0.4455445544554283,
-        "bollinger": 0.3442397257528908,
-        "market_structure": 0.7987012987013523,
-        "adx": 1.0,
+        "momentum": 0.4236841324795574,
+        "market_structure": 0.9867909867915315,
+        "adx": 0.6190476190475207,
         "sma_cross": 1.0,
-        "candle_body": -0.3422221157532424,
-        "sr_proximity": 0.33628318584071903
+        "pattern_hh": 0.5,
+        "wick_rejection": 1.0,
+        "sr_proximity": 0.3732193732193655
       }
     },
     "failure_category": "sl_too_close",
     "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
+    "avg_pnl_pips": -5.25,
     "avoidance_rule": "In TRENDING market, widen SL to 8 pips \u2014 price spikes past tight SL before going in signal direction.",
-    "first_seen": 1782494100,
-    "last_seen": 1782494100
-  },
-  "TRENDING_wrong_direction_sma_cross+ _market_structure+ _candle_body-": {
-    "pattern_name": "TRENDING_wrong_direction_sma_cross+ _market_structure+ _candle_body-",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "market_structure": 0.7878787878788897,
-        "sma_cross": 1.0,
-        "candle_body": -0.452830017800515,
-        "sr_proximity": 0.3683602771362731
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782497700,
-    "last_seen": 1782497700
-  },
-  "RANGING_wrong_direction_momentum+ _sma_cross+ _stochastic-": {
-    "pattern_name": "RANGING_wrong_direction_momentum+ _sma_cross+ _stochastic-",
-    "conditions": {
-      "regime": "RANGING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "stochastic": -0.4687499999999676,
-        "williams_r": 0.46874999999996747,
-        "momentum": 1.0,
-        "sma_cross": 1.0,
-        "candle_body": 0.4615382840234179,
-        "sr_proximity": 0.3521939953810741
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 3,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In RANGING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782498300,
-    "last_seen": 1784056200
-  },
-  "RANGING_bad_entry_momentum+ _market_structure+ _sma_cross+ ": {
-    "pattern_name": "RANGING_bad_entry_momentum+ _market_structure+ _sma_cross+ ",
-    "conditions": {
-      "regime": "RANGING",
-      "failure_category": "bad_entry",
-      "strong_indicators": {
-        "bollinger": -0.3181670466276394,
-        "stochastic": -0.7073170731709959,
-        "williams_r": 0.7073170731709959,
-        "momentum": 1.0,
-        "market_structure": 1.0,
-        "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "wick_rejection": 0.42281859330732424
-      }
-    },
-    "failure_category": "bad_entry",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In RANGING market, wait for better entry confirmation when these indicators fire \u2014 entry timing was poor.",
-    "first_seen": 1782504300,
-    "last_seen": 1782504300
-  },
-  "TRENDING_wrong_direction_momentum+ _market_structure+ _sma_cross+ ": {
-    "pattern_name": "TRENDING_wrong_direction_momentum+ _market_structure+ _sma_cross+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "bollinger": -0.7720491760719836,
-        "stochastic": -0.9368421052632121,
-        "williams_r": 0.9368421052632121,
-        "momentum": 1.0,
-        "cci": -0.5374180083479918,
-        "market_structure": 1.0,
-        "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "candle_body": 0.8600678484319801
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 2,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782504900,
-    "last_seen": 1782902700
-  },
-  "TRENDING_wrong_direction_bollinger-_momentum+ _breakout+ ": {
-    "pattern_name": "TRENDING_wrong_direction_bollinger-_momentum+ _breakout+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "rsi": -0.3670886075948692,
-        "bollinger": -1.0,
-        "stochastic": -0.9080459770113944,
-        "williams_r": 0.9080459770113946,
-        "momentum": 1.0,
-        "cci": -0.9908675799088436,
-        "market_structure": 0.578512396694202,
-        "adx": 0.37229437229453455,
-        "breakout": 1.0,
-        "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "candle_body": 1.0,
-        "sr_proximity": -0.46747967479671715
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782699900,
-    "last_seen": 1782699900
-  },
-  "TRENDING_wrong_direction_momentum+ _adx+ _sma_cross+ ": {
-    "pattern_name": "TRENDING_wrong_direction_momentum+ _adx+ _sma_cross+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "rsi": -0.38566552901017587,
-        "bollinger": -0.539598375755262,
-        "momentum": 1.0,
-        "cci": -0.37909898866054853,
-        "market_structure": 0.4158829676071588,
-        "adx": 1.0,
-        "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "wick_rejection": 0.5702646031832012
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 2,
-    "avg_pnl_pips": -3.9,
-    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782717900,
-    "last_seen": 1782727500
-  },
-  "TRENDING_tp_too_far_bollinger-_momentum+ _cci-": {
-    "pattern_name": "TRENDING_tp_too_far_bollinger-_momentum+ _cci-",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "tp_too_far",
-      "strong_indicators": {
-        "rsi": -0.4174757281553002,
-        "bollinger": -1.0,
-        "stochastic": -0.6206896551725524,
-        "williams_r": 0.6206896551725525,
-        "momentum": 1.0,
-        "cci": -1.0,
-        "market_structure": 0.8444444444442502,
-        "adx": 0.44444444444444453,
-        "breakout": 1.0,
-        "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "candle_body": 0.841345870701157,
-        "wick_rejection": -0.43749985276433256,
-        "sr_proximity": -0.355263157894808
-      }
-    },
-    "failure_category": "tp_too_far",
-    "occurrence_count": 2,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, when these indicators fire, reduce TP to 6 pips \u2014 price reverses before reaching full target.",
-    "first_seen": 1782741300,
-    "last_seen": 1782841500
-  },
-  "TRENDING_wrong_direction_momentum+ _breakout+ _sma_cross+ ": {
-    "pattern_name": "TRENDING_wrong_direction_momentum+ _breakout+ _sma_cross+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "bollinger": -0.9794410530604358,
-        "stochastic": -0.9819819819822633,
-        "williams_r": 0.981981981982263,
-        "momentum": 1.0,
-        "cci": -0.8746328928043171,
-        "market_structure": 0.8604465709726724,
-        "breakout": 1.0,
-        "sma_cross": 1.0,
-        "candle_body": 0.49881218566846547,
-        "sr_proximity": -0.496323529411822
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782749100,
-    "last_seen": 1782749100
-  },
-  "TRENDING_wrong_direction_bollinger-_momentum+ _adx+ ": {
-    "pattern_name": "TRENDING_wrong_direction_bollinger-_momentum+ _adx+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "rsi": -0.3818181818181634,
-        "bollinger": -1.0,
-        "stochastic": -0.9183673469386924,
-        "williams_r": 0.9183673469386924,
-        "momentum": 1.0,
-        "cci": -0.7497886728657354,
-        "adx": 1.0,
-        "breakout": 1.0,
-        "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "candle_body": 0.9230765680475772,
-        "sr_proximity": -0.4860627177700205
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 2,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782751500,
-    "last_seen": 1782958500
-  },
-  "TRENDING_wrong_direction_momentum+ _market_structure+ _adx+ ": {
-    "pattern_name": "TRENDING_wrong_direction_momentum+ _market_structure+ _adx+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "rsi": -0.4545454545450264,
-        "bollinger": -0.40689422938461944,
-        "stochastic": -0.4615384615381987,
-        "williams_r": 0.4615384615381988,
-        "momentum": 1.0,
-        "cci": -0.30396543743259485,
-        "market_structure": 1.0,
-        "adx": 1.0,
-        "sma_cross": 1.0
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -2.8,
-    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782769500,
-    "last_seen": 1782769500
-  },
-  "RANGING_wrong_direction_sma_cross+ _candle_body-_momentum+ ": {
-    "pattern_name": "RANGING_wrong_direction_sma_cross+ _candle_body-_momentum+ ",
-    "conditions": {
-      "regime": "RANGING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "bollinger": 0.7048520505487873,
-        "stochastic": 0.49999999999960354,
-        "williams_r": -0.49999999999960354,
-        "momentum": 0.7499990625033031,
-        "cci": 0.471661863592338,
-        "sma_cross": 1.0,
-        "pattern_hh": -0.5,
-        "candle_body": -1.0
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In RANGING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782775500,
-    "last_seen": 1782775500
-  },
-  "TRENDING_wrong_direction_sma_cross+ _adx+ _pattern_hh+ ": {
-    "pattern_name": "TRENDING_wrong_direction_sma_cross+ _adx+ _pattern_hh+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "rsi": 0.3679653679652031,
-        "stochastic": 0.390070921985657,
-        "williams_r": -0.39007092198565685,
-        "adx": 0.7953216374268706,
-        "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "candle_body": 0.45405388225033205,
-        "sr_proximity": 0.31545064377675414
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782786900,
-    "last_seen": 1782786900
-  },
-  "TRENDING_wrong_direction_sma_cross+ _adx+ _stochastic+ ": {
-    "pattern_name": "TRENDING_wrong_direction_sma_cross+ _adx+ _stochastic+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "rsi": 0.38536585365850784,
-        "bollinger": 0.4062180690105618,
-        "stochastic": 0.660000000000031,
-        "williams_r": -0.660000000000031,
-        "cci": 0.3050097267582352,
-        "adx": 0.883227176221461,
-        "sma_cross": 1.0,
-        "candle_body": -0.40229868873037666,
-        "sr_proximity": 0.4270386266094388
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782787500,
-    "last_seen": 1782787500
-  },
-  "TRENDING_sl_too_close_adx+ _sma_cross+ _momentum+ ": {
-    "pattern_name": "TRENDING_sl_too_close_adx+ _sma_cross+ _momentum+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "sl_too_close",
-      "strong_indicators": {
-        "rsi": 0.40106951871644186,
-        "bollinger": 0.3911975451799456,
-        "momentum": 0.738888601543835,
-        "cci": 0.3011204481788988,
-        "market_structure": 0.6984848484859218,
-        "adx": 1.0,
-        "sma_cross": 1.0,
-        "wick_rejection": 0.3499998638886396,
-        "sr_proximity": 0.3235294117646854
-      }
-    },
-    "failure_category": "sl_too_close",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, widen SL to 8 pips \u2014 price spikes past tight SL before going in signal direction.",
-    "first_seen": 1782798300,
-    "last_seen": 1782798300
-  },
-  "TRENDING_tp_too_far_momentum+ _breakout+ _sma_cross+ ": {
-    "pattern_name": "TRENDING_tp_too_far_momentum+ _breakout+ _sma_cross+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "tp_too_far",
-      "strong_indicators": {
-        "rsi": -0.4265232974910035,
-        "bollinger": -0.9556710419475791,
-        "stochastic": -0.9241706161138807,
-        "williams_r": 0.9241706161138807,
-        "momentum": 1.0,
-        "cci": -0.7637189318536337,
-        "market_structure": 0.9658826022462758,
-        "breakout": 1.0,
-        "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "candle_body": 0.5215684842756312,
-        "sr_proximity": -0.39823008849560304
-      }
-    },
-    "failure_category": "tp_too_far",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, when these indicators fire, reduce TP to 6 pips \u2014 price reverses before reaching full target.",
-    "first_seen": 1782802500,
-    "last_seen": 1782802500
-  },
-  "TRENDING_tp_too_far_bollinger+ _momentum-_market_structure-": {
-    "pattern_name": "TRENDING_tp_too_far_bollinger+ _momentum-_market_structure-",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "tp_too_far",
-      "strong_indicators": {
-        "rsi": 0.552631578947371,
-        "bollinger": 1.0,
-        "stochastic": 0.8009478672985424,
-        "williams_r": -0.8009478672985424,
-        "momentum": -1.0,
-        "cci": 0.8521003768732538,
-        "market_structure": -1.0,
-        "adx": -0.862745098039202,
-        "breakout": -1.0,
-        "sma_cross": 1.0,
-        "pattern_hh": -0.5,
-        "candle_body": -1.0,
-        "wick_rejection": -0.5303028896922952
-      }
-    },
-    "failure_category": "tp_too_far",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, when these indicators fire, reduce TP to 6 pips \u2014 price reverses before reaching full target.",
-    "first_seen": 1782806700,
-    "last_seen": 1782806700
-  },
-  "TRENDING_wrong_direction_sma_cross+ _momentum+ _pattern_hh+ ": {
-    "pattern_name": "TRENDING_wrong_direction_sma_cross+ _momentum+ _pattern_hh+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "stochastic": -0.4285714285713874,
-        "williams_r": 0.4285714285713874,
-        "momentum": 0.7492353136195335,
-        "market_structure": 0.4206773618537965,
-        "sma_cross": 1.0,
-        "pattern_hh": 0.5
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782810300,
-    "last_seen": 1782810300
-  },
-  "TRENDING_tp_too_far_momentum+ _sma_cross+ _market_structure+ ": {
-    "pattern_name": "TRENDING_tp_too_far_momentum+ _sma_cross+ _market_structure+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "tp_too_far",
-      "strong_indicators": {
-        "bollinger": -0.5548421773378108,
-        "stochastic": -0.4408602150535015,
-        "williams_r": 0.4408602150535016,
-        "momentum": 1.0,
-        "cci": -0.4657786149982013,
-        "market_structure": 0.9295552931914998,
-        "sma_cross": 1.0,
-        "wick_rejection": 0.41075780560825553
-      }
-    },
-    "failure_category": "tp_too_far",
-    "occurrence_count": 3,
-    "avg_pnl_pips": -5.53,
-    "avoidance_rule": "In TRENDING market, when these indicators fire, reduce TP to 6 pips \u2014 price reverses before reaching full target.",
-    "first_seen": 1782813900,
-    "last_seen": 1782914100
-  },
-  "TRENDING_wrong_direction_bollinger-_momentum+ _market_structure+ ": {
-    "pattern_name": "TRENDING_wrong_direction_bollinger-_momentum+ _market_structure+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "rsi": -0.4588235294118169,
-        "bollinger": -1.0,
-        "stochastic": -0.9175257731962444,
-        "williams_r": 0.9175257731962444,
-        "momentum": 1.0,
-        "cci": -0.8033573141488176,
-        "market_structure": 1.0,
-        "adx": 0.9042145593878144,
-        "breakout": 1.0,
-        "sma_cross": 1.0,
-        "candle_body": 0.719625932832985,
-        "wick_rejection": 0.3598129664172188
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 2,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782816900,
-    "last_seen": 1782881100
-  },
-  "TRENDING_sl_too_close_bollinger-_momentum+ _adx+ ": {
-    "pattern_name": "TRENDING_sl_too_close_bollinger-_momentum+ _adx+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "sl_too_close",
-      "strong_indicators": {
-        "rsi": -0.6593186372745455,
-        "bollinger": -1.0,
-        "stochastic": -0.9218390804597698,
-        "williams_r": 0.9218390804597699,
-        "momentum": 1.0,
-        "cci": -0.9424417473447206,
-        "market_structure": 0.9218135554014514,
-        "adx": 1.0,
-        "breakout": 1.0,
-        "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "candle_body": 0.7694144471706429,
-        "sr_proximity": -0.4648033126293981
-      }
-    },
-    "failure_category": "sl_too_close",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, widen SL to 8 pips \u2014 price spikes past tight SL before going in signal direction.",
-    "first_seen": 1782831300,
-    "last_seen": 1782831300
-  },
-  "TRENDING_wrong_direction_bollinger-_momentum+ _cci-": {
-    "pattern_name": "TRENDING_wrong_direction_bollinger-_momentum+ _cci-",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "rsi": -0.4979757085018764,
-        "bollinger": -1.0,
-        "stochastic": -0.9370078740156791,
-        "williams_r": 0.9370078740156792,
-        "momentum": 1.0,
-        "cci": -1.0,
-        "market_structure": 0.9677627337207998,
-        "adx": 1.0,
-        "breakout": 1.0,
-        "sma_cross": 1.0,
-        "candle_body": 0.8571425072890501
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782842700,
-    "last_seen": 1782842700
-  },
-  "TRENDING_sl_too_close_momentum+ _market_structure+ _adx+ ": {
-    "pattern_name": "TRENDING_sl_too_close_momentum+ _market_structure+ _adx+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "sl_too_close",
-      "strong_indicators": {
-        "rsi": -0.5151515151513439,
-        "bollinger": -0.6955821164092055,
-        "stochastic": -0.8245614035087789,
-        "williams_r": 0.8245614035087787,
-        "momentum": 1.0,
-        "cci": -0.5519411099914165,
-        "market_structure": 1.0,
-        "adx": 1.0,
-        "sma_cross": 1.0
-      }
-    },
-    "failure_category": "sl_too_close",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, widen SL to 8 pips \u2014 price spikes past tight SL before going in signal direction.",
-    "first_seen": 1782843900,
-    "last_seen": 1782843900
-  },
-  "TRENDING_wrong_direction_adx+ _sma_cross+ _stochastic-": {
-    "pattern_name": "TRENDING_wrong_direction_adx+ _sma_cross+ _stochastic-",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "stochastic": -0.7894736842106903,
-        "williams_r": 0.7894736842106903,
-        "momentum": 0.47058795847813245,
-        "market_structure": 0.49770431588649994,
-        "adx": 1.0,
-        "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "candle_body": 0.47058795847813245
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782855900,
-    "last_seen": 1782855900
-  },
-  "TRENDING_wrong_direction_sma_cross+ _stochastic-_williams_r+ ": {
-    "pattern_name": "TRENDING_wrong_direction_sma_cross+ _stochastic-_williams_r+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "bollinger": -0.3696508073751128,
-        "stochastic": -0.9615384615390528,
-        "williams_r": 0.9615384615390528,
-        "market_structure": 0.6593204775024445,
-        "adx": 0.9066666666657572,
-        "sma_cross": 1.0,
-        "candle_body": 0.7878783103778185
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782857100,
-    "last_seen": 1782857100
-  },
-  "RANGING_wrong_direction_momentum+ _sma_cross+ _candle_body+ ": {
-    "pattern_name": "RANGING_wrong_direction_momentum+ _sma_cross+ _candle_body+ ",
-    "conditions": {
-      "regime": "RANGING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "bollinger": -0.3489552486609259,
-        "stochastic": -0.6396396396396614,
-        "williams_r": 0.6396396396396613,
-        "momentum": 1.0,
-        "market_structure": 0.7562289562291923,
-        "sma_cross": 1.0,
-        "candle_body": 1.0,
-        "wick_rejection": -0.48635218836410743
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 4,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In RANGING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782892500,
-    "last_seen": 1785380400
-  },
-  "RANGING_wrong_direction_momentum+ _sma_cross+ _market_structure+ ": {
-    "pattern_name": "RANGING_wrong_direction_momentum+ _sma_cross+ _market_structure+ ",
-    "conditions": {
-      "regime": "RANGING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "stochastic": -0.47747747747722885,
-        "williams_r": 0.47747747747722874,
-        "momentum": 1.0,
-        "market_structure": 0.8794612794615557,
-        "sma_cross": 1.0,
-        "candle_body": 0.49999983333299236
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 8,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In RANGING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782893100,
-    "last_seen": 1784289000
-  },
-  "TRENDING_tp_too_far_sma_cross+ _candle_body+ _pattern_hh+ ": {
-    "pattern_name": "TRENDING_tp_too_far_sma_cross+ _candle_body+ _pattern_hh+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "tp_too_far",
-      "strong_indicators": {
-        "momentum": 0.42317365429615245,
-        "market_structure": 0.3258817685047229,
-        "adx": 0.48210922787190663,
-        "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "candle_body": 1.0
-      }
-    },
-    "failure_category": "tp_too_far",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, when these indicators fire, reduce TP to 6 pips \u2014 price reverses before reaching full target.",
-    "first_seen": 1782900900,
-    "last_seen": 1782900900
+    "first_seen": 1767852000,
+    "last_seen": 1767852000
   },
   "TRENDING_wrong_direction_sma_cross+ _candle_body+ _adx+ ": {
     "pattern_name": "TRENDING_wrong_direction_sma_cross+ _candle_body+ _adx+ ",
@@ -844,336 +94,120 @@
       "regime": "TRENDING",
       "failure_category": "wrong_direction",
       "strong_indicators": {
-        "stochastic": 0.3170731707319627,
-        "williams_r": -0.3170731707319627,
-        "momentum": -0.7268620727754916,
-        "adx": 0.8253968253969326,
+        "bollinger": 0.3448342606607973,
+        "stochastic": 0.33333333333329124,
+        "williams_r": -0.33333333333329107,
+        "cci": 0.3631526086726515,
+        "market_structure": 0.4132231404961426,
+        "adx": 0.4857881136950546,
         "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "candle_body": 1.0
+        "candle_body": 0.5309992163823388,
+        "sr_proximity": 0.30499999999998095
       }
     },
     "failure_category": "wrong_direction",
     "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
+    "avg_pnl_pips": -8.64,
     "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782926100,
-    "last_seen": 1782926100
+    "first_seen": 1767924000,
+    "last_seen": 1767924000
   },
-  "RANGING_wrong_direction_sma_cross+ _candle_body+ _market_structure+ ": {
-    "pattern_name": "RANGING_wrong_direction_sma_cross+ _candle_body+ _market_structure+ ",
+  "RANGING_sl_too_close_momentum+ _sma_cross+ _sr_proximity+ ": {
+    "pattern_name": "RANGING_sl_too_close_momentum+ _sma_cross+ _sr_proximity+ ",
     "conditions": {
       "regime": "RANGING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "momentum": 0.4499997750008896,
-        "market_structure": 0.6961038961060912,
-        "sma_cross": 1.0,
-        "candle_body": 0.7499996250007426
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -3.5,
-    "avoidance_rule": "In RANGING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782932100,
-    "last_seen": 1782932100
-  },
-  "TRENDING_wrong_direction_sma_cross+ _momentum+ _candle_body+ ": {
-    "pattern_name": "TRENDING_wrong_direction_sma_cross+ _momentum+ _candle_body+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "stochastic": -0.39130434782583506,
-        "williams_r": 0.3913043478258351,
-        "momentum": 0.9130420888481874,
-        "adx": 0.4444444444491438,
-        "sma_cross": 1.0,
-        "candle_body": 0.4565210444240937
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -2.3,
-    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782946500,
-    "last_seen": 1782946500
-  },
-  "TRENDING_tp_too_far_stochastic-_williams_r+ _sma_cross+ ": {
-    "pattern_name": "TRENDING_tp_too_far_stochastic-_williams_r+ _sma_cross+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "tp_too_far",
-      "strong_indicators": {
-        "bollinger": -0.8391027798087494,
-        "stochastic": -1.0,
-        "williams_r": 1.0,
-        "momentum": 0.9589036498407449,
-        "cci": -0.5461454940273341,
-        "market_structure": 0.662798194712678,
-        "adx": 0.44444444444444453,
-        "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "candle_body": 1.0
-      }
-    },
-    "failure_category": "tp_too_far",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -2.7,
-    "avoidance_rule": "In TRENDING market, when these indicators fire, reduce TP to 6 pips \u2014 price reverses before reaching full target.",
-    "first_seen": 1782956100,
-    "last_seen": 1782956100
-  },
-  "TRENDING_bad_entry_bollinger-_momentum+ _cci-": {
-    "pattern_name": "TRENDING_bad_entry_bollinger-_momentum+ _cci-",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "bad_entry",
-      "strong_indicators": {
-        "rsi": -0.48022598870062155,
-        "bollinger": -1.0,
-        "stochastic": -0.9574468085103669,
-        "williams_r": 0.9574468085103669,
-        "momentum": 1.0,
-        "cci": -1.0,
-        "market_structure": 0.7536231884054343,
-        "adx": 1.0,
-        "breakout": 1.0,
-        "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "candle_body": 1.0,
-        "sr_proximity": -0.4805825242717191
-      }
-    },
-    "failure_category": "bad_entry",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, wait for better entry confirmation when these indicators fire \u2014 entry timing was poor.",
-    "first_seen": 1782956700,
-    "last_seen": 1782956700
-  },
-  "TRENDING_wrong_direction_adx+ _sma_cross+ _market_structure+ ": {
-    "pattern_name": "TRENDING_wrong_direction_adx+ _sma_cross+ _market_structure+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "rsi": -0.46153846153842865,
-        "bollinger": -0.55320149366879,
-        "stochastic": -0.5806451612904843,
-        "williams_r": 0.5806451612904844,
-        "momentum": 0.8717944247207869,
-        "cci": -0.4083626416569583,
-        "market_structure": 0.9813519813529987,
-        "adx": 1.0,
-        "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "sr_proximity": -0.3925619834710986
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782968700,
-    "last_seen": 1782968700
-  },
-  "TRENDING_sl_too_close_bollinger-_stochastic-_williams_r+ ": {
-    "pattern_name": "TRENDING_sl_too_close_bollinger-_stochastic-_williams_r+ ",
-    "conditions": {
-      "regime": "TRENDING",
       "failure_category": "sl_too_close",
       "strong_indicators": {
-        "rsi": -0.7339055793992725,
-        "bollinger": -1.0,
-        "stochastic": -1.0,
-        "williams_r": 1.0,
         "momentum": 1.0,
-        "cci": -1.0,
-        "market_structure": 0.6031515151514971,
-        "adx": 1.0,
-        "breakout": 1.0,
         "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "candle_body": 1.0,
-        "sr_proximity": -0.5
+        "sr_proximity": 0.30303030303028544
       }
     },
     "failure_category": "sl_too_close",
     "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, widen SL to 8 pips \u2014 price spikes past tight SL before going in signal direction.",
-    "first_seen": 1782974700,
-    "last_seen": 1782974700
+    "avg_pnl_pips": -6.72,
+    "avoidance_rule": "In RANGING market, widen SL to 10 pips \u2014 price spikes past tight SL before going in signal direction.",
+    "first_seen": 1767931200,
+    "last_seen": 1767931200
   },
-  "TRENDING_bad_entry_momentum+ _market_structure+ _adx+ ": {
-    "pattern_name": "TRENDING_bad_entry_momentum+ _market_structure+ _adx+ ",
+  "TRENDING_tp_too_far_bollinger-_momentum+ _adx+ ": {
+    "pattern_name": "TRENDING_tp_too_far_bollinger-_momentum+ _adx+ ",
     "conditions": {
       "regime": "TRENDING",
-      "failure_category": "bad_entry",
-      "strong_indicators": {
-        "rsi": -0.5849056603773789,
-        "bollinger": -0.6962859524341033,
-        "stochastic": -0.8257261410788038,
-        "williams_r": 0.8257261410788038,
-        "momentum": 1.0,
-        "cci": -0.5131617864536914,
-        "market_structure": 1.0,
-        "adx": 1.0,
-        "sma_cross": 1.0,
-        "sr_proximity": -0.4430894308943001
-      }
-    },
-    "failure_category": "bad_entry",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, wait for better entry confirmation when these indicators fire \u2014 entry timing was poor.",
-    "first_seen": 1782980700,
-    "last_seen": 1782980700
-  },
-  "TRENDING_bad_entry_momentum+ _adx+ _sma_cross+ ": {
-    "pattern_name": "TRENDING_bad_entry_momentum+ _adx+ _sma_cross+ ",
-    "conditions": {
-      "regime": "TRENDING",
-      "failure_category": "bad_entry",
-      "strong_indicators": {
-        "rsi": -0.4920634920635459,
-        "bollinger": -0.570860750352829,
-        "stochastic": -0.8133333333333019,
-        "williams_r": 0.8133333333333017,
-        "momentum": 1.0,
-        "cci": -0.42457783453958015,
-        "market_structure": 0.9006190941671457,
-        "adx": 1.0,
-        "sma_cross": 1.0,
-        "sr_proximity": -0.4430894308943001
-      }
-    },
-    "failure_category": "bad_entry",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In TRENDING market, wait for better entry confirmation when these indicators fire \u2014 entry timing was poor.",
-    "first_seen": 1782981300,
-    "last_seen": 1782981300
-  },
-  "RANGING_bad_entry_momentum+ _sma_cross+ _market_structure+ ": {
-    "pattern_name": "RANGING_bad_entry_momentum+ _sma_cross+ _market_structure+ ",
-    "conditions": {
-      "regime": "RANGING",
-      "failure_category": "bad_entry",
-      "strong_indicators": {
-        "stochastic": -0.5853658536585499,
-        "williams_r": 0.5853658536585499,
-        "momentum": 1.0,
-        "market_structure": 0.8727272727276187,
-        "sma_cross": 1.0,
-        "wick_rejection": 0.842406538862829
-      }
-    },
-    "failure_category": "bad_entry",
-    "occurrence_count": 2,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In RANGING market, wait for better entry confirmation when these indicators fire \u2014 entry timing was poor.",
-    "first_seen": 1782990300,
-    "last_seen": 1784216400
-  },
-  "RANGING_tp_too_far_momentum+ _market_structure+ _sma_cross+ ": {
-    "pattern_name": "RANGING_tp_too_far_momentum+ _market_structure+ _sma_cross+ ",
-    "conditions": {
-      "regime": "RANGING",
       "failure_category": "tp_too_far",
       "strong_indicators": {
-        "bollinger": -0.3823464117021552,
-        "stochastic": -0.4878048780487012,
-        "williams_r": 0.4878048780487012,
-        "momentum": 1.0,
-        "market_structure": 1.0,
-        "sma_cross": 1.0,
-        "candle_body": 0.3987340005605123,
-        "wick_rejection": 0.3987340005605123
-      }
-    },
-    "failure_category": "tp_too_far",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In RANGING market, when these indicators fire, reduce TP to 6 pips \u2014 price reverses before reaching full target.",
-    "first_seen": 1783444500,
-    "last_seen": 1783444500
-  },
-  "RANGING_wrong_direction_momentum+ _sma_cross+ _williams_r+ ": {
-    "pattern_name": "RANGING_wrong_direction_momentum+ _sma_cross+ _williams_r+ ",
-    "conditions": {
-      "regime": "RANGING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
-        "stochastic": -0.7894736842108645,
-        "williams_r": 0.7894736842108646,
-        "momentum": 1.0,
-        "market_structure": 0.785547785548566,
-        "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "candle_body": 0.4615382840241593
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In RANGING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1783590900,
-    "last_seen": 1783590900
-  },
-  "RANGING_wrong_direction_bollinger-_momentum+ _breakout+ ": {
-    "pattern_name": "RANGING_wrong_direction_bollinger-_momentum+ _breakout+ ",
-    "conditions": {
-      "regime": "RANGING",
-      "failure_category": "wrong_direction",
-      "strong_indicators": {
+        "rsi": -0.5578703703703627,
         "bollinger": -1.0,
-        "stochastic": -0.980582524272146,
-        "williams_r": 0.9805825242721461,
+        "stochastic": -0.9194244604316382,
+        "williams_r": 0.9194244604316382,
         "momentum": 1.0,
-        "cci": -0.6969124133586562,
-        "market_structure": 0.9342359767893023,
+        "cci": -0.9660541856196277,
+        "market_structure": 0.8610657472933851,
+        "adx": 1.0,
         "breakout": 1.0,
         "sma_cross": 1.0,
+        "vwap_dev": 0.3157734632675181,
         "pattern_hh": 0.5,
         "candle_body": 1.0,
-        "wick_rejection": 1.0
-      }
-    },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 2,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In RANGING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1783664100,
-    "last_seen": 1784094000
-  },
-  "RANGING_tp_too_far_momentum+ _market_structure+ _breakout+ ": {
-    "pattern_name": "RANGING_tp_too_far_momentum+ _market_structure+ _breakout+ ",
-    "conditions": {
-      "regime": "RANGING",
-      "failure_category": "tp_too_far",
-      "strong_indicators": {
-        "rsi": -0.4162679425838002,
-        "bollinger": -0.9795531054881559,
-        "stochastic": -0.9910313901344702,
-        "williams_r": 0.9910313901344702,
-        "momentum": 1.0,
-        "cci": -0.7196301640747014,
-        "market_structure": 1.0,
-        "breakout": 1.0,
-        "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "wick_rejection": 0.36661202729007414
+        "sr_proximity": -0.4597122302158191
       }
     },
     "failure_category": "tp_too_far",
     "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In RANGING market, when these indicators fire, reduce TP to 6 pips \u2014 price reverses before reaching full target.",
-    "first_seen": 1783697700,
-    "last_seen": 1783697700
+    "avg_pnl_pips": -11.63,
+    "avoidance_rule": "In TRENDING market, when these indicators fire, reduce TP to 12 pips \u2014 price reverses before reaching full target.",
+    "first_seen": 1768201200,
+    "last_seen": 1768201200
+  },
+  "TRENDING_sl_too_close_momentum+ _adx+ _sma_cross+ ": {
+    "pattern_name": "TRENDING_sl_too_close_momentum+ _adx+ _sma_cross+ ",
+    "conditions": {
+      "regime": "TRENDING",
+      "failure_category": "sl_too_close",
+      "strong_indicators": {
+        "rsi": -0.5562015503876012,
+        "bollinger": -0.7634738063071822,
+        "stochastic": -0.8539765319426047,
+        "williams_r": 0.8539765319426047,
+        "momentum": 1.0,
+        "cci": -0.5479063386649904,
+        "market_structure": 0.7466601498858954,
+        "adx": 1.0,
+        "sma_cross": 1.0,
+        "candle_body": 0.7781536447841845,
+        "sr_proximity": -0.4302615193026006
+      }
+    },
+    "failure_category": "sl_too_close",
+    "occurrence_count": 3,
+    "avg_pnl_pips": -15.25,
+    "avoidance_rule": "In TRENDING market, widen SL to 20 pips \u2014 price spikes past tight SL before going in signal direction.",
+    "first_seen": 1768222800,
+    "last_seen": 1772082000
+  },
+  "RANGING_sl_too_close_sma_cross+ _stochastic-_williams_r+ ": {
+    "pattern_name": "RANGING_sl_too_close_sma_cross+ _stochastic-_williams_r+ ",
+    "conditions": {
+      "regime": "RANGING",
+      "failure_category": "sl_too_close",
+      "strong_indicators": {
+        "bollinger": -0.42596929165755726,
+        "stochastic": -0.8860103626944735,
+        "williams_r": 0.8860103626944733,
+        "momentum": 0.6219150177018201,
+        "market_structure": 0.7708742097236622,
+        "sma_cross": 1.0,
+        "pattern_hh": 0.5,
+        "candle_body": 0.40078967807462224,
+        "wick_rejection": 0.6910166863351852
+      }
+    },
+    "failure_category": "sl_too_close",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -6.08,
+    "avoidance_rule": "In RANGING market, widen SL to 9 pips \u2014 price spikes past tight SL before going in signal direction.",
+    "first_seen": 1768294800,
+    "last_seen": 1768294800
   },
   "RANGING_sl_too_close_momentum+ _sma_cross+ _market_structure+ ": {
     "pattern_name": "RANGING_sl_too_close_momentum+ _sma_cross+ _market_structure+ ",
@@ -1181,65 +215,228 @@
       "regime": "RANGING",
       "failure_category": "sl_too_close",
       "strong_indicators": {
-        "stochastic": -0.4500000000000369,
-        "williams_r": 0.45000000000003704,
+        "bollinger": -0.3155172181870659,
+        "stochastic": -0.43414634146341996,
+        "williams_r": 0.4341463414634199,
         "momentum": 1.0,
-        "market_structure": 0.9215041986129809,
+        "market_structure": 0.8837630031659476,
+        "sma_cross": 1.0,
+        "candle_body": 0.31599603116827335
+      }
+    },
+    "failure_category": "sl_too_close",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -6.42,
+    "avoidance_rule": "In RANGING market, widen SL to 10 pips \u2014 price spikes past tight SL before going in signal direction.",
+    "first_seen": 1768302000,
+    "last_seen": 1768302000
+  },
+  "RANGING_tp_too_far_momentum+ _sma_cross+ _stochastic-": {
+    "pattern_name": "RANGING_tp_too_far_momentum+ _sma_cross+ _stochastic-",
+    "conditions": {
+      "regime": "RANGING",
+      "failure_category": "tp_too_far",
+      "strong_indicators": {
+        "bollinger": -0.47388815479350965,
+        "stochastic": -0.7942857142856519,
+        "williams_r": 0.7942857142856519,
+        "momentum": 1.0,
+        "cci": -0.35754034501936693,
+        "market_structure": 0.7198067632852725,
         "sma_cross": 1.0,
         "pattern_hh": 0.5,
-        "candle_body": 0.7405538950189255
+        "candle_body": 0.7539778389756583
+      }
+    },
+    "failure_category": "tp_too_far",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -5.79,
+    "avoidance_rule": "In RANGING market, when these indicators fire, reduce TP to 6 pips \u2014 price reverses before reaching full target.",
+    "first_seen": 1768381200,
+    "last_seen": 1768381200
+  },
+  "TRENDING_sl_too_close_bollinger-_momentum+ _adx+ ": {
+    "pattern_name": "TRENDING_sl_too_close_bollinger-_momentum+ _adx+ ",
+    "conditions": {
+      "regime": "TRENDING",
+      "failure_category": "sl_too_close",
+      "strong_indicators": {
+        "bollinger": -1.0,
+        "stochastic": -0.9344262295083132,
+        "williams_r": 0.9344262295083131,
+        "momentum": 1.0,
+        "cci": -0.7858427471478697,
+        "market_structure": 0.8533510285337035,
+        "adx": 1.0,
+        "sma_cross": 1.0,
+        "pattern_hh": 0.5,
+        "candle_body": 0.43579761788994664,
+        "wick_rejection": 0.6101166650457802
+      }
+    },
+    "failure_category": "sl_too_close",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -8.5,
+    "avoidance_rule": "In TRENDING market, widen SL to 13 pips \u2014 price spikes past tight SL before going in signal direction.",
+    "first_seen": 1768402800,
+    "last_seen": 1768402800
+  },
+  "TRENDING_tp_too_far_adx+ _sma_cross+ _momentum+ ": {
+    "pattern_name": "TRENDING_tp_too_far_adx+ _sma_cross+ _momentum+ ",
+    "conditions": {
+      "regime": "TRENDING",
+      "failure_category": "tp_too_far",
+      "strong_indicators": {
+        "rsi": 0.40150375939849936,
+        "bollinger": 0.3488698492675423,
+        "stochastic": 0.330543933054375,
+        "williams_r": -0.3305439330543751,
+        "momentum": 0.7413441250589611,
+        "market_structure": 0.502986065030407,
+        "adx": 1.0,
+        "sma_cross": 1.0
+      }
+    },
+    "failure_category": "tp_too_far",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -10.23,
+    "avoidance_rule": "In TRENDING market, when these indicators fire, reduce TP to 9 pips \u2014 price reverses before reaching full target.",
+    "first_seen": 1768518000,
+    "last_seen": 1768518000
+  },
+  "TRENDING_sl_too_close_bollinger-_momentum+ _cci-": {
+    "pattern_name": "TRENDING_sl_too_close_bollinger-_momentum+ _cci-",
+    "conditions": {
+      "regime": "TRENDING",
+      "failure_category": "sl_too_close",
+      "strong_indicators": {
+        "bollinger": -1.0,
+        "stochastic": -0.5980861244020287,
+        "williams_r": 0.5980861244020288,
+        "momentum": 1.0,
+        "cci": -1.0,
+        "market_structure": 0.44770283479998996,
+        "adx": 0.40211640211628413,
+        "breakout": 1.0,
+        "sma_cross": 1.0,
+        "candle_body": 0.9964992537807807,
+        "wick_rejection": -0.6534421336263073
       }
     },
     "failure_category": "sl_too_close",
     "occurrence_count": 2,
-    "avg_pnl_pips": -5.005,
-    "avoidance_rule": "In RANGING market, widen SL to 8 pips \u2014 price spikes past tight SL before going in signal direction.",
-    "first_seen": 1784047800,
-    "last_seen": 1782488700
+    "avg_pnl_pips": -9.275,
+    "avoidance_rule": "In TRENDING market, widen SL to 9 pips \u2014 price spikes past tight SL before going in signal direction.",
+    "first_seen": 1768561200,
+    "last_seen": 1770386400
   },
-  "RANGING_wrong_direction_sma_cross+ _momentum+ _candle_body+ ": {
-    "pattern_name": "RANGING_wrong_direction_sma_cross+ _momentum+ _candle_body+ ",
+  "RANGING_sl_too_close_bollinger-_breakout+ _sma_cross+ ": {
+    "pattern_name": "RANGING_sl_too_close_bollinger-_breakout+ _sma_cross+ ",
     "conditions": {
       "regime": "RANGING",
-      "failure_category": "wrong_direction",
+      "failure_category": "sl_too_close",
       "strong_indicators": {
-        "stochastic": -0.3203883495147642,
-        "williams_r": 0.320388349514764,
-        "momentum": 0.921518660728167,
-        "market_structure": 0.470523415978243,
+        "bollinger": -1.0,
+        "stochastic": -0.7819548872180354,
+        "williams_r": 0.7819548872180354,
+        "momentum": 0.9994465191352966,
+        "cci": -0.7957343448460348,
+        "breakout": 1.0,
         "sma_cross": 1.0,
         "pattern_hh": 0.5,
-        "candle_body": 0.6025314320142378
+        "candle_body": 0.6275594422477203,
+        "wick_rejection": 1.0
       }
     },
-    "failure_category": "wrong_direction",
+    "failure_category": "sl_too_close",
     "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In RANGING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1784113200,
-    "last_seen": 1784113200
+    "avg_pnl_pips": -11.95,
+    "avoidance_rule": "In RANGING market, widen SL to 18 pips \u2014 price spikes past tight SL before going in signal direction.",
+    "first_seen": 1768780800,
+    "last_seen": 1768780800
   },
-  "RANGING_wrong_direction_sma_cross+ _momentum+ _market_structure+ ": {
-    "pattern_name": "RANGING_wrong_direction_sma_cross+ _momentum+ _market_structure+ ",
+  "TRENDING_tp_too_far_momentum+ _market_structure+ _adx+ ": {
+    "pattern_name": "TRENDING_tp_too_far_momentum+ _market_structure+ _adx+ ",
     "conditions": {
-      "regime": "RANGING",
+      "regime": "TRENDING",
+      "failure_category": "tp_too_far",
+      "strong_indicators": {
+        "rsi": -0.8459383753501817,
+        "bollinger": -0.8272699315593997,
+        "stochastic": -0.8864628820961008,
+        "williams_r": 0.8864628820961006,
+        "momentum": 1.0,
+        "cci": -0.6245795021305338,
+        "market_structure": 1.0,
+        "adx": 1.0,
+        "sma_cross": 1.0,
+        "vwap_dev": 0.3412462105500846,
+        "pattern_hh": 0.5,
+        "candle_body": 0.4110245311304397,
+        "sr_proximity": -0.4525547445255602
+      }
+    },
+    "failure_category": "tp_too_far",
+    "occurrence_count": 4,
+    "avg_pnl_pips": -18.5575,
+    "avoidance_rule": "In TRENDING market, when these indicators fire, reduce TP to 10 pips \u2014 price reverses before reaching full target.",
+    "first_seen": 1769112000,
+    "last_seen": 1771822800
+  },
+  "TRENDING_wrong_direction_momentum+ _market_structure+ _adx+ ": {
+    "pattern_name": "TRENDING_wrong_direction_momentum+ _market_structure+ _adx+ ",
+    "conditions": {
+      "regime": "TRENDING",
       "failure_category": "wrong_direction",
       "strong_indicators": {
-        "bollinger": -0.30404489924177686,
-        "stochastic": -0.7681159420287804,
-        "williams_r": 0.7681159420287803,
-        "momentum": 0.9180323654931065,
-        "market_structure": 0.8893587033128052,
+        "rsi": -0.9006711409396019,
+        "bollinger": -0.7603580313894083,
+        "stochastic": -0.9799713876967056,
+        "williams_r": 0.9799713876967056,
+        "momentum": 1.0,
+        "cci": -0.5493412875963094,
+        "market_structure": 1.0,
+        "adx": 1.0,
         "sma_cross": 1.0,
-        "candle_body": 0.8721307472181454
+        "vwap_dev": 0.34490779104663705,
+        "pattern_hh": 0.5,
+        "wick_rejection": 0.35696514305031013,
+        "sr_proximity": -0.4918699186991853
       }
     },
     "failure_category": "wrong_direction",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In RANGING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1784543400,
-    "last_seen": 1784543400
+    "occurrence_count": 2,
+    "avg_pnl_pips": -16.275,
+    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
+    "first_seen": 1769119200,
+    "last_seen": 1769396400
+  },
+  "TRENDING_sl_too_close_momentum+ _market_structure+ _adx+ ": {
+    "pattern_name": "TRENDING_sl_too_close_momentum+ _market_structure+ _adx+ ",
+    "conditions": {
+      "regime": "TRENDING",
+      "failure_category": "sl_too_close",
+      "strong_indicators": {
+        "rsi": -0.737665463297248,
+        "bollinger": -0.6973329472053242,
+        "stochastic": -0.8421052631579061,
+        "williams_r": 0.842105263157906,
+        "momentum": 1.0,
+        "cci": -0.5189541389365526,
+        "market_structure": 1.0,
+        "adx": 1.0,
+        "sma_cross": 1.0,
+        "vwap_dev": 0.6363314827029578,
+        "pattern_hh": 0.5,
+        "sr_proximity": -0.44156842644798
+      }
+    },
+    "failure_category": "sl_too_close",
+    "occurrence_count": 2,
+    "avg_pnl_pips": -27.215,
+    "avoidance_rule": "In TRENDING market, widen SL to 31 pips \u2014 price spikes past tight SL before going in signal direction.",
+    "first_seen": 1769403600,
+    "last_seen": 1769554800
   },
   "RANGING_sl_too_close_momentum+ _breakout+ _sma_cross+ ": {
     "pattern_name": "RANGING_sl_too_close_momentum+ _breakout+ _sma_cross+ ",
@@ -1247,233 +444,639 @@
       "regime": "RANGING",
       "failure_category": "sl_too_close",
       "strong_indicators": {
-        "bollinger": -0.7627618652883765,
-        "stochastic": -0.9148936170213438,
-        "williams_r": 0.9148936170213436,
+        "bollinger": -0.893685905318136,
+        "stochastic": -0.9516129032258474,
+        "williams_r": 0.9516129032258475,
         "momentum": 1.0,
-        "cci": -0.4749272970213028,
-        "market_structure": 0.7272727272726297,
+        "cci": -0.6963965527214012,
+        "market_structure": 0.6645288867511888,
         "breakout": 1.0,
         "sma_cross": 1.0,
+        "vwap_dev": 0.4040188054435668,
         "pattern_hh": 0.5,
+        "candle_body": 0.8878576472157891,
+        "wick_rejection": 0.36813609762616734,
+        "sr_proximity": -0.4927325581395411
+      }
+    },
+    "failure_category": "sl_too_close",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -17.96,
+    "avoidance_rule": "In RANGING market, widen SL to 27 pips \u2014 price spikes past tight SL before going in signal direction.",
+    "first_seen": 1769439600,
+    "last_seen": 1769439600
+  },
+  "TRENDING_wrong_direction_bollinger-_momentum+ _market_structure+ ": {
+    "pattern_name": "TRENDING_wrong_direction_bollinger-_momentum+ _market_structure+ ",
+    "conditions": {
+      "regime": "TRENDING",
+      "failure_category": "wrong_direction",
+      "strong_indicators": {
+        "rsi": -0.8905072827724732,
+        "bollinger": -1.0,
+        "stochastic": -0.6595559425337351,
+        "williams_r": 0.6595559425337351,
+        "momentum": 1.0,
+        "cci": -0.8094568204616777,
+        "market_structure": 1.0,
+        "adx": 1.0,
+        "sma_cross": 1.0,
+        "ema_cross": 0.3341109714241041,
+        "vwap_dev": 0.9776070744956193,
+        "candle_body": 0.3657569276403166,
+        "sr_proximity": -0.37427652733118766
+      }
+    },
+    "failure_category": "wrong_direction",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -34.47,
+    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
+    "first_seen": 1769547600,
+    "last_seen": 1769547600
+  },
+  "TRENDING_tp_too_far_momentum+ _adx+ _sma_cross+ ": {
+    "pattern_name": "TRENDING_tp_too_far_momentum+ _adx+ _sma_cross+ ",
+    "conditions": {
+      "regime": "TRENDING",
+      "failure_category": "tp_too_far",
+      "strong_indicators": {
+        "rsi": -0.4604077761972482,
+        "bollinger": -0.3275768603814268,
+        "momentum": 1.0,
+        "cci": -0.30073248251306184,
+        "market_structure": 0.7445753834642815,
+        "adx": 1.0,
+        "sma_cross": 1.0,
+        "ema_cross": 0.3267061671256551,
+        "vwap_dev": 0.3367901982381171,
+        "pattern_hh": -0.5,
+        "candle_body": -0.7316845304629492
+      }
+    },
+    "failure_category": "tp_too_far",
+    "occurrence_count": 2,
+    "avg_pnl_pips": -26.43,
+    "avoidance_rule": "In TRENDING market, when these indicators fire, reduce TP to 24 pips \u2014 price reverses before reaching full target.",
+    "first_seen": 1769562000,
+    "last_seen": 1772175600
+  },
+  "TRENDING_tp_too_far_sma_cross+ _candle_body+ _adx+ ": {
+    "pattern_name": "TRENDING_tp_too_far_sma_cross+ _candle_body+ _adx+ ",
+    "conditions": {
+      "regime": "TRENDING",
+      "failure_category": "tp_too_far",
+      "strong_indicators": {
+        "stochastic": -0.645390070921959,
+        "williams_r": 0.645390070921959,
+        "momentum": 0.7877748899489514,
+        "market_structure": 0.35272727272731874,
+        "adx": 0.8268733850129036,
+        "sma_cross": 1.0,
+        "pattern_hh": 0.5,
+        "candle_body": 0.8437588922803662
+      }
+    },
+    "failure_category": "tp_too_far",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -29.56,
+    "avoidance_rule": "In TRENDING market, when these indicators fire, reduce TP to 18 pips \u2014 price reverses before reaching full target.",
+    "first_seen": 1769641200,
+    "last_seen": 1769641200
+  },
+  "RANGING_wrong_direction_momentum+ _sma_cross+ _stochastic-": {
+    "pattern_name": "RANGING_wrong_direction_momentum+ _sma_cross+ _stochastic-",
+    "conditions": {
+      "regime": "RANGING",
+      "failure_category": "wrong_direction",
+      "strong_indicators": {
+        "bollinger": -0.6658373489628298,
+        "stochastic": -0.9955995599559668,
+        "williams_r": 0.9955995599559668,
+        "momentum": 1.0,
+        "cci": -0.4223197118639316,
+        "market_structure": 0.9073056142824906,
+        "sma_cross": 1.0,
+        "candle_body": 0.5793991167639765
+      }
+    },
+    "failure_category": "wrong_direction",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -23.79,
+    "avoidance_rule": "In RANGING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
+    "first_seen": 1769655600,
+    "last_seen": 1769655600
+  },
+  "TRENDING_sl_too_close_momentum+ _sma_cross+ _stochastic-": {
+    "pattern_name": "TRENDING_sl_too_close_momentum+ _sma_cross+ _stochastic-",
+    "conditions": {
+      "regime": "TRENDING",
+      "failure_category": "sl_too_close",
+      "strong_indicators": {
+        "stochastic": -0.6297229219143853,
+        "williams_r": 0.6297229219143852,
+        "momentum": 1.0,
+        "adx": 0.31642304385207204,
+        "sma_cross": 1.0
+      }
+    },
+    "failure_category": "sl_too_close",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -26.82,
+    "avoidance_rule": "In TRENDING market, widen SL to 40 pips \u2014 price spikes past tight SL before going in signal direction.",
+    "first_seen": 1769720400,
+    "last_seen": 1769720400
+  },
+  "TRENDING_sl_too_close_momentum+ _sma_cross+ _candle_body+ ": {
+    "pattern_name": "TRENDING_sl_too_close_momentum+ _sma_cross+ _candle_body+ ",
+    "conditions": {
+      "regime": "TRENDING",
+      "failure_category": "sl_too_close",
+      "strong_indicators": {
+        "stochastic": -0.3517587939698399,
+        "williams_r": 0.3517587939698399,
+        "momentum": 1.0,
+        "market_structure": 0.3698175787729272,
+        "adx": 0.44296788482840604,
+        "sma_cross": 1.0,
         "candle_body": 1.0
       }
     },
     "failure_category": "sl_too_close",
     "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In RANGING market, widen SL to 8 pips \u2014 price spikes past tight SL before going in signal direction.",
-    "first_seen": 1784643000,
-    "last_seen": 1784643000
+    "avg_pnl_pips": -27.82,
+    "avoidance_rule": "In TRENDING market, widen SL to 42 pips \u2014 price spikes past tight SL before going in signal direction.",
+    "first_seen": 1769770800,
+    "last_seen": 1769770800
   },
-  "RANGING_wrong_direction_momentum+ _breakout+ _sma_cross+ ": {
-    "pattern_name": "RANGING_wrong_direction_momentum+ _breakout+ _sma_cross+ ",
+  "TRENDING_wrong_direction_bollinger+ _momentum-_market_structure-": {
+    "pattern_name": "TRENDING_wrong_direction_bollinger+ _momentum-_market_structure-",
     "conditions": {
-      "regime": "RANGING",
+      "regime": "TRENDING",
       "failure_category": "wrong_direction",
       "strong_indicators": {
-        "bollinger": -0.9630146243039014,
-        "stochastic": -0.9649122807019117,
-        "williams_r": 0.9649122807019116,
-        "momentum": 1.0,
-        "cci": -0.7673961840628388,
-        "market_structure": 0.6347344411861189,
-        "breakout": 1.0,
+        "rsi": 0.5669398907104244,
+        "bollinger": 1.0,
+        "stochastic": 0.9466382070437395,
+        "williams_r": -0.9466382070437394,
+        "momentum": -1.0,
+        "cci": 0.85947775676637,
+        "market_structure": -1.0,
+        "adx": -1.0,
+        "breakout": -1.0,
         "sma_cross": 1.0,
-        "candle_body": 1.0
+        "vwap_dev": -0.5396910675661637,
+        "pattern_hh": -0.5,
+        "candle_body": -0.9834097643213997,
+        "sr_proximity": 0.48730964467004656
       }
     },
     "failure_category": "wrong_direction",
     "occurrence_count": 1,
-    "avg_pnl_pips": -3.1,
-    "avoidance_rule": "In RANGING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1784823000,
-    "last_seen": 1784823000
+    "avg_pnl_pips": -26.37,
+    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
+    "first_seen": 1770055200,
+    "last_seen": 1770055200
   },
-  "RANGING_wrong_direction_momentum+ _market_structure+ _sma_cross+ ": {
-    "pattern_name": "RANGING_wrong_direction_momentum+ _market_structure+ _sma_cross+ ",
+  "RANGING_tp_too_far_momentum+ _market_structure+ _sma_cross+ ": {
+    "pattern_name": "RANGING_tp_too_far_momentum+ _market_structure+ _sma_cross+ ",
     "conditions": {
       "regime": "RANGING",
+      "failure_category": "tp_too_far",
+      "strong_indicators": {
+        "stochastic": -0.4593406593406374,
+        "williams_r": 0.45934065934063745,
+        "momentum": 1.0,
+        "market_structure": 1.0,
+        "sma_cross": 1.0,
+        "wick_rejection": -0.4902162365445143,
+        "sr_proximity": 0.33155758498224214
+      }
+    },
+    "failure_category": "tp_too_far",
+    "occurrence_count": 3,
+    "avg_pnl_pips": -15.300000000000002,
+    "avoidance_rule": "In RANGING market, when these indicators fire, reduce TP to 11 pips \u2014 price reverses before reaching full target.",
+    "first_seen": 1770091200,
+    "last_seen": 1773205200
+  },
+  "RANGING_tp_too_far_momentum+ _sma_cross+ _market_structure+ ": {
+    "pattern_name": "RANGING_tp_too_far_momentum+ _sma_cross+ _market_structure+ ",
+    "conditions": {
+      "regime": "RANGING",
+      "failure_category": "tp_too_far",
+      "strong_indicators": {
+        "stochastic": -0.8617283950618057,
+        "williams_r": 0.8617283950618055,
+        "momentum": 1.0,
+        "market_structure": 0.9762353828743686,
+        "sma_cross": 1.0,
+        "pattern_hh": 0.5,
+        "candle_body": 0.4234567535285282
+      }
+    },
+    "failure_category": "tp_too_far",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -11.81,
+    "avoidance_rule": "In RANGING market, when these indicators fire, reduce TP to 9 pips \u2014 price reverses before reaching full target.",
+    "first_seen": 1770098400,
+    "last_seen": 1770098400
+  },
+  "TRENDING_sl_too_close_momentum+ _sma_cross+ _adx+ ": {
+    "pattern_name": "TRENDING_sl_too_close_momentum+ _sma_cross+ _adx+ ",
+    "conditions": {
+      "regime": "TRENDING",
+      "failure_category": "sl_too_close",
+      "strong_indicators": {
+        "rsi": -0.49101796407188003,
+        "bollinger": -0.40422040815240223,
+        "stochastic": -0.5247933884297541,
+        "williams_r": 0.5247933884297542,
+        "momentum": 1.0,
+        "market_structure": 0.7705099778272537,
+        "adx": 0.9192100538601636,
+        "sma_cross": 1.0,
+        "wick_rejection": 0.4623513443003688
+      }
+    },
+    "failure_category": "sl_too_close",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -14.09,
+    "avoidance_rule": "In TRENDING market, widen SL to 21 pips \u2014 price spikes past tight SL before going in signal direction.",
+    "first_seen": 1770105600,
+    "last_seen": 1770105600
+  },
+  "TRENDING_wrong_direction_momentum+ _adx+ _breakout+ ": {
+    "pattern_name": "TRENDING_wrong_direction_momentum+ _adx+ _breakout+ ",
+    "conditions": {
+      "regime": "TRENDING",
       "failure_category": "wrong_direction",
       "strong_indicators": {
+        "rsi": -0.5420219244823454,
+        "bollinger": -0.8822565690008127,
+        "stochastic": -0.9919191919191391,
+        "williams_r": 0.991919191919139,
+        "momentum": 1.0,
+        "cci": -0.6425154484864812,
+        "market_structure": 0.7530508706978899,
+        "adx": 1.0,
+        "breakout": 1.0,
+        "sma_cross": 1.0,
+        "pattern_hh": 0.5,
+        "candle_body": 0.7087551523372824
+      }
+    },
+    "failure_category": "wrong_direction",
+    "occurrence_count": 2,
+    "avg_pnl_pips": -16.13,
+    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
+    "first_seen": 1770177600,
+    "last_seen": 1772067600
+  },
+  "RANGING_sl_too_close_momentum+ _market_structure+ _sma_cross+ ": {
+    "pattern_name": "RANGING_sl_too_close_momentum+ _market_structure+ _sma_cross+ ",
+    "conditions": {
+      "regime": "RANGING",
+      "failure_category": "sl_too_close",
+      "strong_indicators": {
+        "bollinger": -0.30016700107800437,
+        "stochastic": -0.6259740259741045,
+        "williams_r": 0.6259740259741045,
         "momentum": 1.0,
         "market_structure": 1.0,
         "sma_cross": 1.0,
         "pattern_hh": 0.5
       }
     },
-    "failure_category": "wrong_direction",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In RANGING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1785175800,
-    "last_seen": 1785175800
+    "failure_category": "sl_too_close",
+    "occurrence_count": 2,
+    "avg_pnl_pips": -16.405,
+    "avoidance_rule": "In RANGING market, widen SL to 13 pips \u2014 price spikes past tight SL before going in signal direction.",
+    "first_seen": 1770357600,
+    "last_seen": 1772827200
   },
-  "RANGING_wrong_direction_sma_cross+ _market_structure+ _sr_proximity+ ": {
-    "pattern_name": "RANGING_wrong_direction_sma_cross+ _market_structure+ _sr_proximity+ ",
+  "TRENDING_wrong_direction_momentum+ _adx+ _sma_cross+ ": {
+    "pattern_name": "TRENDING_wrong_direction_momentum+ _adx+ _sma_cross+ ",
     "conditions": {
-      "regime": "RANGING",
+      "regime": "TRENDING",
       "failure_category": "wrong_direction",
       "strong_indicators": {
-        "market_structure": 0.9528619528646177,
+        "rsi": -0.6323851203501011,
+        "bollinger": -0.7297732015870834,
+        "stochastic": -0.8611111111111032,
+        "williams_r": 0.8611111111111032,
+        "momentum": 1.0,
+        "cci": -0.5625493189377215,
+        "market_structure": 0.9868116379745523,
+        "adx": 1.0,
         "sma_cross": 1.0,
-        "sr_proximity": 0.3909090909090817
+        "vwap_dev": 0.44479972496344256,
+        "sr_proximity": -0.45960223741454054
       }
     },
     "failure_category": "wrong_direction",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In RANGING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
-    "first_seen": 1782792900,
-    "last_seen": 1782792900
+    "occurrence_count": 2,
+    "avg_pnl_pips": -22.17,
+    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
+    "first_seen": 1770663600,
+    "last_seen": 1770670800
   },
-  "RANGING_bad_entry_sma_cross+ _momentum+ _sr_proximity+ ": {
-    "pattern_name": "RANGING_bad_entry_sma_cross+ _momentum+ _sr_proximity+ ",
+  "TRENDING_tp_too_far_momentum+ _sma_cross+ _candle_body+ ": {
+    "pattern_name": "TRENDING_tp_too_far_momentum+ _sma_cross+ _candle_body+ ",
     "conditions": {
-      "regime": "RANGING",
-      "failure_category": "bad_entry",
-      "strong_indicators": {
-        "momentum": 0.6249996093750458,
-        "cci": 0.32037437005026137,
-        "market_structure": 0.3030303030323011,
-        "sma_cross": 1.0,
-        "candle_body": 0.31249980468682903,
-        "wick_rejection": 0.3124998046882168,
-        "sr_proximity": 0.4125683060109628
-      }
-    },
-    "failure_category": "bad_entry",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -5.0,
-    "avoidance_rule": "In RANGING market, wait for better entry confirmation when these indicators fire \u2014 entry timing was poor.",
-    "first_seen": 1782793500,
-    "last_seen": 1782793500
-  },
-  "RANGING_sl_too_close_macd+ _stochastic-_williams_r+ ": {
-    "pattern_name": "RANGING_sl_too_close_macd+ _stochastic-_williams_r+ ",
-    "conditions": {
-      "regime": "RANGING",
-      "failure_category": "sl_too_close",
-      "strong_indicators": {
-        "macd": 1.0,
-        "bollinger": -0.9159975433938006,
-        "stochastic": -1.0,
-        "williams_r": 1.0,
-        "momentum": 1.0,
-        "cci": -0.555421556904537,
-        "market_structure": 0.8709727695767301,
-        "breakout": 1.0,
-        "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "candle_body": 1.0
-      }
-    },
-    "failure_category": "sl_too_close",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -331.77,
-    "avoidance_rule": "In RANGING market, widen SL to 498 pips \u2014 price spikes past tight SL before going in signal direction.",
-    "first_seen": 1782951600,
-    "last_seen": 1782951600
-  },
-  "RANGING_sl_too_close_macd+ _momentum+ _market_structure+ ": {
-    "pattern_name": "RANGING_sl_too_close_macd+ _momentum+ _market_structure+ ",
-    "conditions": {
-      "regime": "RANGING",
-      "failure_category": "sl_too_close",
-      "strong_indicators": {
-        "macd": 1.0,
-        "bollinger": -0.6205977783701049,
-        "stochastic": -0.5995410212277895,
-        "williams_r": 0.5995410212277895,
-        "momentum": 1.0,
-        "cci": -0.4817156945776697,
-        "market_structure": 1.0,
-        "sma_cross": 1.0,
-        "candle_body": -0.3732711214710311,
-        "wick_rejection": 0.5342442926055412
-      }
-    },
-    "failure_category": "sl_too_close",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -342.91,
-    "avoidance_rule": "In RANGING market, widen SL to 514 pips \u2014 price spikes past tight SL before going in signal direction.",
-    "first_seen": 1782952200,
-    "last_seen": 1782952200
-  },
-  "RANGING_sl_too_close_macd+ _momentum+ _sma_cross+ ": {
-    "pattern_name": "RANGING_sl_too_close_macd+ _momentum+ _sma_cross+ ",
-    "conditions": {
-      "regime": "RANGING",
-      "failure_category": "sl_too_close",
-      "strong_indicators": {
-        "macd": 1.0,
-        "momentum": 1.0,
-        "cci": -0.32928114373866074,
-        "market_structure": 0.8357256778309696,
-        "sma_cross": 1.0,
-        "candle_body": -1.0
-      }
-    },
-    "failure_category": "sl_too_close",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -496.57,
-    "avoidance_rule": "In RANGING market, widen SL to 745 pips \u2014 price spikes past tight SL before going in signal direction.",
-    "first_seen": 1782955200,
-    "last_seen": 1782955200
-  },
-  "RANGING_sl_too_close_momentum+ _sma_cross+ _stochastic-": {
-    "pattern_name": "RANGING_sl_too_close_momentum+ _sma_cross+ _stochastic-",
-    "conditions": {
-      "regime": "RANGING",
-      "failure_category": "sl_too_close",
-      "strong_indicators": {
-        "macd": 0.7756099610416656,
-        "bollinger": -0.8103298468400009,
-        "stochastic": -0.9010445299615077,
-        "williams_r": 0.9010445299615077,
-        "momentum": 1.0,
-        "cci": -0.5340526701294652,
-        "market_structure": 0.8555273404437885,
-        "sma_cross": 1.0,
-        "pattern_hh": 0.5,
-        "candle_body": 0.4514028832641005,
-        "wick_rejection": 0.7400403038127744,
-        "sr_proximity": -0.4619627234689996
-      }
-    },
-    "failure_category": "sl_too_close",
-    "occurrence_count": 1,
-    "avg_pnl_pips": -368.63,
-    "avoidance_rule": "In RANGING market, widen SL to 553 pips \u2014 price spikes past tight SL before going in signal direction.",
-    "first_seen": 1782982200,
-    "last_seen": 1782982200
-  },
-  "RANGING_tp_too_far_momentum+ _sma_cross+ _macd+ ": {
-    "pattern_name": "RANGING_tp_too_far_momentum+ _sma_cross+ _macd+ ",
-    "conditions": {
-      "regime": "RANGING",
+      "regime": "TRENDING",
       "failure_category": "tp_too_far",
       "strong_indicators": {
-        "macd": 0.6979388004342919,
-        "bollinger": -0.46777195614464523,
-        "stochastic": -0.6503169836502738,
-        "williams_r": 0.6503169836502738,
+        "bollinger": -0.9459976623376545,
+        "stochastic": -0.9512195121952078,
+        "williams_r": 0.9512195121952078,
         "momentum": 1.0,
-        "cci": -0.3755407484606254,
-        "market_structure": 0.629234338747075,
+        "cci": -0.6241709653647685,
+        "market_structure": 0.9219647454941726,
+        "adx": 0.6565437454807397,
         "sma_cross": 1.0,
-        "ema_cross": 0.3470961324068523,
-        "vwap_dev": 0.6318564111233954,
         "pattern_hh": 0.5,
-        "wick_rejection": 0.49758264732325913,
-        "sr_proximity": -0.43652331920047627
+        "candle_body": 1.0,
+        "sr_proximity": -0.40710382513661003
       }
     },
     "failure_category": "tp_too_far",
     "occurrence_count": 1,
-    "avg_pnl_pips": -874.63,
-    "avoidance_rule": "In RANGING market, when these indicators fire, reduce TP to 984 pips \u2014 price reverses before reaching full target.",
-    "first_seen": 1782999600,
-    "last_seen": 1782999600
+    "avg_pnl_pips": -14.93,
+    "avoidance_rule": "In TRENDING market, when these indicators fire, reduce TP to 7 pips \u2014 price reverses before reaching full target.",
+    "first_seen": 1770786000,
+    "last_seen": 1770786000
+  },
+  "TRENDING_tp_too_far_momentum+ _market_structure+ _sma_cross+ ": {
+    "pattern_name": "TRENDING_tp_too_far_momentum+ _market_structure+ _sma_cross+ ",
+    "conditions": {
+      "regime": "TRENDING",
+      "failure_category": "tp_too_far",
+      "strong_indicators": {
+        "rsi": -0.31188811188807675,
+        "bollinger": -0.7828287825531793,
+        "stochastic": -0.6122448979592414,
+        "williams_r": 0.6122448979592415,
+        "momentum": 1.0,
+        "cci": -0.5492196221789097,
+        "market_structure": 1.0,
+        "adx": 0.996763754045214,
+        "sma_cross": 1.0,
+        "wick_rejection": 0.503671020180536,
+        "sr_proximity": -0.3890052356020899
+      }
+    },
+    "failure_category": "tp_too_far",
+    "occurrence_count": 2,
+    "avg_pnl_pips": -13.620000000000001,
+    "avoidance_rule": "In TRENDING market, when these indicators fire, reduce TP to 6 pips \u2014 price reverses before reaching full target.",
+    "first_seen": 1770793200,
+    "last_seen": 1770800400
+  },
+  "TRENDING_tp_too_far_sma_cross+ _adx+ _momentum+ ": {
+    "pattern_name": "TRENDING_tp_too_far_sma_cross+ _adx+ _momentum+ ",
+    "conditions": {
+      "regime": "TRENDING",
+      "failure_category": "tp_too_far",
+      "strong_indicators": {
+        "rsi": 0.38488888888886946,
+        "bollinger": 0.38507233210349046,
+        "momentum": 0.6805174067925206,
+        "cci": 0.3023759295249743,
+        "market_structure": 0.30806174957144555,
+        "adx": 0.9432404540763407,
+        "sma_cross": 1.0
+      }
+    },
+    "failure_category": "tp_too_far",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -4.6,
+    "avoidance_rule": "In TRENDING market, when these indicators fire, reduce TP to 10 pips \u2014 price reverses before reaching full target.",
+    "first_seen": 1770850800,
+    "last_seen": 1770850800
+  },
+  "RANGING_sl_too_close_momentum+ _sma_cross+ _candle_body+ ": {
+    "pattern_name": "RANGING_sl_too_close_momentum+ _sma_cross+ _candle_body+ ",
+    "conditions": {
+      "regime": "RANGING",
+      "failure_category": "sl_too_close",
+      "strong_indicators": {
+        "bollinger": -0.6582789361756034,
+        "stochastic": -0.8309859154929736,
+        "williams_r": 0.8309859154929736,
+        "momentum": 1.0,
+        "cci": -0.3486838634804462,
+        "market_structure": 0.9255574614064939,
+        "sma_cross": 1.0,
+        "candle_body": 0.9839189173622775
+      }
+    },
+    "failure_category": "sl_too_close",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -12.86,
+    "avoidance_rule": "In RANGING market, widen SL to 19 pips \u2014 price spikes past tight SL before going in signal direction.",
+    "first_seen": 1770901200,
+    "last_seen": 1770901200
+  },
+  "TRENDING_wrong_direction_adx+ _sma_cross+ _bollinger+ ": {
+    "pattern_name": "TRENDING_wrong_direction_adx+ _sma_cross+ _bollinger+ ",
+    "conditions": {
+      "regime": "TRENDING",
+      "failure_category": "wrong_direction",
+      "strong_indicators": {
+        "rsi": 0.34095238095237446,
+        "bollinger": 0.49818825415697654,
+        "stochastic": 0.36904761904758837,
+        "williams_r": -0.36904761904758826,
+        "cci": 0.33280024369808253,
+        "adx": 1.0,
+        "sma_cross": 1.0
+      }
+    },
+    "failure_category": "wrong_direction",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -14.7,
+    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
+    "first_seen": 1770951600,
+    "last_seen": 1770951600
+  },
+  "TRENDING_sl_too_close_sma_cross+ _momentum+ _candle_body+ ": {
+    "pattern_name": "TRENDING_sl_too_close_sma_cross+ _momentum+ _candle_body+ ",
+    "conditions": {
+      "regime": "TRENDING",
+      "failure_category": "sl_too_close",
+      "strong_indicators": {
+        "momentum": 0.8128126989051668,
+        "adx": 0.31372549019616375,
+        "sma_cross": 1.0,
+        "candle_body": 0.3643643133021981
+      }
+    },
+    "failure_category": "sl_too_close",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -10.25,
+    "avoidance_rule": "In TRENDING market, widen SL to 15 pips \u2014 price spikes past tight SL before going in signal direction.",
+    "first_seen": 1771236000,
+    "last_seen": 1771236000
+  },
+  "TRENDING_tp_too_far_momentum+ _sma_cross+ _market_structure+ ": {
+    "pattern_name": "TRENDING_tp_too_far_momentum+ _sma_cross+ _market_structure+ ",
+    "conditions": {
+      "regime": "TRENDING",
+      "failure_category": "tp_too_far",
+      "strong_indicators": {
+        "stochastic": -0.6608695652172889,
+        "williams_r": 0.6608695652172889,
+        "momentum": 1.0,
+        "market_structure": 0.9926031973277211,
+        "adx": 0.4105691056911354,
+        "sma_cross": 1.0,
+        "pattern_hh": 0.5
+      }
+    },
+    "failure_category": "tp_too_far",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -10.59,
+    "avoidance_rule": "In TRENDING market, when these indicators fire, reduce TP to 4 pips \u2014 price reverses before reaching full target.",
+    "first_seen": 1771488000,
+    "last_seen": 1771488000
+  },
+  "TRENDING_wrong_direction_sma_cross+ _adx+ _market_structure+ ": {
+    "pattern_name": "TRENDING_wrong_direction_sma_cross+ _adx+ _market_structure+ ",
+    "conditions": {
+      "regime": "TRENDING",
+      "failure_category": "wrong_direction",
+      "strong_indicators": {
+        "rsi": 0.34020618556700444,
+        "market_structure": 0.6715806715808809,
+        "adx": 0.6848816029145094,
+        "sma_cross": 1.0,
+        "pattern_hh": 0.5
+      }
+    },
+    "failure_category": "wrong_direction",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -20.02,
+    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
+    "first_seen": 1771538400,
+    "last_seen": 1771538400
+  },
+  "TRENDING_wrong_direction_momentum+ _sma_cross+ _market_structure+ ": {
+    "pattern_name": "TRENDING_wrong_direction_momentum+ _sma_cross+ _market_structure+ ",
+    "conditions": {
+      "regime": "TRENDING",
+      "failure_category": "wrong_direction",
+      "strong_indicators": {
+        "momentum": 1.0,
+        "market_structure": 0.8206656731247687,
+        "adx": 0.6504065040651871,
+        "sma_cross": 1.0
+      }
+    },
+    "failure_category": "wrong_direction",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -18.86,
+    "avoidance_rule": "In TRENDING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
+    "first_seen": 1771545600,
+    "last_seen": 1771545600
+  },
+  "RANGING_tp_too_far_bollinger-_momentum+ _breakout+ ": {
+    "pattern_name": "RANGING_tp_too_far_bollinger-_momentum+ _breakout+ ",
+    "conditions": {
+      "regime": "RANGING",
+      "failure_category": "tp_too_far",
+      "strong_indicators": {
+        "bollinger": -1.0,
+        "stochastic": -0.657381615598928,
+        "williams_r": 0.657381615598928,
+        "momentum": 1.0,
+        "cci": -0.8391563561767178,
+        "market_structure": 0.7037037037037667,
+        "breakout": 1.0,
+        "sma_cross": 1.0,
+        "candle_body": 1.0,
+        "wick_rejection": -0.6677006229242703
+      }
+    },
+    "failure_category": "tp_too_far",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -20.74,
+    "avoidance_rule": "In RANGING market, when these indicators fire, reduce TP to 13 pips \u2014 price reverses before reaching full target.",
+    "first_seen": 1772618400,
+    "last_seen": 1772618400
+  },
+  "RANGING_wrong_direction_sma_cross+ _market_structure+ _williams_r+ ": {
+    "pattern_name": "RANGING_wrong_direction_sma_cross+ _market_structure+ _williams_r+ ",
+    "conditions": {
+      "regime": "RANGING",
+      "failure_category": "wrong_direction",
+      "strong_indicators": {
+        "bollinger": -0.39140231832369526,
+        "stochastic": -0.5835866261397911,
+        "williams_r": 0.5835866261397912,
+        "momentum": 0.4458272099502551,
+        "cci": -0.3035523190561511,
+        "market_structure": 0.9670068834559523,
+        "sma_cross": 1.0,
+        "pattern_hh": 0.5
+      }
+    },
+    "failure_category": "wrong_direction",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -21.97,
+    "avoidance_rule": "In RANGING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
+    "first_seen": 1772755200,
+    "last_seen": 1772755200
+  },
+  "RANGING_wrong_direction_momentum+ _sma_cross+ _market_structure+ ": {
+    "pattern_name": "RANGING_wrong_direction_momentum+ _sma_cross+ _market_structure+ ",
+    "conditions": {
+      "regime": "RANGING",
+      "failure_category": "wrong_direction",
+      "strong_indicators": {
+        "bollinger": -0.5148552383449321,
+        "stochastic": -0.7522935779816577,
+        "williams_r": 0.752293577981658,
+        "momentum": 1.0,
+        "cci": -0.4324960903230543,
+        "market_structure": 0.9145245559038246,
+        "sma_cross": 1.0,
+        "pattern_hh": 0.5
+      }
+    },
+    "failure_category": "wrong_direction",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -21.04,
+    "avoidance_rule": "In RANGING market, do not take signals when these indicators conflict \u2014 the signal direction is likely wrong.",
+    "first_seen": 1772762400,
+    "last_seen": 1772762400
+  },
+  "TRENDING_sl_too_close_bollinger+ _momentum-_market_structure-": {
+    "pattern_name": "TRENDING_sl_too_close_bollinger+ _momentum-_market_structure-",
+    "conditions": {
+      "regime": "TRENDING",
+      "failure_category": "sl_too_close",
+      "strong_indicators": {
+        "rsi": 0.5062200956937997,
+        "bollinger": 1.0,
+        "stochastic": 0.924418604651184,
+        "williams_r": -0.924418604651184,
+        "momentum": -1.0,
+        "cci": 0.8357582658569319,
+        "market_structure": -1.0,
+        "adx": -1.0,
+        "breakout": -1.0,
+        "sma_cross": 1.0,
+        "vwap_dev": -0.37363443661901924,
+        "pattern_hh": -0.5,
+        "candle_body": -0.6186046008113261,
+        "sr_proximity": 0.4746341463414708
+      }
+    },
+    "failure_category": "sl_too_close",
+    "occurrence_count": 1,
+    "avg_pnl_pips": -20.43,
+    "avoidance_rule": "In TRENDING market, widen SL to 31 pips \u2014 price spikes past tight SL before going in signal direction.",
+    "first_seen": 1772798400,
+    "last_seen": 1772798400
   }
 }

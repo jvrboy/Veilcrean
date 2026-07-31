@@ -1,0 +1,29 @@
+{
+  "timestamp": "2026-07-31T00:38:57.672392+00:00",
+  "instrument_count": 1,
+  "timeframes": [
+    "1h"
+  ],
+  "timeframe_count": 1,
+  "combo_count": 1,
+  "markets": {
+    "forex": {
+      "count": 1,
+      "submarkets": {
+        "majors": [
+          {
+            "symbol": "frxEURUSD",
+            "display_name": "EUR/USD"
+          }
+        ]
+      }
+    }
+  },
+  "deriv_app_id": 1089,
+  "max_batches": 1,
+  "max_candles_per_combo": 5000,
+  "min_history": 50,
+  "max_hold_bars": 20,
+  "signal_interval": 2,
+  "max_signals_per_hour": 50
+}
