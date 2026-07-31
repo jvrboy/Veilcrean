@@ -20,6 +20,12 @@ Vercel does **not** run the full trading brain. Vercel is serverless and is not 
 ## Added files
 
 ```text
+api/index.py                 # repo-root Vercel entrypoint wrapper
+vercel.json                  # repo-root Vercel config
+pyproject.toml               # explicit Vercel Python entrypoint
+requirements.txt             # lightweight Vercel dependencies
+requirements.brain.txt       # full trading-brain dependencies
+
 vercel_app/
   api/index.py              # FastAPI serverless API
   requirements.txt          # lightweight Vercel-only dependencies
@@ -90,7 +96,7 @@ Output Directory: leave empty
 Install Command: pip install -r requirements.txt
 ```
 
-The root directory matters. Do **not** deploy from the repo root because the repo-root `requirements.txt` contains the full trading brain stack with PyTorch and ZMQ.
+The repo root is also Vercel-ready now. If you deploy from `vercel_app`, use this folder's `requirements.txt`. If you deploy from the repo root, the root `api/index.py` wrapper and root `requirements.txt` route to the same lightweight Vercel API.
 
 ## Step 4 — Add Vercel environment variables
 

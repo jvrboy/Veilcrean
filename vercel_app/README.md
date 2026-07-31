@@ -2,7 +2,7 @@
 
 This folder is the Vercel project root for Veilcrean's serverless API layer.
 
-It is intentionally separate from the repository root because the repo-root `requirements.txt` contains the full trading brain stack, including PyTorch and ZMQ. Vercel Functions should use this folder's minimal `requirements.txt` instead.
+It is intentionally separate from the full trading brain. The repo root is also Vercel-ready through `api/index.py`, but this folder can be used as the Vercel Root Directory if you prefer a cleaner Vercel-only project root.
 
 ## What this deploys
 

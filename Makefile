@@ -18,7 +18,7 @@ help:
 	@echo "  make clean     - remove caches & generated artifacts"
 
 install:
-	$(PIP) install -r requirements.txt
+	$(PIP) install -r requirements.brain.txt
 
 test:
 	$(PYTHON) -m pytest tests/ -v

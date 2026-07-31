@@ -1,0 +1,60 @@
+# Veilcrean — Python Brain Requirements
+# Tested on Python 3.11+
+
+# Core scientific stack
+numpy>=1.26.0
+pandas>=2.1.0
+scipy>=1.11.0
+
+# Machine learning
+torch>=2.1.0
+scikit-learn>=1.3.0
+
+# Data sources / technical indicators
+ta>=0.11.0
+pandas-ta>=0.3.14b0
+
+# Communication
+pyzmq>=25.1.0
+msgpack>=1.0.7
+
+# Database
+sqlalchemy>=2.0.23
+
+# Visualization / dashboard
+matplotlib>=3.8.0
+plotly>=5.17.0
+dash>=2.14.0
+
+# Configuration
+pyyaml>=6.0.1
+python-dotenv>=1.0.0
+
+# LLM support
+google-generativeai>=0.3.0
+groq>=0.3.0
+
+# Deriv API
+deriv-api>=1.0.0
+websockets>=12.0
+
+# Alerts
+requests>=2.31.0
+python-telegram-bot>=20.7
+
+# Logging / utilities
+loguru>=0.7.0
+tqdm>=4.66.0
+python-dateutil>=2.8.2
+pytz>=2023.3
+
+# Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-mock>=3.12.0
+
+# Development
+black>=23.10.0
+flake8>=6.1.0
+mypy>=1.6.0
+ipython>=8.16.0
