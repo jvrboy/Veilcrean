@@ -63,6 +63,20 @@ create table if not exists public.trade_journal (
   created_at timestamptz not null default now()
 );
 
+create table if not exists public.bot_commands (
+  id uuid primary key default gen_random_uuid(),
+  source text not null default 'api',
+  chat_id text,
+  username text,
+  command text not null,
+  args text,
+  status text not null default 'pending',
+  payload jsonb not null default '{}'::jsonb,
+  result jsonb not null default '{}'::jsonb,
+  processed_at timestamptz,
+  created_at timestamptz not null default now()
+);
+
 create index if not exists bot_events_created_at_idx on public.bot_events (created_at desc);
 create index if not exists bot_events_type_idx on public.bot_events (event_type);
 create index if not exists bot_events_symbol_idx on public.bot_events (symbol);
@@ -73,6 +87,9 @@ create index if not exists trade_signals_symbol_idx on public.trade_signals (sym
 create index if not exists trade_journal_created_at_idx on public.trade_journal (created_at desc);
 create index if not exists trade_journal_symbol_idx on public.trade_journal (symbol);
 create index if not exists trade_journal_trade_id_idx on public.trade_journal (trade_id);
+create index if not exists bot_commands_created_at_idx on public.bot_commands (created_at desc);
+create index if not exists bot_commands_status_idx on public.bot_commands (status);
+create index if not exists bot_commands_command_idx on public.bot_commands (command);
 
 create or replace view public.latest_bot_status as
 select *
@@ -92,3 +109,4 @@ alter table public.bot_events enable row level security;
 alter table public.bot_status enable row level security;
 alter table public.trade_signals enable row level security;
 alter table public.trade_journal enable row level security;
+alter table public.bot_commands enable row level security;

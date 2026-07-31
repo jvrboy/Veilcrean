@@ -120,8 +120,179 @@ class SupabaseREST:
             params.update(query)
         return self._request("GET", table, query=params, prefer="")
 
+    def update_rows(self, table: str, *, query: dict[str, Any], patch: dict[str, Any]) -> Any:
+        params: dict[str, Any] = {"select": "*"}
+        params.update(query)
+        return self._request("PATCH", table, query=params, body=patch)
+
 
 supabase = SupabaseREST()
+
+
+class TelegramBot:
+    """Minimal Telegram Bot API client using only stdlib."""
+
+    def __init__(self) -> None:
+        self.token = os.getenv("TELEGRAM_BOT_TOKEN", "")
+        self.timeout = float(os.getenv("TELEGRAM_TIMEOUT_SECONDS", "8"))
+
+    @property
+    def configured(self) -> bool:
+        return bool(self.token)
+
+    def api(self, method: str) -> str:
+        return f"https://api.telegram.org/bot{self.token}/{method}"
+
+    def send_message(self, chat_id: int | str, text: str, *, disable_web_page_preview: bool = True) -> Any:
+        if not self.configured:
+            return None
+        # Telegram's limit is 4096 chars. Keep margin for safety.
+        safe_text = text if len(text) <= 3900 else text[:3890] + "\n..."
+        payload = {
+            "chat_id": chat_id,
+            "text": safe_text,
+            "disable_web_page_preview": disable_web_page_preview,
+        }
+        request = urllib.request.Request(
+            self.api("sendMessage"),
+            data=json.dumps(payload).encode("utf-8"),
+            method="POST",
+            headers={"content-type": "application/json"},
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=self.timeout) as response:
+                raw = response.read().decode("utf-8")
+                return json.loads(raw) if raw else None
+        except Exception:
+            # Never fail the webhook just because Telegram reply failed.
+            return None
+
+
+telegram = TelegramBot()
+
+
+def _allowed_chat_ids() -> set[str]:
+    raw = os.getenv("TELEGRAM_ALLOWED_CHAT_IDS", "")
+    return {part.strip() for part in raw.replace(";", ",").split(",") if part.strip()}
+
+
+def _telegram_allowed(chat_id: int | str) -> bool:
+    allowed = _allowed_chat_ids()
+    return not allowed or str(chat_id) in allowed
+
+
+def _telegram_secret_ok(request: Request) -> bool:
+    expected = os.getenv("TELEGRAM_WEBHOOK_SECRET", "")
+    if not expected:
+        return True
+    return request.headers.get("x-telegram-bot-api-secret-token") == expected
+
+
+def _as_float(value: Any) -> Optional[float]:
+    try:
+        if value is None:
+            return None
+        return float(value)
+    except Exception:
+        return None
+
+
+def _fmt_num(value: Any, digits: int = 3) -> str:
+    number = _as_float(value)
+    if number is None:
+        return "—"
+    return f"{number:.{digits}f}"
+
+
+def _row_payload(row: dict[str, Any]) -> dict[str, Any]:
+    payload = row.get("payload")
+    return payload if isinstance(payload, dict) else {}
+
+
+def _fmt_status(rows: Any) -> str:
+    if not rows:
+        return "No Veilcrean status has been recorded yet."
+    row = rows[0] if isinstance(rows, list) else rows
+    status = row.get("status") if isinstance(row.get("status"), dict) else {}
+    return "\n".join([
+        "Veilcrean latest status",
+        f"Time: {row.get('created_at', '—')}",
+        f"Regime: {row.get('regime') or status.get('regime') or '—'}",
+        f"Confidence: {_fmt_num(row.get('confidence') or status.get('confidence'))}",
+        f"Win rate: {_fmt_num(row.get('win_rate') or status.get('win_rate'))}",
+        f"Profit factor: {_fmt_num(row.get('profit_factor') or status.get('profit_factor'))}",
+        f"Sharpe: {_fmt_num(row.get('sharpe') or status.get('sharpe'))}",
+        f"Max DD %: {_fmt_num(row.get('max_dd_pct') or status.get('max_dd_pct'))}",
+        f"Trades: {row.get('trades') or status.get('trades') or 0}",
+        f"Kill switch: {row.get('kill_switch') if row.get('kill_switch') is not None else status.get('kill_switch', False)}",
+    ])
+
+
+def _fmt_signals(rows: Any) -> str:
+    if not rows:
+        return "No signals recorded yet."
+    lines = ["Latest signals"]
+    for row in rows[:10]:
+        lines.append(
+            f"{row.get('created_at', '—')} | {row.get('symbol', '—')} | "
+            f"{row.get('action', '—')} | conf {_fmt_num(row.get('confidence'))} | price {_fmt_num(row.get('price'), 5)}"
+        )
+    return "\n".join(lines)
+
+
+def _fmt_trades(rows: Any) -> str:
+    if not rows:
+        return "No trades recorded yet."
+    lines = ["Latest trades"]
+    for row in rows[:10]:
+        lines.append(
+            f"{row.get('created_at', '—')} | {row.get('symbol', '—')} | "
+            f"{row.get('direction') or '—'} | {row.get('status', '—')} | "
+            f"entry {_fmt_num(row.get('entry_price'), 5)} | pnl {_fmt_num(row.get('pnl'))}"
+        )
+    return "\n".join(lines)
+
+
+def _fmt_events(rows: Any) -> str:
+    if not rows:
+        return "No events recorded yet."
+    lines = ["Latest events"]
+    for row in rows[:10]:
+        payload = _row_payload(row)
+        symbol = row.get("symbol") or payload.get("symbol") or "—"
+        lines.append(f"{row.get('created_at', '—')} | {row.get('event_type', 'event')} | {symbol} | {row.get('severity', 'info')}")
+    return "\n".join(lines)
+
+
+def _fmt_commands(rows: Any) -> str:
+    if not rows:
+        return "No commands queued yet."
+    lines = ["Recent command queue"]
+    for row in rows[:10]:
+        lines.append(
+            f"{row.get('created_at', '—')} | {row.get('command', '—')} {row.get('args') or ''} | {row.get('status', '—')}"
+        )
+    return "\n".join(lines)
+
+
+def _help_text(chat_id: Optional[int | str] = None) -> str:
+    chat_line = f"\nYour chat id: {chat_id}" if chat_id is not None else ""
+    return (
+        "Veilcrean Telegram commands\n"
+        "/status - latest bot status\n"
+        "/signals [n] - latest signals\n"
+        "/trades [n] - latest trades\n"
+        "/events [n] - latest events\n"
+        "/queue - recent queued commands\n"
+        "/pause [reason] - queue pause command\n"
+        "/resume [reason] - queue resume command\n"
+        "/flatten [symbol] - queue flatten-all command; execution requires brain opt-in\n"
+        "/command NAME [args] - queue a custom command\n"
+        "/id - show your Telegram chat id\n"
+        "/help - this help"
+        f"{chat_line}"
+    )
+
 
 app = FastAPI(
     title="Veilcrean Vercel API",
@@ -194,8 +365,22 @@ class TradeIn(BaseModel):
     payload: dict[str, Any] = Field(default_factory=dict)
 
 
+class CommandIn(BaseModel):
+    command: str = Field(..., max_length=80)
+    args: Optional[str] = Field(default=None, max_length=500)
+    source: str = Field(default="api", max_length=80)
+    chat_id: Optional[str] = Field(default=None, max_length=80)
+    username: Optional[str] = Field(default=None, max_length=120)
+    payload: dict[str, Any] = Field(default_factory=dict)
+
+
+class CommandCompleteIn(BaseModel):
+    status: str = Field(default="processed", max_length=40)
+    result: dict[str, Any] = Field(default_factory=dict)
+
+
 class IngestIn(BaseModel):
-    kind: str = Field(default="event", description="event, status, signal, or trade")
+    kind: str = Field(default="event", description="event, status, signal, trade, or command")
     data: dict[str, Any] = Field(default_factory=dict)
 
 
@@ -277,6 +462,8 @@ async def health() -> dict[str, Any]:
         "time": _utc_now(),
         "supabase_configured": supabase.configured,
         "api_key_configured": bool(os.getenv("VEIL_API_KEY")),
+        "telegram_configured": telegram.configured,
+        "telegram_allowed_chat_ids_configured": bool(_allowed_chat_ids()),
         "public_read": _env_bool("VEIL_PUBLIC_READ", False),
     }
 
@@ -289,6 +476,9 @@ async def config() -> dict[str, Any]:
         "schema": os.getenv("SUPABASE_SCHEMA", "public"),
         "cors_origins": cors_origins,
         "public_read": _env_bool("VEIL_PUBLIC_READ", False),
+        "telegram_bot_token_present": bool(os.getenv("TELEGRAM_BOT_TOKEN")),
+        "telegram_webhook_secret_present": bool(os.getenv("TELEGRAM_WEBHOOK_SECRET")),
+        "telegram_allowed_chat_ids_present": bool(os.getenv("TELEGRAM_ALLOWED_CHAT_IDS")),
     }
 
 
@@ -339,6 +529,35 @@ async def list_trades(limit: int = Query(default=50, ge=1, le=500)) -> Any:
     return supabase.list_rows("trade_journal", limit=limit)
 
 
+@app.post("/api/commands", dependencies=[Depends(require_api_key)])
+async def create_command(command: CommandIn) -> Any:
+    row = command.model_dump(mode="json", exclude_none=True)
+    row["command"] = row["command"].upper().strip()
+    row.setdefault("status", "pending")
+    return supabase.insert("bot_commands", row)
+
+
+@app.get("/api/commands", dependencies=[Depends(maybe_require_read_key)])
+async def list_commands(
+    limit: int = Query(default=50, ge=1, le=500),
+    status: Optional[str] = Query(default=None, max_length=40),
+) -> Any:
+    query = {"status": f"eq.{status}"} if status else None
+    return supabase.list_rows("bot_commands", limit=limit, query=query)
+
+
+@app.get("/api/commands/pending", dependencies=[Depends(require_api_key)])
+async def pending_commands(limit: int = Query(default=10, ge=1, le=50)) -> Any:
+    return supabase.list_rows("bot_commands", limit=limit, query={"status": "eq.pending"})
+
+
+@app.post("/api/commands/{command_id}/complete", dependencies=[Depends(require_api_key)])
+async def complete_command(command_id: str, result: CommandCompleteIn) -> Any:
+    patch = result.model_dump(mode="json", exclude_none=True)
+    patch["processed_at"] = _utc_now()
+    return supabase.update_rows("bot_commands", query={"id": f"eq.{command_id}"}, patch=patch)
+
+
 @app.post("/api/ingest", dependencies=[Depends(require_api_key)])
 async def ingest(item: IngestIn) -> Any:
     kind = item.kind.lower().strip()
@@ -349,7 +568,120 @@ async def ingest(item: IngestIn) -> Any:
         return await create_signal(SignalIn(**data))
     if kind == "trade":
         return await create_trade(TradeIn(**data))
+    if kind == "command":
+        return await create_command(CommandIn(**data))
     return await create_event(EventIn(event_type=kind or "event", payload=data))
+
+
+async def _queue_telegram_command(
+    *,
+    command: str,
+    args: str,
+    chat_id: int | str,
+    username: Optional[str],
+    raw_update: dict[str, Any],
+) -> Any:
+    return await create_command(
+        CommandIn(
+            command=command.upper().strip(),
+            args=args.strip() or None,
+            source="telegram",
+            chat_id=str(chat_id),
+            username=username,
+            payload={"telegram_update": raw_update},
+        )
+    )
+
+
+@app.get("/api/telegram/info", dependencies=[Depends(maybe_require_read_key)])
+async def telegram_info() -> dict[str, Any]:
+    return {
+        "telegram_configured": telegram.configured,
+        "webhook_secret_configured": bool(os.getenv("TELEGRAM_WEBHOOK_SECRET")),
+        "allowed_chat_ids_configured": bool(_allowed_chat_ids()),
+        "webhook_endpoint": "/api/telegram/webhook",
+    }
+
+
+@app.post("/api/telegram/webhook")
+async def telegram_webhook(request: Request) -> dict[str, Any]:
+    if not _telegram_secret_ok(request):
+        raise HTTPException(status_code=401, detail="Invalid Telegram webhook secret.")
+
+    update = await request.json()
+    message = update.get("message") or update.get("edited_message") or {}
+    chat = message.get("chat") or {}
+    from_user = message.get("from") or {}
+    chat_id = chat.get("id")
+    username = from_user.get("username") or from_user.get("first_name")
+    text = (message.get("text") or "").strip()
+
+    if chat_id is None:
+        return {"ok": True, "ignored": "no_chat"}
+
+    if not _telegram_allowed(chat_id):
+        telegram.send_message(chat_id, f"This chat is not authorized. Chat id: {chat_id}")
+        return {"ok": True, "authorized": False}
+
+    if not text.startswith("/"):
+        telegram.send_message(chat_id, _help_text(chat_id))
+        return {"ok": True, "handled": "help"}
+
+    parts = text.split(maxsplit=1)
+    command = parts[0].split("@", 1)[0].lower()
+    args = parts[1] if len(parts) > 1 else ""
+
+    try:
+        if command in {"/start", "/help"}:
+            reply = _help_text(chat_id)
+        elif command == "/id":
+            reply = f"Your Telegram chat id is: {chat_id}"
+        elif command == "/health":
+            h = await health()
+            reply = "Veilcrean API health\n" + "\n".join(f"{k}: {v}" for k, v in h.items())
+        elif command == "/status":
+            reply = _fmt_status(await latest_status(limit=1))
+        elif command == "/signals":
+            limit = int(args.strip() or "5")
+            reply = _fmt_signals(await latest_signals(limit=max(1, min(limit, 10))))
+        elif command == "/trades":
+            limit = int(args.strip() or "5")
+            reply = _fmt_trades(await list_trades(limit=max(1, min(limit, 10))))
+        elif command == "/events":
+            limit = int(args.strip() or "5")
+            reply = _fmt_events(await list_events(limit=max(1, min(limit, 10))))
+        elif command == "/queue":
+            reply = _fmt_commands(await list_commands(limit=10, status=None))
+        elif command == "/pause":
+            await _queue_telegram_command(command="PAUSE", args=args, chat_id=chat_id, username=username, raw_update=update)
+            reply = "Queued PAUSE command. The brain must have command polling enabled to act on it."
+        elif command == "/resume":
+            await _queue_telegram_command(command="RESUME", args=args, chat_id=chat_id, username=username, raw_update=update)
+            reply = "Queued RESUME command. The brain must have command polling enabled to act on it."
+        elif command == "/flatten":
+            await _queue_telegram_command(command="FLATTEN_ALL", args=args, chat_id=chat_id, username=username, raw_update=update)
+            reply = "Queued FLATTEN_ALL command. Execution requires VEIL_ENABLE_REMOTE_TRADE_COMMANDS=true on the brain host."
+        elif command == "/command":
+            if not args.strip():
+                reply = "Usage: /command NAME optional args"
+            else:
+                cmd_parts = args.split(maxsplit=1)
+                custom_command = cmd_parts[0].upper()
+                custom_args = cmd_parts[1] if len(cmd_parts) > 1 else ""
+                await _queue_telegram_command(command=custom_command, args=custom_args, chat_id=chat_id, username=username, raw_update=update)
+                reply = f"Queued {custom_command}."
+        else:
+            reply = "Unknown command.\n\n" + _help_text(chat_id)
+    except HTTPException as exc:
+        reply = f"API error: {exc.detail}"
+    except Exception as exc:
+        if _env_bool("DEBUG_ERRORS", False):
+            reply = f"Command failed: {exc}\n{traceback.format_exc()}"
+        else:
+            reply = f"Command failed: {exc}"
+
+    telegram.send_message(chat_id, reply)
+    return {"ok": True, "command": command}
 
 
 # Vercel expects an exported ASGI variable named `app`.

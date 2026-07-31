@@ -27,6 +27,7 @@ new packet from the EA we:
    10. periodically retrain the networks
 """
 from __future__ import annotations
+import os
 import signal
 import sys
 import time
@@ -169,6 +170,10 @@ class VeilcreanBrain:
         # misc
         self.vis = Visualizer()
         self.cloud = VercelSupabaseBridge()
+        self.remote_paused = False
+        self._last_command_poll_ts = 0.0
+        self.command_poll_seconds = float(os.getenv("VEIL_COMMAND_POLL_SECONDS", "10"))
+        self.enable_remote_trade_commands = os.getenv("VEIL_ENABLE_REMOTE_TRADE_COMMANDS", "false").lower() in {"1", "true", "yes", "on"}
         self.running = True
         self.last_feature_names: list = []
         self.last_decision: dict = {}
@@ -191,6 +196,7 @@ class VeilcreanBrain:
         cycle = 0
         while self.running:
             try:
+                self._poll_remote_commands()
                 raw = self.zmq.receive_market_data()
                 if raw is None:
                     self._heartbeat_check()
@@ -241,6 +247,10 @@ class VeilcreanBrain:
 
         # 3. Dynamic Management (Trailing)
         self._manage_active_positions(snapshot)
+
+        if self.remote_paused:
+            log.info("remote pause active — skipping new trade decisions")
+            return
 
         # 4. Risk & Threshold Checks
         if not report["risk_ok"]:
@@ -409,6 +419,70 @@ class VeilcreanBrain:
             return []
         return self.last_feature_vec.tolist()
 
+    # ------------------------------------------------------------------ remote commands
+    def _poll_remote_commands(self) -> None:
+        """Poll queued commands from the Vercel/Supabase API.
+
+        Telegram commands land in Supabase as pending rows. The brain can poll
+        and process safe controls. Trade-executing commands require the explicit
+        VEIL_ENABLE_REMOTE_TRADE_COMMANDS=true opt-in.
+        """
+        if not self.cloud.enabled or self.command_poll_seconds <= 0:
+            return
+        now = time.time()
+        if now - self._last_command_poll_ts < self.command_poll_seconds:
+            return
+        self._last_command_poll_ts = now
+
+        try:
+            commands = self.cloud.get_pending_commands(limit=10)
+            for command in commands:
+                self._handle_remote_command(command)
+        except Exception as e:
+            log.warning(f"remote command polling failed: {e}")
+
+    def _handle_remote_command(self, row: dict) -> None:
+        command_id = row.get("id")
+        command = str(row.get("command", "")).upper().strip()
+        args = str(row.get("args") or "").strip()
+        result = {"command": command, "args": args, "handled_at": datetime.now(timezone.utc).isoformat()}
+        status = "processed"
+
+        try:
+            if command == "PAUSE":
+                self.remote_paused = True
+                log.warning(f"remote PAUSE command accepted: {args}")
+                result["remote_paused"] = True
+                self.cloud.send_event("remote_pause", result, severity="warning")
+            elif command == "RESUME":
+                self.remote_paused = False
+                log.warning(f"remote RESUME command accepted: {args}")
+                result["remote_paused"] = False
+                self.cloud.send_event("remote_resume", result, severity="warning")
+            elif command in {"FLATTEN", "FLATTEN_ALL"}:
+                if not self.enable_remote_trade_commands:
+                    status = "rejected"
+                    result["reason"] = "VEIL_ENABLE_REMOTE_TRADE_COMMANDS is not true"
+                    log.warning("remote FLATTEN_ALL rejected — remote trade commands disabled")
+                else:
+                    symbol = args or "ALL"
+                    sent = self.zmq.send_trade_command({"action": "FLATTEN_ALL", "symbol": symbol})
+                    result["sent"] = bool(sent)
+                    result["symbol"] = symbol
+                    log.warning(f"remote FLATTEN_ALL command sent={sent} symbol={symbol}")
+                    self.cloud.send_event("remote_flatten_all", result, symbol=symbol, severity="critical")
+            else:
+                status = "ignored"
+                result["reason"] = "unknown command"
+                log.info(f"unknown remote command ignored: {command}")
+        except Exception as e:
+            status = "failed"
+            result["error"] = str(e)
+            log.exception(f"remote command failed: {command}: {e}")
+
+        if command_id:
+            self.cloud.complete_command(str(command_id), status=status, result=result)
+
     # ------------------------------------------------------------------ maintenance
     def _heartbeat_check(self) -> None:
         # if no packet for a while but we haven't decided, do nothing
@@ -441,6 +515,7 @@ class VeilcreanBrain:
             "trades":       snap.total_trades,
             "threshold":    self.threshold.current,
             "kill_switch":  self.guard.kill_switch,
+            "remote_paused": self.remote_paused,
             "regime":       decision.get("regime", "—") if decision else "—",
             "confidence":   decision.get("confidence", 0.0) if decision else 0.0,
         }

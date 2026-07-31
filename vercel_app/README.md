@@ -18,6 +18,10 @@ A FastAPI serverless API that stores Veilcrean data in Supabase:
 - `POST /api/trades`
 - `GET /api/trades`
 - `POST /api/ingest`
+- `POST /api/commands`
+- `GET /api/commands`
+- `POST /api/telegram/webhook`
+- `GET /api/telegram/info`
 - `GET /api/docs`
 
 ## Vercel settings
@@ -43,6 +47,11 @@ VEIL_API_KEY=long-random-secret
 SUPABASE_SCHEMA=public
 VEIL_PUBLIC_READ=false
 CORS_ORIGINS=*
+
+# Optional Telegram bot
+TELEGRAM_BOT_TOKEN=token-from-botfather
+TELEGRAM_WEBHOOK_SECRET=long-random-webhook-secret
+TELEGRAM_ALLOWED_CHAT_IDS=your-telegram-chat-id
 ```
 
 Generate `VEIL_API_KEY` with:

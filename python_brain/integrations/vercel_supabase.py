@@ -11,6 +11,7 @@ import json
 import os
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 from dataclasses import asdict, is_dataclass
 from datetime import datetime, timezone
@@ -58,16 +59,23 @@ class VercelSupabaseBridge:
             log.warning(message)
             self._last_error_ts = now
 
-    def _post(self, path: str, payload: dict[str, Any]) -> Optional[Any]:
+    def _request(
+        self,
+        method: str,
+        path: str,
+        payload: Optional[dict[str, Any]] = None,
+        query: Optional[dict[str, Any]] = None,
+    ) -> Optional[Any]:
         if not self.enabled:
             return None
 
-        url = f"{self.base_url}{path}"
-        body = json.dumps(_jsonable(payload)).encode("utf-8")
+        qs = urllib.parse.urlencode(query or {}, doseq=True)
+        url = f"{self.base_url}{path}" + (f"?{qs}" if qs else "")
+        body = None if payload is None else json.dumps(_jsonable(payload)).encode("utf-8")
         request = urllib.request.Request(
             url,
             data=body,
-            method="POST",
+            method=method,
             headers={
                 "content-type": "application/json",
                 "accept": "application/json",
@@ -84,6 +92,12 @@ class VercelSupabaseBridge:
         except Exception as exc:
             self._warn_throttled(f"Vercel/Supabase bridge failed: {exc}")
         return None
+
+    def _get(self, path: str, query: Optional[dict[str, Any]] = None) -> Optional[Any]:
+        return self._request("GET", path, query=query)
+
+    def _post(self, path: str, payload: dict[str, Any]) -> Optional[Any]:
+        return self._request("POST", path, payload=payload)
 
     def send_event(
         self,
@@ -157,5 +171,18 @@ class VercelSupabaseBridge:
                 "pnl_pct": trade.get("pnl_pct"),
                 "confidence": trade.get("confidence"),
                 "payload": trade,
+            },
+        )
+
+    def get_pending_commands(self, limit: int = 10) -> list[dict[str, Any]]:
+        data = self._get("/api/commands/pending", {"limit": max(1, min(int(limit), 50))})
+        return data if isinstance(data, list) else []
+
+    def complete_command(self, command_id: str, status: str, result: dict[str, Any]) -> Optional[Any]:
+        return self._post(
+            f"/api/commands/{command_id}/complete",
+            {
+                "status": status,
+                "result": result,
             },
         )
