@@ -1,0 +1,241 @@
+[
+  {
+    "id": "boom_spike_rsi_oversold",
+    "name": "Spike RSI Oversold",
+    "desc": "BUY when RSI is deeply oversold before a spike. Boom indices spike upward after consolidation.",
+    "indicators": {
+      "rsi": 2.0,
+      "bollinger": 1.5
+    },
+    "regime_filter": [
+      "RANGING",
+      "CHOPPY",
+      "VOLATILE"
+    ],
+    "tp_mult": 2.5,
+    "sl_mult": 1.2,
+    "min_confidence": 0.4,
+    "force_direction": "BUY",
+    "entry_filter": "rsi_oversold_consolidation",
+    "instrument": "BOOM500",
+    "instrument_name": "Boom_500",
+    "instrument_type": "boom",
+    "full_id": "BOOM500_boom_spike_rsi_oversold",
+    "pip_size": 0.01
+  },
+  {
+    "id": "boom_squeeze_fire",
+    "name": "Squeeze Fire Buy",
+    "desc": "Enter BUY on TTM Squeeze release - boom spikes often follow volatility compression.",
+    "indicators": {
+      "ttm_squeeze": 2.0,
+      "atr_channel": 1.8
+    },
+    "regime_filter": [
+      "BREAKOUT",
+      "VOLATILE",
+      "RANGING"
+    ],
+    "tp_mult": 3.0,
+    "sl_mult": 1.0,
+    "min_confidence": 0.45,
+    "force_direction": "BUY",
+    "entry_filter": "squeeze_release_buy",
+    "instrument": "BOOM500",
+    "instrument_name": "Boom_500",
+    "instrument_type": "boom",
+    "full_id": "BOOM500_boom_squeeze_fire",
+    "pip_size": 0.01
+  },
+  {
+    "id": "boom_bollinger_lower",
+    "name": "Bollinger Lower Buy",
+    "desc": "BUY when price touches lower Bollinger Band in ranging market - classic mean reversion for boom spikes.",
+    "indicators": {
+      "bollinger": 2.0,
+      "rsi": 1.5,
+      "stochastic": 1.0
+    },
+    "regime_filter": [
+      "RANGING",
+      "CHOPPY"
+    ],
+    "tp_mult": 2.0,
+    "sl_mult": 1.0,
+    "min_confidence": 0.45,
+    "force_direction": "BUY",
+    "entry_filter": "bollinger_lower_touch",
+    "instrument": "BOOM500",
+    "instrument_name": "Boom_500",
+    "instrument_type": "boom",
+    "full_id": "BOOM500_boom_bollinger_lower",
+    "pip_size": 0.01
+  },
+  {
+    "id": "boom_momentum_surge",
+    "name": "Momentum Surge Buy",
+    "desc": "BUY on momentum surge after quiet period - boom indices show sharp upward momentum bursts.",
+    "indicators": {
+      "momentum": 2.0,
+      "roc": 1.8,
+      "awesome_osc": 1.5
+    },
+    "regime_filter": [
+      "TRENDING",
+      "BREAKOUT",
+      "VOLATILE"
+    ],
+    "tp_mult": 2.5,
+    "sl_mult": 1.2,
+    "min_confidence": 0.4,
+    "force_direction": "BUY",
+    "entry_filter": "momentum_surge_from_low",
+    "instrument": "BOOM500",
+    "instrument_name": "Boom_500",
+    "instrument_type": "boom",
+    "full_id": "BOOM500_boom_momentum_surge",
+    "pip_size": 0.01
+  },
+  {
+    "id": "boom_atr_expansion",
+    "name": "ATR Expansion Buy",
+    "desc": "BUY when ATR starts expanding after contraction - signals imminent boom spike.",
+    "indicators": {
+      "atr_channel": 2.0,
+      "bollinger_width": 1.8
+    },
+    "regime_filter": [
+      "BREAKOUT",
+      "VOLATILE"
+    ],
+    "tp_mult": 3.0,
+    "sl_mult": 1.0,
+    "min_confidence": 0.45,
+    "force_direction": "BUY",
+    "entry_filter": "atr_expanding_from_low",
+    "instrument": "BOOM500",
+    "instrument_name": "Boom_500",
+    "instrument_type": "boom",
+    "full_id": "BOOM500_boom_atr_expansion",
+    "pip_size": 0.01
+  },
+  {
+    "id": "boom_stochastic_oversold",
+    "name": "Stochastic Oversold Buy",
+    "desc": "BUY when stochastic crosses up from oversold - early entry before spike.",
+    "indicators": {
+      "stochastic": 2.0,
+      "williams_r": 1.5,
+      "rsi": 1.0
+    },
+    "regime_filter": [
+      "RANGING",
+      "CHOPPY"
+    ],
+    "tp_mult": 2.0,
+    "sl_mult": 1.0,
+    "min_confidence": 0.45,
+    "force_direction": "BUY",
+    "entry_filter": "stoch_cross_up_oversold",
+    "instrument": "BOOM500",
+    "instrument_name": "Boom_500",
+    "instrument_type": "boom",
+    "full_id": "BOOM500_boom_stochastic_oversold",
+    "pip_size": 0.01
+  },
+  {
+    "id": "boom_dmi_bullish_cross",
+    "name": "DMI Bullish Cross Buy",
+    "desc": "BUY when +DI crosses above -DI with rising ADX - confirms upward breakout.",
+    "indicators": {
+      "dmi_direction": 2.0,
+      "adx": 1.5,
+      "hull_ma": 1.0
+    },
+    "regime_filter": [
+      "TRENDING",
+      "BREAKOUT"
+    ],
+    "tp_mult": 2.5,
+    "sl_mult": 1.0,
+    "min_confidence": 0.45,
+    "force_direction": "BUY",
+    "entry_filter": "plus_di_cross_above_minus",
+    "instrument": "BOOM500",
+    "instrument_name": "Boom_500",
+    "instrument_type": "boom",
+    "full_id": "BOOM500_boom_dmi_bullish_cross",
+    "pip_size": 0.01
+  },
+  {
+    "id": "boom_supply_demand_buy",
+    "name": "Supply/Demand Buy",
+    "desc": "BUY at demand zone with volume confirmation - boom spikes originate from demand zones.",
+    "indicators": {
+      "supply_demand": 2.0,
+      "volume_conf": 1.5
+    },
+    "regime_filter": [
+      "RANGING",
+      "VOLATILE"
+    ],
+    "tp_mult": 2.5,
+    "sl_mult": 1.2,
+    "min_confidence": 0.4,
+    "force_direction": "BUY",
+    "entry_filter": "demand_zone_touch",
+    "instrument": "BOOM500",
+    "instrument_name": "Boom_500",
+    "instrument_type": "boom",
+    "full_id": "BOOM500_boom_supply_demand_buy",
+    "pip_size": 0.01
+  },
+  {
+    "id": "boom_cci_extreme_buy",
+    "name": "CCI Extreme Buy",
+    "desc": "BUY when CCI is extremely oversold (-200 or below) - high-probability reversal for boom.",
+    "indicators": {
+      "cci": 2.0,
+      "rsi": 1.5,
+      "bollinger": 1.0
+    },
+    "regime_filter": [
+      "RANGING",
+      "CHOPPY",
+      "VOLATILE"
+    ],
+    "tp_mult": 2.0,
+    "sl_mult": 1.0,
+    "min_confidence": 0.4,
+    "force_direction": "BUY",
+    "entry_filter": "cci_below_neg200",
+    "instrument": "BOOM500",
+    "instrument_name": "Boom_500",
+    "instrument_type": "boom",
+    "full_id": "BOOM500_boom_cci_extreme_buy",
+    "pip_size": 0.01
+  },
+  {
+    "id": "boom_ichimoku_buy",
+    "name": "Ichimoku Cloud Buy",
+    "desc": "BUY when price breaks above Ichimoku cloud - strong trend signal for boom spike.",
+    "indicators": {
+      "ichimoku": 2.0,
+      "multi_tf_trend": 1.5
+    },
+    "regime_filter": [
+      "TRENDING",
+      "BREAKOUT"
+    ],
+    "tp_mult": 3.0,
+    "sl_mult": 1.2,
+    "min_confidence": 0.45,
+    "force_direction": "BUY",
+    "entry_filter": "price_above_cloud",
+    "instrument": "BOOM500",
+    "instrument_name": "Boom_500",
+    "instrument_type": "boom",
+    "full_id": "BOOM500_boom_ichimoku_buy",
+    "pip_size": 0.01
+  }
+]

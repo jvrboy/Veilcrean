@@ -1,0 +1,63 @@
+{
+  "generated": "2026-07-31",
+  "training_data_source": "real_historical_csv",
+  "total_strategies_tested": 80,
+  "instruments_trained": 8,
+  "best_strategies_per_instrument": {
+    "1HZ50V": {
+      "best_strategy": "vol_keltner_bounce",
+      "win_rate": 44.1,
+      "profit_factor": 1.95,
+      "signals": 34
+    },
+    "1HZ75V": {
+      "best_strategy": "vol_breakout_squeeze",
+      "win_rate": 42.9,
+      "profit_factor": 1.72,
+      "signals": 14
+    },
+    "1HZ100V": {
+      "best_strategy": "vol_breakout_squeeze",
+      "win_rate": 50.0,
+      "profit_factor": 4.39,
+      "signals": 16
+    },
+    "BOOM500": {
+      "best_strategy": "boom_supply_demand_buy",
+      "win_rate": 44.4,
+      "profit_factor": 2.65,
+      "signals": 9
+    },
+    "BOOM900": {
+      "best_strategy": "boom_momentum_surge",
+      "win_rate": 38.1,
+      "profit_factor": 1.38,
+      "signals": 21
+    },
+    "BOOM1000": {
+      "best_strategy": "boom_squeeze_fire",
+      "win_rate": 25.0,
+      "profit_factor": 0.45,
+      "signals": 4
+    },
+    "CRASH500": {
+      "best_strategy": "crash_ichimoku_sell",
+      "win_rate": 55.6,
+      "profit_factor": 2.71,
+      "signals": 9
+    },
+    "CRASH900": {
+      "best_strategy": "crash_supply_resistance",
+      "win_rate": 47.6,
+      "profit_factor": 3.05,
+      "signals": 21
+    }
+  },
+  "top_5_strategies_overall": [
+    {"instrument": "CRASH500", "strategy": "crash_ichimoku_sell", "wr": 55.6, "pf": 2.71},
+    {"instrument": "1HZ100V", "strategy": "vol_breakout_squeeze", "wr": 50.0, "pf": 4.39},
+    {"instrument": "CRASH900", "strategy": "crash_supply_resistance", "wr": 47.6, "pf": 3.05},
+    {"instrument": "1HZ50V", "strategy": "vol_keltner_bounce", "wr": 44.1, "pf": 1.95},
+    {"instrument": "BOOM500", "strategy": "boom_supply_demand_buy", "wr": 44.4, "pf": 2.65}
+  ]
+}

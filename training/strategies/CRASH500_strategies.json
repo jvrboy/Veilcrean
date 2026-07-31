@@ -1,0 +1,237 @@
+[
+  {
+    "id": "crash_rsi_overbought",
+    "name": "RSI Overbought Sell",
+    "desc": "SELL when RSI is extremely overbought - crash indices drop sharply from overbought levels.",
+    "indicators": {
+      "rsi": 2.0,
+      "bollinger": 1.5
+    },
+    "regime_filter": [
+      "RANGING",
+      "CHOPPY",
+      "VOLATILE"
+    ],
+    "tp_mult": 2.5,
+    "sl_mult": 1.2,
+    "min_confidence": 0.4,
+    "force_direction": "SELL",
+    "entry_filter": "rsi_overbought_consolidation",
+    "instrument": "CRASH500",
+    "instrument_name": "Crash_500",
+    "instrument_type": "crash",
+    "full_id": "CRASH500_crash_rsi_overbought",
+    "pip_size": 0.01
+  },
+  {
+    "id": "crash_squeeze_fire",
+    "name": "Squeeze Fire Sell",
+    "desc": "SELL on TTM Squeeze release - crash drops often follow volatility compression.",
+    "indicators": {
+      "ttm_squeeze": 2.0,
+      "atr_channel": 1.8
+    },
+    "regime_filter": [
+      "BREAKOUT",
+      "VOLATILE",
+      "RANGING"
+    ],
+    "tp_mult": 3.0,
+    "sl_mult": 1.0,
+    "min_confidence": 0.45,
+    "force_direction": "SELL",
+    "entry_filter": "squeeze_release_sell",
+    "instrument": "CRASH500",
+    "instrument_name": "Crash_500",
+    "instrument_type": "crash",
+    "full_id": "CRASH500_crash_squeeze_fire",
+    "pip_size": 0.01
+  },
+  {
+    "id": "crash_bollinger_upper",
+    "name": "Bollinger Upper Sell",
+    "desc": "SELL when price touches upper Bollinger Band - mean reversion for crash drops.",
+    "indicators": {
+      "bollinger": 2.0,
+      "rsi": 1.5,
+      "stochastic": 1.0
+    },
+    "regime_filter": [
+      "RANGING",
+      "CHOPPY"
+    ],
+    "tp_mult": 2.0,
+    "sl_mult": 1.0,
+    "min_confidence": 0.45,
+    "force_direction": "SELL",
+    "entry_filter": "bollinger_upper_touch",
+    "instrument": "CRASH500",
+    "instrument_name": "Crash_500",
+    "instrument_type": "crash",
+    "full_id": "CRASH500_crash_bollinger_upper",
+    "pip_size": 0.01
+  },
+  {
+    "id": "crash_momentum_drop",
+    "name": "Momentum Drop Sell",
+    "desc": "SELL on negative momentum surge - crash indices show sharp downward momentum bursts.",
+    "indicators": {
+      "momentum": 2.0,
+      "roc": 1.8
+    },
+    "regime_filter": [
+      "TRENDING",
+      "BREAKOUT",
+      "VOLATILE"
+    ],
+    "tp_mult": 2.5,
+    "sl_mult": 1.2,
+    "min_confidence": 0.4,
+    "force_direction": "SELL",
+    "entry_filter": "momentum_dropping",
+    "instrument": "CRASH500",
+    "instrument_name": "Crash_500",
+    "instrument_type": "crash",
+    "full_id": "CRASH500_crash_momentum_drop",
+    "pip_size": 0.01
+  },
+  {
+    "id": "crash_atr_expansion",
+    "name": "ATR Expansion Sell",
+    "desc": "SELL when ATR starts expanding - signals imminent crash drop.",
+    "indicators": {
+      "atr_channel": 2.0,
+      "bollinger_width": 1.8
+    },
+    "regime_filter": [
+      "BREAKOUT",
+      "VOLATILE"
+    ],
+    "tp_mult": 3.0,
+    "sl_mult": 1.0,
+    "min_confidence": 0.45,
+    "force_direction": "SELL",
+    "entry_filter": "atr_expanding_high",
+    "instrument": "CRASH500",
+    "instrument_name": "Crash_500",
+    "instrument_type": "crash",
+    "full_id": "CRASH500_crash_atr_expansion",
+    "pip_size": 0.01
+  },
+  {
+    "id": "crash_stochastic_overbought",
+    "name": "Stochastic Overbought Sell",
+    "desc": "SELL when stochastic crosses down from overbought.",
+    "indicators": {
+      "stochastic": 2.0,
+      "williams_r": 1.5,
+      "rsi": 1.0
+    },
+    "regime_filter": [
+      "RANGING",
+      "CHOPPY"
+    ],
+    "tp_mult": 2.0,
+    "sl_mult": 1.0,
+    "min_confidence": 0.45,
+    "force_direction": "SELL",
+    "entry_filter": "stoch_cross_down_overbought",
+    "instrument": "CRASH500",
+    "instrument_name": "Crash_500",
+    "instrument_type": "crash",
+    "full_id": "CRASH500_crash_stochastic_overbought",
+    "pip_size": 0.01
+  },
+  {
+    "id": "crash_dmi_bearish_cross",
+    "name": "DMI Bearish Cross Sell",
+    "desc": "SELL when -DI crosses above +DI with rising ADX.",
+    "indicators": {
+      "dmi_direction": 2.0,
+      "adx": 1.5
+    },
+    "regime_filter": [
+      "TRENDING",
+      "BREAKOUT"
+    ],
+    "tp_mult": 2.5,
+    "sl_mult": 1.0,
+    "min_confidence": 0.45,
+    "force_direction": "SELL",
+    "entry_filter": "minus_di_cross_above_plus",
+    "instrument": "CRASH500",
+    "instrument_name": "Crash_500",
+    "instrument_type": "crash",
+    "full_id": "CRASH500_crash_dmi_bearish_cross",
+    "pip_size": 0.01
+  },
+  {
+    "id": "crash_supply_resistance",
+    "name": "Supply Zone Sell",
+    "desc": "SELL at supply zone - crash drops originate from supply zones.",
+    "indicators": {
+      "supply_demand": 2.0
+    },
+    "regime_filter": [
+      "RANGING",
+      "VOLATILE"
+    ],
+    "tp_mult": 2.5,
+    "sl_mult": 1.2,
+    "min_confidence": 0.4,
+    "force_direction": "SELL",
+    "entry_filter": "supply_zone_touch",
+    "instrument": "CRASH500",
+    "instrument_name": "Crash_500",
+    "instrument_type": "crash",
+    "full_id": "CRASH500_crash_supply_resistance",
+    "pip_size": 0.01
+  },
+  {
+    "id": "crash_cci_extreme_sell",
+    "name": "CCI Extreme Sell",
+    "desc": "SELL when CCI is extremely overbought (+200 or above).",
+    "indicators": {
+      "cci": 2.0,
+      "rsi": 1.5
+    },
+    "regime_filter": [
+      "RANGING",
+      "CHOPPY",
+      "VOLATILE"
+    ],
+    "tp_mult": 2.0,
+    "sl_mult": 1.0,
+    "min_confidence": 0.4,
+    "force_direction": "SELL",
+    "entry_filter": "cci_above_pos200",
+    "instrument": "CRASH500",
+    "instrument_name": "Crash_500",
+    "instrument_type": "crash",
+    "full_id": "CRASH500_crash_cci_extreme_sell",
+    "pip_size": 0.01
+  },
+  {
+    "id": "crash_ichimoku_sell",
+    "name": "Ichimoku Cloud Sell",
+    "desc": "SELL when price breaks below Ichimoku cloud.",
+    "indicators": {
+      "ichimoku": 2.0,
+      "multi_tf_trend": 1.5
+    },
+    "regime_filter": [
+      "TRENDING",
+      "BREAKOUT"
+    ],
+    "tp_mult": 3.0,
+    "sl_mult": 1.2,
+    "min_confidence": 0.45,
+    "force_direction": "SELL",
+    "entry_filter": "price_below_cloud",
+    "instrument": "CRASH500",
+    "instrument_name": "Crash_500",
+    "instrument_type": "crash",
+    "full_id": "CRASH500_crash_ichimoku_sell",
+    "pip_size": 0.01
+  }
+]

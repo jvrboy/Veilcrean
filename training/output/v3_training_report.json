@@ -1,0 +1,27 @@
+{
+  "training_session": "2026-07-31",
+  "trainer_version": "v3_comprehensive",
+  "data_source": "real_historical_csv_deriv_api",
+  "instruments_trained": [
+    {"symbol": "1HZ50V", "name": "Volatility 50", "signals": 20, "win_rate": 35.0, "profit_factor": 0.80},
+    {"symbol": "1HZ75V", "name": "Volatility 75", "signals": 49, "win_rate": 46.9, "profit_factor": 1.60},
+    {"symbol": "1HZ100V", "name": "Volatility 100", "signals": 33, "win_rate": 36.4, "profit_factor": 1.10},
+    {"symbol": "BOOM500", "name": "Boom 500", "signals": 16, "win_rate": 25.0, "profit_factor": 0.66},
+    {"symbol": "BOOM900", "name": "Boom 900", "signals": 50, "win_rate": 42.0, "profit_factor": 1.16},
+    {"symbol": "BOOM1000", "name": "Boom 1000", "signals": 20, "win_rate": 50.0, "profit_factor": 1.13},
+    {"symbol": "CRASH500", "name": "Crash 500", "signals": 20, "win_rate": 25.0, "profit_factor": 0.90},
+    {"symbol": "CRASH900", "name": "Crash 900", "signals": 19, "win_rate": 21.1, "profit_factor": 0.44}
+  ],
+  "total_signals": 227,
+  "total_patterns_learned": 121,
+  "strategy_training_completed": true,
+  "strategies_created": 110,
+  "strategies_per_instrument": 10,
+  "top_performing_strategies": [
+    {"instrument": "CRASH500", "strategy": "crash_ichimoku_sell", "win_rate": 55.6},
+    {"instrument": "1HZ100V", "strategy": "vol_breakout_squeeze", "win_rate": 50.0},
+    {"instrument": "CRASH900", "strategy": "crash_supply_resistance", "win_rate": 47.6},
+    {"instrument": "BOOM500", "strategy": "boom_supply_demand_buy", "win_rate": 44.4},
+    {"instrument": "1HZ50V", "strategy": "vol_keltner_bounce", "win_rate": 44.1}
+  ]
+}

@@ -1,0 +1,2576 @@
+{
+  "1HZ50V": [
+    {
+      "id": "vol_rsi_bollinger_reversal",
+      "name": "RSI Bollinger Reversal",
+      "desc": "Enter when RSI is extreme (>70 or <30) and price is at Bollinger Band edge, expecting mean reversion within volatility range.",
+      "indicators": {
+        "rsi": 2.0,
+        "bollinger": 1.8,
+        "stochastic": 1.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY"
+      ],
+      "tp_mult": 0.8,
+      "sl_mult": 0.6,
+      "min_confidence": 0.55,
+      "entry_filter": "rsi_extreme_bollinger_touch",
+      "instrument": "1HZ50V",
+      "instrument_name": "Volatility_50",
+      "instrument_type": "volatility",
+      "full_id": "1HZ50V_vol_rsi_bollinger_reversal",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_macd_trend_follow",
+      "name": "MACD Trend Follow",
+      "desc": "Follow MACD crossovers with ADX confirmation for strong directional moves in volatility indices.",
+      "indicators": {
+        "macd": 2.0,
+        "dmi_direction": 1.5,
+        "adx": 1.2
+      },
+      "regime_filter": [
+        "TRENDING"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 0.8,
+      "min_confidence": 0.45,
+      "entry_filter": "macd_cross_above_zero",
+      "instrument": "1HZ50V",
+      "instrument_name": "Volatility_50",
+      "instrument_type": "volatility",
+      "full_id": "1HZ50V_vol_macd_trend_follow",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_breakout_squeeze",
+      "name": "Squeeze Breakout",
+      "desc": "Enter on TTM Squeeze release with ATR expansion - volatility indices show strong post-squeeze moves.",
+      "indicators": {
+        "ttm_squeeze": 2.0,
+        "atr_channel": 1.8,
+        "bollinger_width": 1.5
+      },
+      "regime_filter": [
+        "BREAKOUT",
+        "TRENDING"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.0,
+      "min_confidence": 0.5,
+      "entry_filter": "squeeze_fired_atr_expanding",
+      "instrument": "1HZ50V",
+      "instrument_name": "Volatility_50",
+      "instrument_type": "volatility",
+      "full_id": "1HZ50V_vol_breakout_squeeze",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_hull_momentum",
+      "name": "Hull MA Momentum",
+      "desc": "Hull MA direction change with momentum and ROC confirmation for clean trend entries.",
+      "indicators": {
+        "hull_ma": 2.0,
+        "momentum": 1.5,
+        "roc": 1.2
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 1.8,
+      "sl_mult": 0.7,
+      "min_confidence": 0.45,
+      "entry_filter": "hull_reversal_momentum_align",
+      "instrument": "1HZ50V",
+      "instrument_name": "Volatility_50",
+      "instrument_type": "volatility",
+      "full_id": "1HZ50V_vol_hull_momentum",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_ichimoku_trend",
+      "name": "Ichimoku Cloud Trend",
+      "desc": "Price above/below Ichimoku cloud with Tenkan-Kijun cross confirmation.",
+      "indicators": {
+        "ichimoku": 2.0,
+        "multi_tf_trend": 1.5
+      },
+      "regime_filter": [
+        "TRENDING"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 0.8,
+      "min_confidence": 0.5,
+      "entry_filter": "ichimoku_cloud_break",
+      "instrument": "1HZ50V",
+      "instrument_name": "Volatility_50",
+      "instrument_type": "volatility",
+      "full_id": "1HZ50V_vol_ichimoku_trend",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_stochastic_divergence",
+      "name": "Stochastic Divergence",
+      "desc": "Stochastic RSI divergence with Williams %R confirmation for reversal entries.",
+      "indicators": {
+        "stochastic_rsi": 2.0,
+        "rsi_divergence": 1.8,
+        "williams_r": 1.2
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY",
+        "VOLATILE"
+      ],
+      "tp_mult": 1.0,
+      "sl_mult": 0.5,
+      "min_confidence": 0.55,
+      "entry_filter": "stoch_rsi_divergence",
+      "instrument": "1HZ50V",
+      "instrument_name": "Volatility_50",
+      "instrument_type": "volatility",
+      "full_id": "1HZ50V_vol_stochastic_divergence",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_multi_tf_confluence",
+      "name": "Multi-TF Confluence",
+      "desc": "Align multiple timeframe trends with DMI direction for high-confidence entries.",
+      "indicators": {
+        "multi_tf_trend": 2.0,
+        "dmi_direction": 1.5,
+        "hull_ma": 1.0
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 0.7,
+      "min_confidence": 0.5,
+      "entry_filter": "all_tf_aligned",
+      "instrument": "1HZ50V",
+      "instrument_name": "Volatility_50",
+      "instrument_type": "volatility",
+      "full_id": "1HZ50V_vol_multi_tf_confluence",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_adx_breakout",
+      "name": "ADX Breakout",
+      "desc": "ADX rising above 25 with directional indicator confirming breakout direction.",
+      "indicators": {
+        "adx": 2.0,
+        "dmi_direction": 1.8,
+        "atr_channel": 1.2
+      },
+      "regime_filter": [
+        "BREAKOUT"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 0.8,
+      "min_confidence": 0.45,
+      "entry_filter": "adx_rising_di_cross",
+      "instrument": "1HZ50V",
+      "instrument_name": "Volatility_50",
+      "instrument_type": "volatility",
+      "full_id": "1HZ50V_vol_adx_breakout",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_keltner_bounce",
+      "name": "Keltner Channel Bounce",
+      "desc": "Price bouncing off Keltner Channel with CCI confirmation for mean reversion.",
+      "indicators": {
+        "keltner": 2.0,
+        "cci": 1.5,
+        "rsi": 1.0
+      },
+      "regime_filter": [
+        "RANGING"
+      ],
+      "tp_mult": 0.8,
+      "sl_mult": 0.5,
+      "min_confidence": 0.55,
+      "entry_filter": "keltner_touch_cci_extreme",
+      "instrument": "1HZ50V",
+      "instrument_name": "Volatility_50",
+      "instrument_type": "volatility",
+      "full_id": "1HZ50V_vol_keltner_bounce",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_chop_avoidance_trend",
+      "name": "Chop Avoidance Trend",
+      "desc": "Only trade when chop index is LOW (trending market) with momentum confirmation.",
+      "indicators": {
+        "chop_index": 2.0,
+        "momentum": 1.5,
+        "macd": 1.2
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 0.8,
+      "min_confidence": 0.5,
+      "entry_filter": "low_chop_momentum_confirm",
+      "instrument": "1HZ50V",
+      "instrument_name": "Volatility_50",
+      "instrument_type": "volatility",
+      "full_id": "1HZ50V_vol_chop_avoidance_trend",
+      "pip_size": 0.01
+    }
+  ],
+  "1HZ75V": [
+    {
+      "id": "vol_rsi_bollinger_reversal",
+      "name": "RSI Bollinger Reversal",
+      "desc": "Enter when RSI is extreme (>70 or <30) and price is at Bollinger Band edge, expecting mean reversion within volatility range.",
+      "indicators": {
+        "rsi": 2.0,
+        "bollinger": 1.8,
+        "stochastic": 1.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY"
+      ],
+      "tp_mult": 0.8,
+      "sl_mult": 0.6,
+      "min_confidence": 0.55,
+      "entry_filter": "rsi_extreme_bollinger_touch",
+      "instrument": "1HZ75V",
+      "instrument_name": "Volatility_75",
+      "instrument_type": "volatility",
+      "full_id": "1HZ75V_vol_rsi_bollinger_reversal",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_macd_trend_follow",
+      "name": "MACD Trend Follow",
+      "desc": "Follow MACD crossovers with ADX confirmation for strong directional moves in volatility indices.",
+      "indicators": {
+        "macd": 2.0,
+        "dmi_direction": 1.5,
+        "adx": 1.2
+      },
+      "regime_filter": [
+        "TRENDING"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 0.8,
+      "min_confidence": 0.45,
+      "entry_filter": "macd_cross_above_zero",
+      "instrument": "1HZ75V",
+      "instrument_name": "Volatility_75",
+      "instrument_type": "volatility",
+      "full_id": "1HZ75V_vol_macd_trend_follow",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_breakout_squeeze",
+      "name": "Squeeze Breakout",
+      "desc": "Enter on TTM Squeeze release with ATR expansion - volatility indices show strong post-squeeze moves.",
+      "indicators": {
+        "ttm_squeeze": 2.0,
+        "atr_channel": 1.8,
+        "bollinger_width": 1.5
+      },
+      "regime_filter": [
+        "BREAKOUT",
+        "TRENDING"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.0,
+      "min_confidence": 0.5,
+      "entry_filter": "squeeze_fired_atr_expanding",
+      "instrument": "1HZ75V",
+      "instrument_name": "Volatility_75",
+      "instrument_type": "volatility",
+      "full_id": "1HZ75V_vol_breakout_squeeze",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_hull_momentum",
+      "name": "Hull MA Momentum",
+      "desc": "Hull MA direction change with momentum and ROC confirmation for clean trend entries.",
+      "indicators": {
+        "hull_ma": 2.0,
+        "momentum": 1.5,
+        "roc": 1.2
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 1.8,
+      "sl_mult": 0.7,
+      "min_confidence": 0.45,
+      "entry_filter": "hull_reversal_momentum_align",
+      "instrument": "1HZ75V",
+      "instrument_name": "Volatility_75",
+      "instrument_type": "volatility",
+      "full_id": "1HZ75V_vol_hull_momentum",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_ichimoku_trend",
+      "name": "Ichimoku Cloud Trend",
+      "desc": "Price above/below Ichimoku cloud with Tenkan-Kijun cross confirmation.",
+      "indicators": {
+        "ichimoku": 2.0,
+        "multi_tf_trend": 1.5
+      },
+      "regime_filter": [
+        "TRENDING"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 0.8,
+      "min_confidence": 0.5,
+      "entry_filter": "ichimoku_cloud_break",
+      "instrument": "1HZ75V",
+      "instrument_name": "Volatility_75",
+      "instrument_type": "volatility",
+      "full_id": "1HZ75V_vol_ichimoku_trend",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_stochastic_divergence",
+      "name": "Stochastic Divergence",
+      "desc": "Stochastic RSI divergence with Williams %R confirmation for reversal entries.",
+      "indicators": {
+        "stochastic_rsi": 2.0,
+        "rsi_divergence": 1.8,
+        "williams_r": 1.2
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY",
+        "VOLATILE"
+      ],
+      "tp_mult": 1.0,
+      "sl_mult": 0.5,
+      "min_confidence": 0.55,
+      "entry_filter": "stoch_rsi_divergence",
+      "instrument": "1HZ75V",
+      "instrument_name": "Volatility_75",
+      "instrument_type": "volatility",
+      "full_id": "1HZ75V_vol_stochastic_divergence",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_multi_tf_confluence",
+      "name": "Multi-TF Confluence",
+      "desc": "Align multiple timeframe trends with DMI direction for high-confidence entries.",
+      "indicators": {
+        "multi_tf_trend": 2.0,
+        "dmi_direction": 1.5,
+        "hull_ma": 1.0
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 0.7,
+      "min_confidence": 0.5,
+      "entry_filter": "all_tf_aligned",
+      "instrument": "1HZ75V",
+      "instrument_name": "Volatility_75",
+      "instrument_type": "volatility",
+      "full_id": "1HZ75V_vol_multi_tf_confluence",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_adx_breakout",
+      "name": "ADX Breakout",
+      "desc": "ADX rising above 25 with directional indicator confirming breakout direction.",
+      "indicators": {
+        "adx": 2.0,
+        "dmi_direction": 1.8,
+        "atr_channel": 1.2
+      },
+      "regime_filter": [
+        "BREAKOUT"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 0.8,
+      "min_confidence": 0.45,
+      "entry_filter": "adx_rising_di_cross",
+      "instrument": "1HZ75V",
+      "instrument_name": "Volatility_75",
+      "instrument_type": "volatility",
+      "full_id": "1HZ75V_vol_adx_breakout",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_keltner_bounce",
+      "name": "Keltner Channel Bounce",
+      "desc": "Price bouncing off Keltner Channel with CCI confirmation for mean reversion.",
+      "indicators": {
+        "keltner": 2.0,
+        "cci": 1.5,
+        "rsi": 1.0
+      },
+      "regime_filter": [
+        "RANGING"
+      ],
+      "tp_mult": 0.8,
+      "sl_mult": 0.5,
+      "min_confidence": 0.55,
+      "entry_filter": "keltner_touch_cci_extreme",
+      "instrument": "1HZ75V",
+      "instrument_name": "Volatility_75",
+      "instrument_type": "volatility",
+      "full_id": "1HZ75V_vol_keltner_bounce",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_chop_avoidance_trend",
+      "name": "Chop Avoidance Trend",
+      "desc": "Only trade when chop index is LOW (trending market) with momentum confirmation.",
+      "indicators": {
+        "chop_index": 2.0,
+        "momentum": 1.5,
+        "macd": 1.2
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 0.8,
+      "min_confidence": 0.5,
+      "entry_filter": "low_chop_momentum_confirm",
+      "instrument": "1HZ75V",
+      "instrument_name": "Volatility_75",
+      "instrument_type": "volatility",
+      "full_id": "1HZ75V_vol_chop_avoidance_trend",
+      "pip_size": 0.01
+    }
+  ],
+  "1HZ100V": [
+    {
+      "id": "vol_rsi_bollinger_reversal",
+      "name": "RSI Bollinger Reversal",
+      "desc": "Enter when RSI is extreme (>70 or <30) and price is at Bollinger Band edge, expecting mean reversion within volatility range.",
+      "indicators": {
+        "rsi": 2.0,
+        "bollinger": 1.8,
+        "stochastic": 1.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY"
+      ],
+      "tp_mult": 0.8,
+      "sl_mult": 0.6,
+      "min_confidence": 0.55,
+      "entry_filter": "rsi_extreme_bollinger_touch",
+      "instrument": "1HZ100V",
+      "instrument_name": "Volatility_100",
+      "instrument_type": "volatility",
+      "full_id": "1HZ100V_vol_rsi_bollinger_reversal",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_macd_trend_follow",
+      "name": "MACD Trend Follow",
+      "desc": "Follow MACD crossovers with ADX confirmation for strong directional moves in volatility indices.",
+      "indicators": {
+        "macd": 2.0,
+        "dmi_direction": 1.5,
+        "adx": 1.2
+      },
+      "regime_filter": [
+        "TRENDING"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 0.8,
+      "min_confidence": 0.45,
+      "entry_filter": "macd_cross_above_zero",
+      "instrument": "1HZ100V",
+      "instrument_name": "Volatility_100",
+      "instrument_type": "volatility",
+      "full_id": "1HZ100V_vol_macd_trend_follow",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_breakout_squeeze",
+      "name": "Squeeze Breakout",
+      "desc": "Enter on TTM Squeeze release with ATR expansion - volatility indices show strong post-squeeze moves.",
+      "indicators": {
+        "ttm_squeeze": 2.0,
+        "atr_channel": 1.8,
+        "bollinger_width": 1.5
+      },
+      "regime_filter": [
+        "BREAKOUT",
+        "TRENDING"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.0,
+      "min_confidence": 0.5,
+      "entry_filter": "squeeze_fired_atr_expanding",
+      "instrument": "1HZ100V",
+      "instrument_name": "Volatility_100",
+      "instrument_type": "volatility",
+      "full_id": "1HZ100V_vol_breakout_squeeze",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_hull_momentum",
+      "name": "Hull MA Momentum",
+      "desc": "Hull MA direction change with momentum and ROC confirmation for clean trend entries.",
+      "indicators": {
+        "hull_ma": 2.0,
+        "momentum": 1.5,
+        "roc": 1.2
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 1.8,
+      "sl_mult": 0.7,
+      "min_confidence": 0.45,
+      "entry_filter": "hull_reversal_momentum_align",
+      "instrument": "1HZ100V",
+      "instrument_name": "Volatility_100",
+      "instrument_type": "volatility",
+      "full_id": "1HZ100V_vol_hull_momentum",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_ichimoku_trend",
+      "name": "Ichimoku Cloud Trend",
+      "desc": "Price above/below Ichimoku cloud with Tenkan-Kijun cross confirmation.",
+      "indicators": {
+        "ichimoku": 2.0,
+        "multi_tf_trend": 1.5
+      },
+      "regime_filter": [
+        "TRENDING"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 0.8,
+      "min_confidence": 0.5,
+      "entry_filter": "ichimoku_cloud_break",
+      "instrument": "1HZ100V",
+      "instrument_name": "Volatility_100",
+      "instrument_type": "volatility",
+      "full_id": "1HZ100V_vol_ichimoku_trend",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_stochastic_divergence",
+      "name": "Stochastic Divergence",
+      "desc": "Stochastic RSI divergence with Williams %R confirmation for reversal entries.",
+      "indicators": {
+        "stochastic_rsi": 2.0,
+        "rsi_divergence": 1.8,
+        "williams_r": 1.2
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY",
+        "VOLATILE"
+      ],
+      "tp_mult": 1.0,
+      "sl_mult": 0.5,
+      "min_confidence": 0.55,
+      "entry_filter": "stoch_rsi_divergence",
+      "instrument": "1HZ100V",
+      "instrument_name": "Volatility_100",
+      "instrument_type": "volatility",
+      "full_id": "1HZ100V_vol_stochastic_divergence",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_multi_tf_confluence",
+      "name": "Multi-TF Confluence",
+      "desc": "Align multiple timeframe trends with DMI direction for high-confidence entries.",
+      "indicators": {
+        "multi_tf_trend": 2.0,
+        "dmi_direction": 1.5,
+        "hull_ma": 1.0
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 0.7,
+      "min_confidence": 0.5,
+      "entry_filter": "all_tf_aligned",
+      "instrument": "1HZ100V",
+      "instrument_name": "Volatility_100",
+      "instrument_type": "volatility",
+      "full_id": "1HZ100V_vol_multi_tf_confluence",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_adx_breakout",
+      "name": "ADX Breakout",
+      "desc": "ADX rising above 25 with directional indicator confirming breakout direction.",
+      "indicators": {
+        "adx": 2.0,
+        "dmi_direction": 1.8,
+        "atr_channel": 1.2
+      },
+      "regime_filter": [
+        "BREAKOUT"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 0.8,
+      "min_confidence": 0.45,
+      "entry_filter": "adx_rising_di_cross",
+      "instrument": "1HZ100V",
+      "instrument_name": "Volatility_100",
+      "instrument_type": "volatility",
+      "full_id": "1HZ100V_vol_adx_breakout",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_keltner_bounce",
+      "name": "Keltner Channel Bounce",
+      "desc": "Price bouncing off Keltner Channel with CCI confirmation for mean reversion.",
+      "indicators": {
+        "keltner": 2.0,
+        "cci": 1.5,
+        "rsi": 1.0
+      },
+      "regime_filter": [
+        "RANGING"
+      ],
+      "tp_mult": 0.8,
+      "sl_mult": 0.5,
+      "min_confidence": 0.55,
+      "entry_filter": "keltner_touch_cci_extreme",
+      "instrument": "1HZ100V",
+      "instrument_name": "Volatility_100",
+      "instrument_type": "volatility",
+      "full_id": "1HZ100V_vol_keltner_bounce",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_chop_avoidance_trend",
+      "name": "Chop Avoidance Trend",
+      "desc": "Only trade when chop index is LOW (trending market) with momentum confirmation.",
+      "indicators": {
+        "chop_index": 2.0,
+        "momentum": 1.5,
+        "macd": 1.2
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 0.8,
+      "min_confidence": 0.5,
+      "entry_filter": "low_chop_momentum_confirm",
+      "instrument": "1HZ100V",
+      "instrument_name": "Volatility_100",
+      "instrument_type": "volatility",
+      "full_id": "1HZ100V_vol_chop_avoidance_trend",
+      "pip_size": 0.01
+    }
+  ],
+  "BOOM500": [
+    {
+      "id": "boom_spike_rsi_oversold",
+      "name": "Spike RSI Oversold",
+      "desc": "BUY when RSI is deeply oversold before a spike. Boom indices spike upward after consolidation.",
+      "indicators": {
+        "rsi": 2.0,
+        "bollinger": 1.5
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.2,
+      "min_confidence": 0.4,
+      "force_direction": "BUY",
+      "entry_filter": "rsi_oversold_consolidation",
+      "instrument": "BOOM500",
+      "instrument_name": "Boom_500",
+      "instrument_type": "boom",
+      "full_id": "BOOM500_boom_spike_rsi_oversold",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_squeeze_fire",
+      "name": "Squeeze Fire Buy",
+      "desc": "Enter BUY on TTM Squeeze release - boom spikes often follow volatility compression.",
+      "indicators": {
+        "ttm_squeeze": 2.0,
+        "atr_channel": 1.8
+      },
+      "regime_filter": [
+        "BREAKOUT",
+        "VOLATILE",
+        "RANGING"
+      ],
+      "tp_mult": 3.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "BUY",
+      "entry_filter": "squeeze_release_buy",
+      "instrument": "BOOM500",
+      "instrument_name": "Boom_500",
+      "instrument_type": "boom",
+      "full_id": "BOOM500_boom_squeeze_fire",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_bollinger_lower",
+      "name": "Bollinger Lower Buy",
+      "desc": "BUY when price touches lower Bollinger Band in ranging market - classic mean reversion for boom spikes.",
+      "indicators": {
+        "bollinger": 2.0,
+        "rsi": 1.5,
+        "stochastic": 1.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "BUY",
+      "entry_filter": "bollinger_lower_touch",
+      "instrument": "BOOM500",
+      "instrument_name": "Boom_500",
+      "instrument_type": "boom",
+      "full_id": "BOOM500_boom_bollinger_lower",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_momentum_surge",
+      "name": "Momentum Surge Buy",
+      "desc": "BUY on momentum surge after quiet period - boom indices show sharp upward momentum bursts.",
+      "indicators": {
+        "momentum": 2.0,
+        "roc": 1.8,
+        "awesome_osc": 1.5
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.2,
+      "min_confidence": 0.4,
+      "force_direction": "BUY",
+      "entry_filter": "momentum_surge_from_low",
+      "instrument": "BOOM500",
+      "instrument_name": "Boom_500",
+      "instrument_type": "boom",
+      "full_id": "BOOM500_boom_momentum_surge",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_atr_expansion",
+      "name": "ATR Expansion Buy",
+      "desc": "BUY when ATR starts expanding after contraction - signals imminent boom spike.",
+      "indicators": {
+        "atr_channel": 2.0,
+        "bollinger_width": 1.8
+      },
+      "regime_filter": [
+        "BREAKOUT",
+        "VOLATILE"
+      ],
+      "tp_mult": 3.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "BUY",
+      "entry_filter": "atr_expanding_from_low",
+      "instrument": "BOOM500",
+      "instrument_name": "Boom_500",
+      "instrument_type": "boom",
+      "full_id": "BOOM500_boom_atr_expansion",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_stochastic_oversold",
+      "name": "Stochastic Oversold Buy",
+      "desc": "BUY when stochastic crosses up from oversold - early entry before spike.",
+      "indicators": {
+        "stochastic": 2.0,
+        "williams_r": 1.5,
+        "rsi": 1.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "BUY",
+      "entry_filter": "stoch_cross_up_oversold",
+      "instrument": "BOOM500",
+      "instrument_name": "Boom_500",
+      "instrument_type": "boom",
+      "full_id": "BOOM500_boom_stochastic_oversold",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_dmi_bullish_cross",
+      "name": "DMI Bullish Cross Buy",
+      "desc": "BUY when +DI crosses above -DI with rising ADX - confirms upward breakout.",
+      "indicators": {
+        "dmi_direction": 2.0,
+        "adx": 1.5,
+        "hull_ma": 1.0
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "BUY",
+      "entry_filter": "plus_di_cross_above_minus",
+      "instrument": "BOOM500",
+      "instrument_name": "Boom_500",
+      "instrument_type": "boom",
+      "full_id": "BOOM500_boom_dmi_bullish_cross",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_supply_demand_buy",
+      "name": "Supply/Demand Buy",
+      "desc": "BUY at demand zone with volume confirmation - boom spikes originate from demand zones.",
+      "indicators": {
+        "supply_demand": 2.0,
+        "volume_conf": 1.5
+      },
+      "regime_filter": [
+        "RANGING",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.2,
+      "min_confidence": 0.4,
+      "force_direction": "BUY",
+      "entry_filter": "demand_zone_touch",
+      "instrument": "BOOM500",
+      "instrument_name": "Boom_500",
+      "instrument_type": "boom",
+      "full_id": "BOOM500_boom_supply_demand_buy",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_cci_extreme_buy",
+      "name": "CCI Extreme Buy",
+      "desc": "BUY when CCI is extremely oversold (-200 or below) - high-probability reversal for boom.",
+      "indicators": {
+        "cci": 2.0,
+        "rsi": 1.5,
+        "bollinger": 1.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.4,
+      "force_direction": "BUY",
+      "entry_filter": "cci_below_neg200",
+      "instrument": "BOOM500",
+      "instrument_name": "Boom_500",
+      "instrument_type": "boom",
+      "full_id": "BOOM500_boom_cci_extreme_buy",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_ichimoku_buy",
+      "name": "Ichimoku Cloud Buy",
+      "desc": "BUY when price breaks above Ichimoku cloud - strong trend signal for boom spike.",
+      "indicators": {
+        "ichimoku": 2.0,
+        "multi_tf_trend": 1.5
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 3.0,
+      "sl_mult": 1.2,
+      "min_confidence": 0.45,
+      "force_direction": "BUY",
+      "entry_filter": "price_above_cloud",
+      "instrument": "BOOM500",
+      "instrument_name": "Boom_500",
+      "instrument_type": "boom",
+      "full_id": "BOOM500_boom_ichimoku_buy",
+      "pip_size": 0.01
+    }
+  ],
+  "BOOM900": [
+    {
+      "id": "boom_spike_rsi_oversold",
+      "name": "Spike RSI Oversold",
+      "desc": "BUY when RSI is deeply oversold before a spike. Boom indices spike upward after consolidation.",
+      "indicators": {
+        "rsi": 2.0,
+        "bollinger": 1.5
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.2,
+      "min_confidence": 0.4,
+      "force_direction": "BUY",
+      "entry_filter": "rsi_oversold_consolidation",
+      "instrument": "BOOM900",
+      "instrument_name": "Boom_900",
+      "instrument_type": "boom",
+      "full_id": "BOOM900_boom_spike_rsi_oversold",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_squeeze_fire",
+      "name": "Squeeze Fire Buy",
+      "desc": "Enter BUY on TTM Squeeze release - boom spikes often follow volatility compression.",
+      "indicators": {
+        "ttm_squeeze": 2.0,
+        "atr_channel": 1.8
+      },
+      "regime_filter": [
+        "BREAKOUT",
+        "VOLATILE",
+        "RANGING"
+      ],
+      "tp_mult": 3.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "BUY",
+      "entry_filter": "squeeze_release_buy",
+      "instrument": "BOOM900",
+      "instrument_name": "Boom_900",
+      "instrument_type": "boom",
+      "full_id": "BOOM900_boom_squeeze_fire",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_bollinger_lower",
+      "name": "Bollinger Lower Buy",
+      "desc": "BUY when price touches lower Bollinger Band in ranging market - classic mean reversion for boom spikes.",
+      "indicators": {
+        "bollinger": 2.0,
+        "rsi": 1.5,
+        "stochastic": 1.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "BUY",
+      "entry_filter": "bollinger_lower_touch",
+      "instrument": "BOOM900",
+      "instrument_name": "Boom_900",
+      "instrument_type": "boom",
+      "full_id": "BOOM900_boom_bollinger_lower",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_momentum_surge",
+      "name": "Momentum Surge Buy",
+      "desc": "BUY on momentum surge after quiet period - boom indices show sharp upward momentum bursts.",
+      "indicators": {
+        "momentum": 2.0,
+        "roc": 1.8,
+        "awesome_osc": 1.5
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.2,
+      "min_confidence": 0.4,
+      "force_direction": "BUY",
+      "entry_filter": "momentum_surge_from_low",
+      "instrument": "BOOM900",
+      "instrument_name": "Boom_900",
+      "instrument_type": "boom",
+      "full_id": "BOOM900_boom_momentum_surge",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_atr_expansion",
+      "name": "ATR Expansion Buy",
+      "desc": "BUY when ATR starts expanding after contraction - signals imminent boom spike.",
+      "indicators": {
+        "atr_channel": 2.0,
+        "bollinger_width": 1.8
+      },
+      "regime_filter": [
+        "BREAKOUT",
+        "VOLATILE"
+      ],
+      "tp_mult": 3.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "BUY",
+      "entry_filter": "atr_expanding_from_low",
+      "instrument": "BOOM900",
+      "instrument_name": "Boom_900",
+      "instrument_type": "boom",
+      "full_id": "BOOM900_boom_atr_expansion",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_stochastic_oversold",
+      "name": "Stochastic Oversold Buy",
+      "desc": "BUY when stochastic crosses up from oversold - early entry before spike.",
+      "indicators": {
+        "stochastic": 2.0,
+        "williams_r": 1.5,
+        "rsi": 1.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "BUY",
+      "entry_filter": "stoch_cross_up_oversold",
+      "instrument": "BOOM900",
+      "instrument_name": "Boom_900",
+      "instrument_type": "boom",
+      "full_id": "BOOM900_boom_stochastic_oversold",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_dmi_bullish_cross",
+      "name": "DMI Bullish Cross Buy",
+      "desc": "BUY when +DI crosses above -DI with rising ADX - confirms upward breakout.",
+      "indicators": {
+        "dmi_direction": 2.0,
+        "adx": 1.5,
+        "hull_ma": 1.0
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "BUY",
+      "entry_filter": "plus_di_cross_above_minus",
+      "instrument": "BOOM900",
+      "instrument_name": "Boom_900",
+      "instrument_type": "boom",
+      "full_id": "BOOM900_boom_dmi_bullish_cross",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_supply_demand_buy",
+      "name": "Supply/Demand Buy",
+      "desc": "BUY at demand zone with volume confirmation - boom spikes originate from demand zones.",
+      "indicators": {
+        "supply_demand": 2.0,
+        "volume_conf": 1.5
+      },
+      "regime_filter": [
+        "RANGING",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.2,
+      "min_confidence": 0.4,
+      "force_direction": "BUY",
+      "entry_filter": "demand_zone_touch",
+      "instrument": "BOOM900",
+      "instrument_name": "Boom_900",
+      "instrument_type": "boom",
+      "full_id": "BOOM900_boom_supply_demand_buy",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_cci_extreme_buy",
+      "name": "CCI Extreme Buy",
+      "desc": "BUY when CCI is extremely oversold (-200 or below) - high-probability reversal for boom.",
+      "indicators": {
+        "cci": 2.0,
+        "rsi": 1.5,
+        "bollinger": 1.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.4,
+      "force_direction": "BUY",
+      "entry_filter": "cci_below_neg200",
+      "instrument": "BOOM900",
+      "instrument_name": "Boom_900",
+      "instrument_type": "boom",
+      "full_id": "BOOM900_boom_cci_extreme_buy",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_ichimoku_buy",
+      "name": "Ichimoku Cloud Buy",
+      "desc": "BUY when price breaks above Ichimoku cloud - strong trend signal for boom spike.",
+      "indicators": {
+        "ichimoku": 2.0,
+        "multi_tf_trend": 1.5
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 3.0,
+      "sl_mult": 1.2,
+      "min_confidence": 0.45,
+      "force_direction": "BUY",
+      "entry_filter": "price_above_cloud",
+      "instrument": "BOOM900",
+      "instrument_name": "Boom_900",
+      "instrument_type": "boom",
+      "full_id": "BOOM900_boom_ichimoku_buy",
+      "pip_size": 0.01
+    }
+  ],
+  "BOOM1000": [
+    {
+      "id": "boom_spike_rsi_oversold",
+      "name": "Spike RSI Oversold",
+      "desc": "BUY when RSI is deeply oversold before a spike. Boom indices spike upward after consolidation.",
+      "indicators": {
+        "rsi": 2.0,
+        "bollinger": 1.5
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.2,
+      "min_confidence": 0.4,
+      "force_direction": "BUY",
+      "entry_filter": "rsi_oversold_consolidation",
+      "instrument": "BOOM1000",
+      "instrument_name": "Boom_1000",
+      "instrument_type": "boom",
+      "full_id": "BOOM1000_boom_spike_rsi_oversold",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_squeeze_fire",
+      "name": "Squeeze Fire Buy",
+      "desc": "Enter BUY on TTM Squeeze release - boom spikes often follow volatility compression.",
+      "indicators": {
+        "ttm_squeeze": 2.0,
+        "atr_channel": 1.8
+      },
+      "regime_filter": [
+        "BREAKOUT",
+        "VOLATILE",
+        "RANGING"
+      ],
+      "tp_mult": 3.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "BUY",
+      "entry_filter": "squeeze_release_buy",
+      "instrument": "BOOM1000",
+      "instrument_name": "Boom_1000",
+      "instrument_type": "boom",
+      "full_id": "BOOM1000_boom_squeeze_fire",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_bollinger_lower",
+      "name": "Bollinger Lower Buy",
+      "desc": "BUY when price touches lower Bollinger Band in ranging market - classic mean reversion for boom spikes.",
+      "indicators": {
+        "bollinger": 2.0,
+        "rsi": 1.5,
+        "stochastic": 1.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "BUY",
+      "entry_filter": "bollinger_lower_touch",
+      "instrument": "BOOM1000",
+      "instrument_name": "Boom_1000",
+      "instrument_type": "boom",
+      "full_id": "BOOM1000_boom_bollinger_lower",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_momentum_surge",
+      "name": "Momentum Surge Buy",
+      "desc": "BUY on momentum surge after quiet period - boom indices show sharp upward momentum bursts.",
+      "indicators": {
+        "momentum": 2.0,
+        "roc": 1.8,
+        "awesome_osc": 1.5
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.2,
+      "min_confidence": 0.4,
+      "force_direction": "BUY",
+      "entry_filter": "momentum_surge_from_low",
+      "instrument": "BOOM1000",
+      "instrument_name": "Boom_1000",
+      "instrument_type": "boom",
+      "full_id": "BOOM1000_boom_momentum_surge",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_atr_expansion",
+      "name": "ATR Expansion Buy",
+      "desc": "BUY when ATR starts expanding after contraction - signals imminent boom spike.",
+      "indicators": {
+        "atr_channel": 2.0,
+        "bollinger_width": 1.8
+      },
+      "regime_filter": [
+        "BREAKOUT",
+        "VOLATILE"
+      ],
+      "tp_mult": 3.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "BUY",
+      "entry_filter": "atr_expanding_from_low",
+      "instrument": "BOOM1000",
+      "instrument_name": "Boom_1000",
+      "instrument_type": "boom",
+      "full_id": "BOOM1000_boom_atr_expansion",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_stochastic_oversold",
+      "name": "Stochastic Oversold Buy",
+      "desc": "BUY when stochastic crosses up from oversold - early entry before spike.",
+      "indicators": {
+        "stochastic": 2.0,
+        "williams_r": 1.5,
+        "rsi": 1.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "BUY",
+      "entry_filter": "stoch_cross_up_oversold",
+      "instrument": "BOOM1000",
+      "instrument_name": "Boom_1000",
+      "instrument_type": "boom",
+      "full_id": "BOOM1000_boom_stochastic_oversold",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_dmi_bullish_cross",
+      "name": "DMI Bullish Cross Buy",
+      "desc": "BUY when +DI crosses above -DI with rising ADX - confirms upward breakout.",
+      "indicators": {
+        "dmi_direction": 2.0,
+        "adx": 1.5,
+        "hull_ma": 1.0
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "BUY",
+      "entry_filter": "plus_di_cross_above_minus",
+      "instrument": "BOOM1000",
+      "instrument_name": "Boom_1000",
+      "instrument_type": "boom",
+      "full_id": "BOOM1000_boom_dmi_bullish_cross",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_supply_demand_buy",
+      "name": "Supply/Demand Buy",
+      "desc": "BUY at demand zone with volume confirmation - boom spikes originate from demand zones.",
+      "indicators": {
+        "supply_demand": 2.0,
+        "volume_conf": 1.5
+      },
+      "regime_filter": [
+        "RANGING",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.2,
+      "min_confidence": 0.4,
+      "force_direction": "BUY",
+      "entry_filter": "demand_zone_touch",
+      "instrument": "BOOM1000",
+      "instrument_name": "Boom_1000",
+      "instrument_type": "boom",
+      "full_id": "BOOM1000_boom_supply_demand_buy",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_cci_extreme_buy",
+      "name": "CCI Extreme Buy",
+      "desc": "BUY when CCI is extremely oversold (-200 or below) - high-probability reversal for boom.",
+      "indicators": {
+        "cci": 2.0,
+        "rsi": 1.5,
+        "bollinger": 1.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.4,
+      "force_direction": "BUY",
+      "entry_filter": "cci_below_neg200",
+      "instrument": "BOOM1000",
+      "instrument_name": "Boom_1000",
+      "instrument_type": "boom",
+      "full_id": "BOOM1000_boom_cci_extreme_buy",
+      "pip_size": 0.01
+    },
+    {
+      "id": "boom_ichimoku_buy",
+      "name": "Ichimoku Cloud Buy",
+      "desc": "BUY when price breaks above Ichimoku cloud - strong trend signal for boom spike.",
+      "indicators": {
+        "ichimoku": 2.0,
+        "multi_tf_trend": 1.5
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 3.0,
+      "sl_mult": 1.2,
+      "min_confidence": 0.45,
+      "force_direction": "BUY",
+      "entry_filter": "price_above_cloud",
+      "instrument": "BOOM1000",
+      "instrument_name": "Boom_1000",
+      "instrument_type": "boom",
+      "full_id": "BOOM1000_boom_ichimoku_buy",
+      "pip_size": 0.01
+    }
+  ],
+  "CRASH500": [
+    {
+      "id": "crash_rsi_overbought",
+      "name": "RSI Overbought Sell",
+      "desc": "SELL when RSI is extremely overbought - crash indices drop sharply from overbought levels.",
+      "indicators": {
+        "rsi": 2.0,
+        "bollinger": 1.5
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.2,
+      "min_confidence": 0.4,
+      "force_direction": "SELL",
+      "entry_filter": "rsi_overbought_consolidation",
+      "instrument": "CRASH500",
+      "instrument_name": "Crash_500",
+      "instrument_type": "crash",
+      "full_id": "CRASH500_crash_rsi_overbought",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_squeeze_fire",
+      "name": "Squeeze Fire Sell",
+      "desc": "SELL on TTM Squeeze release - crash drops often follow volatility compression.",
+      "indicators": {
+        "ttm_squeeze": 2.0,
+        "atr_channel": 1.8
+      },
+      "regime_filter": [
+        "BREAKOUT",
+        "VOLATILE",
+        "RANGING"
+      ],
+      "tp_mult": 3.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "SELL",
+      "entry_filter": "squeeze_release_sell",
+      "instrument": "CRASH500",
+      "instrument_name": "Crash_500",
+      "instrument_type": "crash",
+      "full_id": "CRASH500_crash_squeeze_fire",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_bollinger_upper",
+      "name": "Bollinger Upper Sell",
+      "desc": "SELL when price touches upper Bollinger Band - mean reversion for crash drops.",
+      "indicators": {
+        "bollinger": 2.0,
+        "rsi": 1.5,
+        "stochastic": 1.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "SELL",
+      "entry_filter": "bollinger_upper_touch",
+      "instrument": "CRASH500",
+      "instrument_name": "Crash_500",
+      "instrument_type": "crash",
+      "full_id": "CRASH500_crash_bollinger_upper",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_momentum_drop",
+      "name": "Momentum Drop Sell",
+      "desc": "SELL on negative momentum surge - crash indices show sharp downward momentum bursts.",
+      "indicators": {
+        "momentum": 2.0,
+        "roc": 1.8
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.2,
+      "min_confidence": 0.4,
+      "force_direction": "SELL",
+      "entry_filter": "momentum_dropping",
+      "instrument": "CRASH500",
+      "instrument_name": "Crash_500",
+      "instrument_type": "crash",
+      "full_id": "CRASH500_crash_momentum_drop",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_atr_expansion",
+      "name": "ATR Expansion Sell",
+      "desc": "SELL when ATR starts expanding - signals imminent crash drop.",
+      "indicators": {
+        "atr_channel": 2.0,
+        "bollinger_width": 1.8
+      },
+      "regime_filter": [
+        "BREAKOUT",
+        "VOLATILE"
+      ],
+      "tp_mult": 3.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "SELL",
+      "entry_filter": "atr_expanding_high",
+      "instrument": "CRASH500",
+      "instrument_name": "Crash_500",
+      "instrument_type": "crash",
+      "full_id": "CRASH500_crash_atr_expansion",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_stochastic_overbought",
+      "name": "Stochastic Overbought Sell",
+      "desc": "SELL when stochastic crosses down from overbought.",
+      "indicators": {
+        "stochastic": 2.0,
+        "williams_r": 1.5,
+        "rsi": 1.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "SELL",
+      "entry_filter": "stoch_cross_down_overbought",
+      "instrument": "CRASH500",
+      "instrument_name": "Crash_500",
+      "instrument_type": "crash",
+      "full_id": "CRASH500_crash_stochastic_overbought",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_dmi_bearish_cross",
+      "name": "DMI Bearish Cross Sell",
+      "desc": "SELL when -DI crosses above +DI with rising ADX.",
+      "indicators": {
+        "dmi_direction": 2.0,
+        "adx": 1.5
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "SELL",
+      "entry_filter": "minus_di_cross_above_plus",
+      "instrument": "CRASH500",
+      "instrument_name": "Crash_500",
+      "instrument_type": "crash",
+      "full_id": "CRASH500_crash_dmi_bearish_cross",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_supply_resistance",
+      "name": "Supply Zone Sell",
+      "desc": "SELL at supply zone - crash drops originate from supply zones.",
+      "indicators": {
+        "supply_demand": 2.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.2,
+      "min_confidence": 0.4,
+      "force_direction": "SELL",
+      "entry_filter": "supply_zone_touch",
+      "instrument": "CRASH500",
+      "instrument_name": "Crash_500",
+      "instrument_type": "crash",
+      "full_id": "CRASH500_crash_supply_resistance",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_cci_extreme_sell",
+      "name": "CCI Extreme Sell",
+      "desc": "SELL when CCI is extremely overbought (+200 or above).",
+      "indicators": {
+        "cci": 2.0,
+        "rsi": 1.5
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.4,
+      "force_direction": "SELL",
+      "entry_filter": "cci_above_pos200",
+      "instrument": "CRASH500",
+      "instrument_name": "Crash_500",
+      "instrument_type": "crash",
+      "full_id": "CRASH500_crash_cci_extreme_sell",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_ichimoku_sell",
+      "name": "Ichimoku Cloud Sell",
+      "desc": "SELL when price breaks below Ichimoku cloud.",
+      "indicators": {
+        "ichimoku": 2.0,
+        "multi_tf_trend": 1.5
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 3.0,
+      "sl_mult": 1.2,
+      "min_confidence": 0.45,
+      "force_direction": "SELL",
+      "entry_filter": "price_below_cloud",
+      "instrument": "CRASH500",
+      "instrument_name": "Crash_500",
+      "instrument_type": "crash",
+      "full_id": "CRASH500_crash_ichimoku_sell",
+      "pip_size": 0.01
+    }
+  ],
+  "CRASH900": [
+    {
+      "id": "crash_rsi_overbought",
+      "name": "RSI Overbought Sell",
+      "desc": "SELL when RSI is extremely overbought - crash indices drop sharply from overbought levels.",
+      "indicators": {
+        "rsi": 2.0,
+        "bollinger": 1.5
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.2,
+      "min_confidence": 0.4,
+      "force_direction": "SELL",
+      "entry_filter": "rsi_overbought_consolidation",
+      "instrument": "CRASH900",
+      "instrument_name": "Crash_900",
+      "instrument_type": "crash",
+      "full_id": "CRASH900_crash_rsi_overbought",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_squeeze_fire",
+      "name": "Squeeze Fire Sell",
+      "desc": "SELL on TTM Squeeze release - crash drops often follow volatility compression.",
+      "indicators": {
+        "ttm_squeeze": 2.0,
+        "atr_channel": 1.8
+      },
+      "regime_filter": [
+        "BREAKOUT",
+        "VOLATILE",
+        "RANGING"
+      ],
+      "tp_mult": 3.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "SELL",
+      "entry_filter": "squeeze_release_sell",
+      "instrument": "CRASH900",
+      "instrument_name": "Crash_900",
+      "instrument_type": "crash",
+      "full_id": "CRASH900_crash_squeeze_fire",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_bollinger_upper",
+      "name": "Bollinger Upper Sell",
+      "desc": "SELL when price touches upper Bollinger Band - mean reversion for crash drops.",
+      "indicators": {
+        "bollinger": 2.0,
+        "rsi": 1.5,
+        "stochastic": 1.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "SELL",
+      "entry_filter": "bollinger_upper_touch",
+      "instrument": "CRASH900",
+      "instrument_name": "Crash_900",
+      "instrument_type": "crash",
+      "full_id": "CRASH900_crash_bollinger_upper",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_momentum_drop",
+      "name": "Momentum Drop Sell",
+      "desc": "SELL on negative momentum surge - crash indices show sharp downward momentum bursts.",
+      "indicators": {
+        "momentum": 2.0,
+        "roc": 1.8
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.2,
+      "min_confidence": 0.4,
+      "force_direction": "SELL",
+      "entry_filter": "momentum_dropping",
+      "instrument": "CRASH900",
+      "instrument_name": "Crash_900",
+      "instrument_type": "crash",
+      "full_id": "CRASH900_crash_momentum_drop",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_atr_expansion",
+      "name": "ATR Expansion Sell",
+      "desc": "SELL when ATR starts expanding - signals imminent crash drop.",
+      "indicators": {
+        "atr_channel": 2.0,
+        "bollinger_width": 1.8
+      },
+      "regime_filter": [
+        "BREAKOUT",
+        "VOLATILE"
+      ],
+      "tp_mult": 3.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "SELL",
+      "entry_filter": "atr_expanding_high",
+      "instrument": "CRASH900",
+      "instrument_name": "Crash_900",
+      "instrument_type": "crash",
+      "full_id": "CRASH900_crash_atr_expansion",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_stochastic_overbought",
+      "name": "Stochastic Overbought Sell",
+      "desc": "SELL when stochastic crosses down from overbought.",
+      "indicators": {
+        "stochastic": 2.0,
+        "williams_r": 1.5,
+        "rsi": 1.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "SELL",
+      "entry_filter": "stoch_cross_down_overbought",
+      "instrument": "CRASH900",
+      "instrument_name": "Crash_900",
+      "instrument_type": "crash",
+      "full_id": "CRASH900_crash_stochastic_overbought",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_dmi_bearish_cross",
+      "name": "DMI Bearish Cross Sell",
+      "desc": "SELL when -DI crosses above +DI with rising ADX.",
+      "indicators": {
+        "dmi_direction": 2.0,
+        "adx": 1.5
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "SELL",
+      "entry_filter": "minus_di_cross_above_plus",
+      "instrument": "CRASH900",
+      "instrument_name": "Crash_900",
+      "instrument_type": "crash",
+      "full_id": "CRASH900_crash_dmi_bearish_cross",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_supply_resistance",
+      "name": "Supply Zone Sell",
+      "desc": "SELL at supply zone - crash drops originate from supply zones.",
+      "indicators": {
+        "supply_demand": 2.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.2,
+      "min_confidence": 0.4,
+      "force_direction": "SELL",
+      "entry_filter": "supply_zone_touch",
+      "instrument": "CRASH900",
+      "instrument_name": "Crash_900",
+      "instrument_type": "crash",
+      "full_id": "CRASH900_crash_supply_resistance",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_cci_extreme_sell",
+      "name": "CCI Extreme Sell",
+      "desc": "SELL when CCI is extremely overbought (+200 or above).",
+      "indicators": {
+        "cci": 2.0,
+        "rsi": 1.5
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.4,
+      "force_direction": "SELL",
+      "entry_filter": "cci_above_pos200",
+      "instrument": "CRASH900",
+      "instrument_name": "Crash_900",
+      "instrument_type": "crash",
+      "full_id": "CRASH900_crash_cci_extreme_sell",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_ichimoku_sell",
+      "name": "Ichimoku Cloud Sell",
+      "desc": "SELL when price breaks below Ichimoku cloud.",
+      "indicators": {
+        "ichimoku": 2.0,
+        "multi_tf_trend": 1.5
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 3.0,
+      "sl_mult": 1.2,
+      "min_confidence": 0.45,
+      "force_direction": "SELL",
+      "entry_filter": "price_below_cloud",
+      "instrument": "CRASH900",
+      "instrument_name": "Crash_900",
+      "instrument_type": "crash",
+      "full_id": "CRASH900_crash_ichimoku_sell",
+      "pip_size": 0.01
+    }
+  ],
+  "cryBTCUSD": [
+    {
+      "id": "vol_rsi_bollinger_reversal",
+      "name": "RSI Bollinger Reversal",
+      "desc": "Enter when RSI is extreme (>70 or <30) and price is at Bollinger Band edge, expecting mean reversion within volatility range.",
+      "indicators": {
+        "rsi": 2.0,
+        "bollinger": 1.8,
+        "stochastic": 1.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY"
+      ],
+      "tp_mult": 0.8,
+      "sl_mult": 0.6,
+      "min_confidence": 0.55,
+      "entry_filter": "rsi_extreme_bollinger_touch",
+      "instrument": "cryBTCUSD",
+      "instrument_name": "BTC/USD",
+      "instrument_type": "crypto",
+      "full_id": "cryBTCUSD_vol_rsi_bollinger_reversal",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_macd_trend_follow",
+      "name": "MACD Trend Follow",
+      "desc": "Follow MACD crossovers with ADX confirmation for strong directional moves in volatility indices.",
+      "indicators": {
+        "macd": 2.0,
+        "dmi_direction": 1.5,
+        "adx": 1.2
+      },
+      "regime_filter": [
+        "TRENDING"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 0.8,
+      "min_confidence": 0.45,
+      "entry_filter": "macd_cross_above_zero",
+      "instrument": "cryBTCUSD",
+      "instrument_name": "BTC/USD",
+      "instrument_type": "crypto",
+      "full_id": "cryBTCUSD_vol_macd_trend_follow",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_breakout_squeeze",
+      "name": "Squeeze Breakout",
+      "desc": "Enter on TTM Squeeze release with ATR expansion - volatility indices show strong post-squeeze moves.",
+      "indicators": {
+        "ttm_squeeze": 2.0,
+        "atr_channel": 1.8,
+        "bollinger_width": 1.5
+      },
+      "regime_filter": [
+        "BREAKOUT",
+        "TRENDING"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.0,
+      "min_confidence": 0.5,
+      "entry_filter": "squeeze_fired_atr_expanding",
+      "instrument": "cryBTCUSD",
+      "instrument_name": "BTC/USD",
+      "instrument_type": "crypto",
+      "full_id": "cryBTCUSD_vol_breakout_squeeze",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_hull_momentum",
+      "name": "Hull MA Momentum",
+      "desc": "Hull MA direction change with momentum and ROC confirmation for clean trend entries.",
+      "indicators": {
+        "hull_ma": 2.0,
+        "momentum": 1.5,
+        "roc": 1.2
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 1.8,
+      "sl_mult": 0.7,
+      "min_confidence": 0.45,
+      "entry_filter": "hull_reversal_momentum_align",
+      "instrument": "cryBTCUSD",
+      "instrument_name": "BTC/USD",
+      "instrument_type": "crypto",
+      "full_id": "cryBTCUSD_vol_hull_momentum",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_ichimoku_trend",
+      "name": "Ichimoku Cloud Trend",
+      "desc": "Price above/below Ichimoku cloud with Tenkan-Kijun cross confirmation.",
+      "indicators": {
+        "ichimoku": 2.0,
+        "multi_tf_trend": 1.5
+      },
+      "regime_filter": [
+        "TRENDING"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 0.8,
+      "min_confidence": 0.5,
+      "entry_filter": "ichimoku_cloud_break",
+      "instrument": "cryBTCUSD",
+      "instrument_name": "BTC/USD",
+      "instrument_type": "crypto",
+      "full_id": "cryBTCUSD_vol_ichimoku_trend",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_stochastic_divergence",
+      "name": "Stochastic Divergence",
+      "desc": "Stochastic RSI divergence with Williams %R confirmation for reversal entries.",
+      "indicators": {
+        "stochastic_rsi": 2.0,
+        "rsi_divergence": 1.8,
+        "williams_r": 1.2
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY",
+        "VOLATILE"
+      ],
+      "tp_mult": 1.0,
+      "sl_mult": 0.5,
+      "min_confidence": 0.55,
+      "entry_filter": "stoch_rsi_divergence",
+      "instrument": "cryBTCUSD",
+      "instrument_name": "BTC/USD",
+      "instrument_type": "crypto",
+      "full_id": "cryBTCUSD_vol_stochastic_divergence",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_multi_tf_confluence",
+      "name": "Multi-TF Confluence",
+      "desc": "Align multiple timeframe trends with DMI direction for high-confidence entries.",
+      "indicators": {
+        "multi_tf_trend": 2.0,
+        "dmi_direction": 1.5,
+        "hull_ma": 1.0
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 0.7,
+      "min_confidence": 0.5,
+      "entry_filter": "all_tf_aligned",
+      "instrument": "cryBTCUSD",
+      "instrument_name": "BTC/USD",
+      "instrument_type": "crypto",
+      "full_id": "cryBTCUSD_vol_multi_tf_confluence",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_adx_breakout",
+      "name": "ADX Breakout",
+      "desc": "ADX rising above 25 with directional indicator confirming breakout direction.",
+      "indicators": {
+        "adx": 2.0,
+        "dmi_direction": 1.8,
+        "atr_channel": 1.2
+      },
+      "regime_filter": [
+        "BREAKOUT"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 0.8,
+      "min_confidence": 0.45,
+      "entry_filter": "adx_rising_di_cross",
+      "instrument": "cryBTCUSD",
+      "instrument_name": "BTC/USD",
+      "instrument_type": "crypto",
+      "full_id": "cryBTCUSD_vol_adx_breakout",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_keltner_bounce",
+      "name": "Keltner Channel Bounce",
+      "desc": "Price bouncing off Keltner Channel with CCI confirmation for mean reversion.",
+      "indicators": {
+        "keltner": 2.0,
+        "cci": 1.5,
+        "rsi": 1.0
+      },
+      "regime_filter": [
+        "RANGING"
+      ],
+      "tp_mult": 0.8,
+      "sl_mult": 0.5,
+      "min_confidence": 0.55,
+      "entry_filter": "keltner_touch_cci_extreme",
+      "instrument": "cryBTCUSD",
+      "instrument_name": "BTC/USD",
+      "instrument_type": "crypto",
+      "full_id": "cryBTCUSD_vol_keltner_bounce",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_chop_avoidance_trend",
+      "name": "Chop Avoidance Trend",
+      "desc": "Only trade when chop index is LOW (trending market) with momentum confirmation.",
+      "indicators": {
+        "chop_index": 2.0,
+        "momentum": 1.5,
+        "macd": 1.2
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 0.8,
+      "min_confidence": 0.5,
+      "entry_filter": "low_chop_momentum_confirm",
+      "instrument": "cryBTCUSD",
+      "instrument_name": "BTC/USD",
+      "instrument_type": "crypto",
+      "full_id": "cryBTCUSD_vol_chop_avoidance_trend",
+      "pip_size": 0.01
+    }
+  ],
+  "frxXAUUSD": [
+    {
+      "id": "vol_rsi_bollinger_reversal",
+      "name": "RSI Bollinger Reversal",
+      "desc": "Enter when RSI is extreme (>70 or <30) and price is at Bollinger Band edge, expecting mean reversion within volatility range.",
+      "indicators": {
+        "rsi": 2.0,
+        "bollinger": 1.8,
+        "stochastic": 1.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY"
+      ],
+      "tp_mult": 0.8,
+      "sl_mult": 0.6,
+      "min_confidence": 0.55,
+      "entry_filter": "rsi_extreme_bollinger_touch",
+      "instrument": "frxXAUUSD",
+      "instrument_name": "XAU/USD",
+      "instrument_type": "metal",
+      "full_id": "frxXAUUSD_vol_rsi_bollinger_reversal",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_macd_trend_follow",
+      "name": "MACD Trend Follow",
+      "desc": "Follow MACD crossovers with ADX confirmation for strong directional moves in volatility indices.",
+      "indicators": {
+        "macd": 2.0,
+        "dmi_direction": 1.5,
+        "adx": 1.2
+      },
+      "regime_filter": [
+        "TRENDING"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 0.8,
+      "min_confidence": 0.45,
+      "entry_filter": "macd_cross_above_zero",
+      "instrument": "frxXAUUSD",
+      "instrument_name": "XAU/USD",
+      "instrument_type": "metal",
+      "full_id": "frxXAUUSD_vol_macd_trend_follow",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_breakout_squeeze",
+      "name": "Squeeze Breakout",
+      "desc": "Enter on TTM Squeeze release with ATR expansion - volatility indices show strong post-squeeze moves.",
+      "indicators": {
+        "ttm_squeeze": 2.0,
+        "atr_channel": 1.8,
+        "bollinger_width": 1.5
+      },
+      "regime_filter": [
+        "BREAKOUT",
+        "TRENDING"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.0,
+      "min_confidence": 0.5,
+      "entry_filter": "squeeze_fired_atr_expanding",
+      "instrument": "frxXAUUSD",
+      "instrument_name": "XAU/USD",
+      "instrument_type": "metal",
+      "full_id": "frxXAUUSD_vol_breakout_squeeze",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_hull_momentum",
+      "name": "Hull MA Momentum",
+      "desc": "Hull MA direction change with momentum and ROC confirmation for clean trend entries.",
+      "indicators": {
+        "hull_ma": 2.0,
+        "momentum": 1.5,
+        "roc": 1.2
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 1.8,
+      "sl_mult": 0.7,
+      "min_confidence": 0.45,
+      "entry_filter": "hull_reversal_momentum_align",
+      "instrument": "frxXAUUSD",
+      "instrument_name": "XAU/USD",
+      "instrument_type": "metal",
+      "full_id": "frxXAUUSD_vol_hull_momentum",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_ichimoku_trend",
+      "name": "Ichimoku Cloud Trend",
+      "desc": "Price above/below Ichimoku cloud with Tenkan-Kijun cross confirmation.",
+      "indicators": {
+        "ichimoku": 2.0,
+        "multi_tf_trend": 1.5
+      },
+      "regime_filter": [
+        "TRENDING"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 0.8,
+      "min_confidence": 0.5,
+      "entry_filter": "ichimoku_cloud_break",
+      "instrument": "frxXAUUSD",
+      "instrument_name": "XAU/USD",
+      "instrument_type": "metal",
+      "full_id": "frxXAUUSD_vol_ichimoku_trend",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_stochastic_divergence",
+      "name": "Stochastic Divergence",
+      "desc": "Stochastic RSI divergence with Williams %R confirmation for reversal entries.",
+      "indicators": {
+        "stochastic_rsi": 2.0,
+        "rsi_divergence": 1.8,
+        "williams_r": 1.2
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY",
+        "VOLATILE"
+      ],
+      "tp_mult": 1.0,
+      "sl_mult": 0.5,
+      "min_confidence": 0.55,
+      "entry_filter": "stoch_rsi_divergence",
+      "instrument": "frxXAUUSD",
+      "instrument_name": "XAU/USD",
+      "instrument_type": "metal",
+      "full_id": "frxXAUUSD_vol_stochastic_divergence",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_multi_tf_confluence",
+      "name": "Multi-TF Confluence",
+      "desc": "Align multiple timeframe trends with DMI direction for high-confidence entries.",
+      "indicators": {
+        "multi_tf_trend": 2.0,
+        "dmi_direction": 1.5,
+        "hull_ma": 1.0
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 0.7,
+      "min_confidence": 0.5,
+      "entry_filter": "all_tf_aligned",
+      "instrument": "frxXAUUSD",
+      "instrument_name": "XAU/USD",
+      "instrument_type": "metal",
+      "full_id": "frxXAUUSD_vol_multi_tf_confluence",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_adx_breakout",
+      "name": "ADX Breakout",
+      "desc": "ADX rising above 25 with directional indicator confirming breakout direction.",
+      "indicators": {
+        "adx": 2.0,
+        "dmi_direction": 1.8,
+        "atr_channel": 1.2
+      },
+      "regime_filter": [
+        "BREAKOUT"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 0.8,
+      "min_confidence": 0.45,
+      "entry_filter": "adx_rising_di_cross",
+      "instrument": "frxXAUUSD",
+      "instrument_name": "XAU/USD",
+      "instrument_type": "metal",
+      "full_id": "frxXAUUSD_vol_adx_breakout",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_keltner_bounce",
+      "name": "Keltner Channel Bounce",
+      "desc": "Price bouncing off Keltner Channel with CCI confirmation for mean reversion.",
+      "indicators": {
+        "keltner": 2.0,
+        "cci": 1.5,
+        "rsi": 1.0
+      },
+      "regime_filter": [
+        "RANGING"
+      ],
+      "tp_mult": 0.8,
+      "sl_mult": 0.5,
+      "min_confidence": 0.55,
+      "entry_filter": "keltner_touch_cci_extreme",
+      "instrument": "frxXAUUSD",
+      "instrument_name": "XAU/USD",
+      "instrument_type": "metal",
+      "full_id": "frxXAUUSD_vol_keltner_bounce",
+      "pip_size": 0.01
+    },
+    {
+      "id": "vol_chop_avoidance_trend",
+      "name": "Chop Avoidance Trend",
+      "desc": "Only trade when chop index is LOW (trending market) with momentum confirmation.",
+      "indicators": {
+        "chop_index": 2.0,
+        "momentum": 1.5,
+        "macd": 1.2
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 0.8,
+      "min_confidence": 0.5,
+      "entry_filter": "low_chop_momentum_confirm",
+      "instrument": "frxXAUUSD",
+      "instrument_name": "XAU/USD",
+      "instrument_type": "metal",
+      "full_id": "frxXAUUSD_vol_chop_avoidance_trend",
+      "pip_size": 0.01
+    }
+  ],
+  "CRASH1000": [
+    {
+      "id": "crash_rsi_overbought",
+      "name": "RSI Overbought Sell",
+      "desc": "SELL when RSI is extremely overbought - crash indices drop sharply from overbought levels.",
+      "indicators": {
+        "rsi": 2.0,
+        "bollinger": 1.5
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.2,
+      "min_confidence": 0.4,
+      "force_direction": "SELL",
+      "entry_filter": "rsi_overbought_consolidation",
+      "instrument": "CRASH1000",
+      "instrument_name": "Crash_1000",
+      "instrument_type": "crash",
+      "full_id": "CRASH1000_crash_rsi_overbought",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_squeeze_fire",
+      "name": "Squeeze Fire Sell",
+      "desc": "SELL on TTM Squeeze release - crash drops often follow volatility compression.",
+      "indicators": {
+        "ttm_squeeze": 2.0,
+        "atr_channel": 1.8
+      },
+      "regime_filter": [
+        "BREAKOUT",
+        "VOLATILE",
+        "RANGING"
+      ],
+      "tp_mult": 3.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "SELL",
+      "entry_filter": "squeeze_release_sell",
+      "instrument": "CRASH1000",
+      "instrument_name": "Crash_1000",
+      "instrument_type": "crash",
+      "full_id": "CRASH1000_crash_squeeze_fire",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_bollinger_upper",
+      "name": "Bollinger Upper Sell",
+      "desc": "SELL when price touches upper Bollinger Band - mean reversion for crash drops.",
+      "indicators": {
+        "bollinger": 2.0,
+        "rsi": 1.5,
+        "stochastic": 1.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "SELL",
+      "entry_filter": "bollinger_upper_touch",
+      "instrument": "CRASH1000",
+      "instrument_name": "Crash_1000",
+      "instrument_type": "crash",
+      "full_id": "CRASH1000_crash_bollinger_upper",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_momentum_drop",
+      "name": "Momentum Drop Sell",
+      "desc": "SELL on negative momentum surge - crash indices show sharp downward momentum bursts.",
+      "indicators": {
+        "momentum": 2.0,
+        "roc": 1.8
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.2,
+      "min_confidence": 0.4,
+      "force_direction": "SELL",
+      "entry_filter": "momentum_dropping",
+      "instrument": "CRASH1000",
+      "instrument_name": "Crash_1000",
+      "instrument_type": "crash",
+      "full_id": "CRASH1000_crash_momentum_drop",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_atr_expansion",
+      "name": "ATR Expansion Sell",
+      "desc": "SELL when ATR starts expanding - signals imminent crash drop.",
+      "indicators": {
+        "atr_channel": 2.0,
+        "bollinger_width": 1.8
+      },
+      "regime_filter": [
+        "BREAKOUT",
+        "VOLATILE"
+      ],
+      "tp_mult": 3.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "SELL",
+      "entry_filter": "atr_expanding_high",
+      "instrument": "CRASH1000",
+      "instrument_name": "Crash_1000",
+      "instrument_type": "crash",
+      "full_id": "CRASH1000_crash_atr_expansion",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_stochastic_overbought",
+      "name": "Stochastic Overbought Sell",
+      "desc": "SELL when stochastic crosses down from overbought.",
+      "indicators": {
+        "stochastic": 2.0,
+        "williams_r": 1.5,
+        "rsi": 1.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "SELL",
+      "entry_filter": "stoch_cross_down_overbought",
+      "instrument": "CRASH1000",
+      "instrument_name": "Crash_1000",
+      "instrument_type": "crash",
+      "full_id": "CRASH1000_crash_stochastic_overbought",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_dmi_bearish_cross",
+      "name": "DMI Bearish Cross Sell",
+      "desc": "SELL when -DI crosses above +DI with rising ADX.",
+      "indicators": {
+        "dmi_direction": 2.0,
+        "adx": 1.5
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.0,
+      "min_confidence": 0.45,
+      "force_direction": "SELL",
+      "entry_filter": "minus_di_cross_above_plus",
+      "instrument": "CRASH1000",
+      "instrument_name": "Crash_1000",
+      "instrument_type": "crash",
+      "full_id": "CRASH1000_crash_dmi_bearish_cross",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_supply_resistance",
+      "name": "Supply Zone Sell",
+      "desc": "SELL at supply zone - crash drops originate from supply zones.",
+      "indicators": {
+        "supply_demand": 2.0
+      },
+      "regime_filter": [
+        "RANGING",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.5,
+      "sl_mult": 1.2,
+      "min_confidence": 0.4,
+      "force_direction": "SELL",
+      "entry_filter": "supply_zone_touch",
+      "instrument": "CRASH1000",
+      "instrument_name": "Crash_1000",
+      "instrument_type": "crash",
+      "full_id": "CRASH1000_crash_supply_resistance",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_cci_extreme_sell",
+      "name": "CCI Extreme Sell",
+      "desc": "SELL when CCI is extremely overbought (+200 or above).",
+      "indicators": {
+        "cci": 2.0,
+        "rsi": 1.5
+      },
+      "regime_filter": [
+        "RANGING",
+        "CHOPPY",
+        "VOLATILE"
+      ],
+      "tp_mult": 2.0,
+      "sl_mult": 1.0,
+      "min_confidence": 0.4,
+      "force_direction": "SELL",
+      "entry_filter": "cci_above_pos200",
+      "instrument": "CRASH1000",
+      "instrument_name": "Crash_1000",
+      "instrument_type": "crash",
+      "full_id": "CRASH1000_crash_cci_extreme_sell",
+      "pip_size": 0.01
+    },
+    {
+      "id": "crash_ichimoku_sell",
+      "name": "Ichimoku Cloud Sell",
+      "desc": "SELL when price breaks below Ichimoku cloud.",
+      "indicators": {
+        "ichimoku": 2.0,
+        "multi_tf_trend": 1.5
+      },
+      "regime_filter": [
+        "TRENDING",
+        "BREAKOUT"
+      ],
+      "tp_mult": 3.0,
+      "sl_mult": 1.2,
+      "min_confidence": 0.45,
+      "force_direction": "SELL",
+      "entry_filter": "price_below_cloud",
+      "instrument": "CRASH1000",
+      "instrument_name": "Crash_1000",
+      "instrument_type": "crash",
+      "full_id": "CRASH1000_crash_ichimoku_sell",
+      "pip_size": 0.01
+    }
+  ]
+}

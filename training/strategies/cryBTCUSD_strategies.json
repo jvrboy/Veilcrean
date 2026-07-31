@@ -1,0 +1,228 @@
+[
+  {
+    "id": "vol_rsi_bollinger_reversal",
+    "name": "RSI Bollinger Reversal",
+    "desc": "Enter when RSI is extreme (>70 or <30) and price is at Bollinger Band edge, expecting mean reversion within volatility range.",
+    "indicators": {
+      "rsi": 2.0,
+      "bollinger": 1.8,
+      "stochastic": 1.0
+    },
+    "regime_filter": [
+      "RANGING",
+      "CHOPPY"
+    ],
+    "tp_mult": 0.8,
+    "sl_mult": 0.6,
+    "min_confidence": 0.55,
+    "entry_filter": "rsi_extreme_bollinger_touch",
+    "instrument": "cryBTCUSD",
+    "instrument_name": "BTC/USD",
+    "instrument_type": "crypto",
+    "full_id": "cryBTCUSD_vol_rsi_bollinger_reversal",
+    "pip_size": 0.01
+  },
+  {
+    "id": "vol_macd_trend_follow",
+    "name": "MACD Trend Follow",
+    "desc": "Follow MACD crossovers with ADX confirmation for strong directional moves in volatility indices.",
+    "indicators": {
+      "macd": 2.0,
+      "dmi_direction": 1.5,
+      "adx": 1.2
+    },
+    "regime_filter": [
+      "TRENDING"
+    ],
+    "tp_mult": 2.0,
+    "sl_mult": 0.8,
+    "min_confidence": 0.45,
+    "entry_filter": "macd_cross_above_zero",
+    "instrument": "cryBTCUSD",
+    "instrument_name": "BTC/USD",
+    "instrument_type": "crypto",
+    "full_id": "cryBTCUSD_vol_macd_trend_follow",
+    "pip_size": 0.01
+  },
+  {
+    "id": "vol_breakout_squeeze",
+    "name": "Squeeze Breakout",
+    "desc": "Enter on TTM Squeeze release with ATR expansion - volatility indices show strong post-squeeze moves.",
+    "indicators": {
+      "ttm_squeeze": 2.0,
+      "atr_channel": 1.8,
+      "bollinger_width": 1.5
+    },
+    "regime_filter": [
+      "BREAKOUT",
+      "TRENDING"
+    ],
+    "tp_mult": 2.5,
+    "sl_mult": 1.0,
+    "min_confidence": 0.5,
+    "entry_filter": "squeeze_fired_atr_expanding",
+    "instrument": "cryBTCUSD",
+    "instrument_name": "BTC/USD",
+    "instrument_type": "crypto",
+    "full_id": "cryBTCUSD_vol_breakout_squeeze",
+    "pip_size": 0.01
+  },
+  {
+    "id": "vol_hull_momentum",
+    "name": "Hull MA Momentum",
+    "desc": "Hull MA direction change with momentum and ROC confirmation for clean trend entries.",
+    "indicators": {
+      "hull_ma": 2.0,
+      "momentum": 1.5,
+      "roc": 1.2
+    },
+    "regime_filter": [
+      "TRENDING",
+      "BREAKOUT"
+    ],
+    "tp_mult": 1.8,
+    "sl_mult": 0.7,
+    "min_confidence": 0.45,
+    "entry_filter": "hull_reversal_momentum_align",
+    "instrument": "cryBTCUSD",
+    "instrument_name": "BTC/USD",
+    "instrument_type": "crypto",
+    "full_id": "cryBTCUSD_vol_hull_momentum",
+    "pip_size": 0.01
+  },
+  {
+    "id": "vol_ichimoku_trend",
+    "name": "Ichimoku Cloud Trend",
+    "desc": "Price above/below Ichimoku cloud with Tenkan-Kijun cross confirmation.",
+    "indicators": {
+      "ichimoku": 2.0,
+      "multi_tf_trend": 1.5
+    },
+    "regime_filter": [
+      "TRENDING"
+    ],
+    "tp_mult": 2.0,
+    "sl_mult": 0.8,
+    "min_confidence": 0.5,
+    "entry_filter": "ichimoku_cloud_break",
+    "instrument": "cryBTCUSD",
+    "instrument_name": "BTC/USD",
+    "instrument_type": "crypto",
+    "full_id": "cryBTCUSD_vol_ichimoku_trend",
+    "pip_size": 0.01
+  },
+  {
+    "id": "vol_stochastic_divergence",
+    "name": "Stochastic Divergence",
+    "desc": "Stochastic RSI divergence with Williams %R confirmation for reversal entries.",
+    "indicators": {
+      "stochastic_rsi": 2.0,
+      "rsi_divergence": 1.8,
+      "williams_r": 1.2
+    },
+    "regime_filter": [
+      "RANGING",
+      "CHOPPY",
+      "VOLATILE"
+    ],
+    "tp_mult": 1.0,
+    "sl_mult": 0.5,
+    "min_confidence": 0.55,
+    "entry_filter": "stoch_rsi_divergence",
+    "instrument": "cryBTCUSD",
+    "instrument_name": "BTC/USD",
+    "instrument_type": "crypto",
+    "full_id": "cryBTCUSD_vol_stochastic_divergence",
+    "pip_size": 0.01
+  },
+  {
+    "id": "vol_multi_tf_confluence",
+    "name": "Multi-TF Confluence",
+    "desc": "Align multiple timeframe trends with DMI direction for high-confidence entries.",
+    "indicators": {
+      "multi_tf_trend": 2.0,
+      "dmi_direction": 1.5,
+      "hull_ma": 1.0
+    },
+    "regime_filter": [
+      "TRENDING",
+      "BREAKOUT"
+    ],
+    "tp_mult": 2.0,
+    "sl_mult": 0.7,
+    "min_confidence": 0.5,
+    "entry_filter": "all_tf_aligned",
+    "instrument": "cryBTCUSD",
+    "instrument_name": "BTC/USD",
+    "instrument_type": "crypto",
+    "full_id": "cryBTCUSD_vol_multi_tf_confluence",
+    "pip_size": 0.01
+  },
+  {
+    "id": "vol_adx_breakout",
+    "name": "ADX Breakout",
+    "desc": "ADX rising above 25 with directional indicator confirming breakout direction.",
+    "indicators": {
+      "adx": 2.0,
+      "dmi_direction": 1.8,
+      "atr_channel": 1.2
+    },
+    "regime_filter": [
+      "BREAKOUT"
+    ],
+    "tp_mult": 2.5,
+    "sl_mult": 0.8,
+    "min_confidence": 0.45,
+    "entry_filter": "adx_rising_di_cross",
+    "instrument": "cryBTCUSD",
+    "instrument_name": "BTC/USD",
+    "instrument_type": "crypto",
+    "full_id": "cryBTCUSD_vol_adx_breakout",
+    "pip_size": 0.01
+  },
+  {
+    "id": "vol_keltner_bounce",
+    "name": "Keltner Channel Bounce",
+    "desc": "Price bouncing off Keltner Channel with CCI confirmation for mean reversion.",
+    "indicators": {
+      "keltner": 2.0,
+      "cci": 1.5,
+      "rsi": 1.0
+    },
+    "regime_filter": [
+      "RANGING"
+    ],
+    "tp_mult": 0.8,
+    "sl_mult": 0.5,
+    "min_confidence": 0.55,
+    "entry_filter": "keltner_touch_cci_extreme",
+    "instrument": "cryBTCUSD",
+    "instrument_name": "BTC/USD",
+    "instrument_type": "crypto",
+    "full_id": "cryBTCUSD_vol_keltner_bounce",
+    "pip_size": 0.01
+  },
+  {
+    "id": "vol_chop_avoidance_trend",
+    "name": "Chop Avoidance Trend",
+    "desc": "Only trade when chop index is LOW (trending market) with momentum confirmation.",
+    "indicators": {
+      "chop_index": 2.0,
+      "momentum": 1.5,
+      "macd": 1.2
+    },
+    "regime_filter": [
+      "TRENDING",
+      "BREAKOUT"
+    ],
+    "tp_mult": 2.0,
+    "sl_mult": 0.8,
+    "min_confidence": 0.5,
+    "entry_filter": "low_chop_momentum_confirm",
+    "instrument": "cryBTCUSD",
+    "instrument_name": "BTC/USD",
+    "instrument_type": "crypto",
+    "full_id": "cryBTCUSD_vol_chop_avoidance_trend",
+    "pip_size": 0.01
+  }
+]

@@ -15,11 +15,11 @@
     "instrument": "frxEURUSD",
     "timeframe": "5m",
     "tp_mult": 2.3000000000000003,
-    "sl_mult": 1.1664,
+    "sl_mult": 1.2597120000000002,
     "trailing_enabled": false,
-    "win_count": 3,
-    "loss_count": 3,
-    "expectancy": 0.8333333333333335
+    "win_count": 6,
+    "loss_count": 4,
+    "expectancy": 1.6
   },
   "frxEURUSD_1h_TRENDING": {
     "regime": "TRENDING",
@@ -108,5 +108,49 @@
     "win_count": 12,
     "loss_count": 8,
     "expectancy": 203.7025
+  },
+  "R_100_5m_TRENDING": {
+    "regime": "TRENDING",
+    "instrument": "R_100",
+    "timeframe": "5m",
+    "tp_mult": 1.84,
+    "sl_mult": 1.5868743229440005,
+    "trailing_enabled": false,
+    "win_count": 7,
+    "loss_count": 7,
+    "expectancy": 110.5864285714286
+  },
+  "R_100_5m_BREAKOUT": {
+    "regime": "BREAKOUT",
+    "instrument": "R_100",
+    "timeframe": "5m",
+    "tp_mult": 1.9467200000000007,
+    "sl_mult": 2.158924997272788,
+    "trailing_enabled": false,
+    "win_count": 35,
+    "loss_count": 13,
+    "expectancy": 440.55062499999997
+  },
+  "R_100_1h_VOLATILE": {
+    "regime": "VOLATILE",
+    "instrument": "R_100",
+    "timeframe": "1h",
+    "tp_mult": 0.7698283097063426,
+    "sl_mult": 2.5,
+    "trailing_enabled": false,
+    "win_count": 89,
+    "loss_count": 24,
+    "expectancy": 2126.9246017699124
+  },
+  "R_100_1h_CHOPPY": {
+    "regime": "CHOPPY",
+    "instrument": "R_100",
+    "timeframe": "1h",
+    "tp_mult": 0.6771200000000002,
+    "sl_mult": 0.6298560000000001,
+    "trailing_enabled": false,
+    "win_count": 22,
+    "loss_count": 5,
+    "expectancy": 1746.137037037037
   }
 }
