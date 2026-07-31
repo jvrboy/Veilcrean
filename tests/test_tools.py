@@ -94,3 +94,44 @@ def test_mtf_alignment_trending():
     res = MTFAlignmentTool().analyze(buffers)
     # most TFs should agree on direction → positive score
     assert res.score > 0
+
+
+# ---------------------------------------------------------------- regression:
+# every tool must compute (no silent exceptions) on plain pandas DataFrames,
+# and the feature vector / aggregate score must never contain NaN.
+def test_no_tool_silently_fails_on_plain_dataframes():
+    from python_brain.confluence import ConfluenceEngine
+    from python_brain.communication.data_parser import MarketSnapshot, TickData, AccountData
+    from datetime import datetime, timezone
+    from tests.test_smoke import _make_df
+
+    buffers = {tf: _make_df(seed=i) for i, tf in enumerate(["M1", "M5", "M15", "M30", "H1", "H4", "D1"])}
+    snap = MarketSnapshot(
+        symbol="EURUSD", trigger="TICK",
+        timestamp=datetime.now(timezone.utc),
+        tick=TickData(1.0840, 1.0845, 1.5, 100),
+        account=AccountData(10000, 10100, 9500, 500, 100, 100),
+    )
+    res = ConfluenceEngine().run(snap, buffers)
+
+    failed = {name: r.errors for name, r in res["tool_results"].items() if r.errors}
+    assert not failed, f"{len(failed)} tools raised exceptions: {list(failed)[:10]}"
+
+    fv = res["feature_vector"]
+    assert fv.ndim == 1
+    assert not np.isnan(fv).any(), "feature vector contains NaN"
+    assert np.isfinite(res["aggregate_score"]), "aggregate score is not finite"
+
+
+def test_buffer_manager_returns_safe_frames():
+    from python_brain.preprocessor import BufferManager
+    from python_brain.preprocessor.buffer_manager import SafeDataFrame
+    from tests.test_smoke import _make_df
+
+    buf = BufferManager()
+    buf.update({"M5": _make_df(seed=1), "H1": _make_df(seed=2)})
+    for tf, df in buf.all().items():
+        assert isinstance(df, SafeDataFrame)
+    # boolean context must not raise
+    assert bool(buf.get("M5"))
+    assert not bool(buf.get("M1"))  # untouched TF stays empty

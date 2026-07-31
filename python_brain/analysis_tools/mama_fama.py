@@ -37,6 +37,8 @@ class MAMAFAMATool(BaseTool):
         change = prices.diff().abs()
         volatility = change.rolling(10).sum()
         er = (prices.diff(10).abs() / (volatility + 1e-9)).clip(0, 1)
+        # rolling() leaves leading NaNs that would poison the recursive MAMA/FAMA.
+        er = er.fillna(0.0)
         
         # Adaptive alpha
         alpha = er * (fast_limit - slow_limit) + slow_limit

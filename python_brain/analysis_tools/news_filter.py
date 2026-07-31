@@ -10,6 +10,8 @@ from __future__ import annotations
 from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional
 
+import pandas as pd
+
 from .base_tool import BaseTool, ToolResult
 from ..config import RISK_CFG
 

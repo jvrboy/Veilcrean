@@ -85,6 +85,13 @@ class DecisionEngine:
         if bundle is None:
             log.warning("no model bundle found — using fresh (untrained) networks")
             return
+        bundle_dim = bundle.metadata.get("input_dim")
+        if bundle_dim is not None and int(bundle_dim) != self.input_dim:
+            log.info(
+                f"skipping bundle {bundle.version} (trained on {bundle_dim} "
+                f"features, engine uses {self.input_dim}) — using fresh networks"
+            )
+            return
         try:
             self.trade.load_state_dict(bundle.trade_state)
             self.risk.load_state_dict(bundle.risk_state)
@@ -107,7 +114,8 @@ class DecisionEngine:
         action_oh = F.one_hot(torch.tensor([action_idx]), num_classes=3).float()
         sl_norm, tp_norm, lot_norm = self.risk(x, action_oh, torch.tensor([confidence]))
         regime_logits = self.regime(x)
-        regime_idx = int(np.argmax(regime_logits, dim=-1)[0].item())
+        # torch tensor -> use torch.argmax (np.argmax has no `dim` kwarg)
+        regime_idx = int(torch.argmax(regime_logits, dim=-1)[0].item())
         regime = REGIME_LABELS[regime_idx] if regime_idx < len(REGIME_LABELS) else "UNKNOWN"
         return {
             "action":      action,

@@ -508,7 +508,7 @@ async def run_full_training(num_runs: int = 15, verbose: bool = True,
         total_wins = sum(r["wins"] for r in results)
         total_losses = sum(r["losses"] for r in results)
         total_pnl = sum(r["pnl_pips"] for r in results)
-        total_tp = sum(r.get("avg_win", 0) * r["wins"] for r in all_results if r.get("wins", 0) > 0) if 'all_results' in dir() else sum(r.get("avg_win", 0) * r["wins"] for r in results if r.get("wins", 0) > 0)
+        total_tp = sum(r.get("avg_win", 0) * r["wins"] for r in results if r.get("wins", 0) > 0)
         total_sl = sum(r.get("avg_loss", 0) * r["losses"] for r in results if r.get("losses", 0) > 0)
         avg_w = total_tp / max(total_wins, 1)
         avg_l = total_sl / max(total_losses, 1)

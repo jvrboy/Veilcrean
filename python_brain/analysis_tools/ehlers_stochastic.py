@@ -23,7 +23,9 @@ class EhlersStochTool(BaseTool):
         prices = (df["high"] + df["low"]) / 2
         alpha = 0.07
         smooth = (prices + 2 * prices.shift(1) + 2 * prices.shift(2) + prices.shift(3)) / 6
-        
+        # Remove leading NaNs from shift() so the recursive cycle stays finite.
+        smooth = smooth.ffill().bfill()
+
         cycle = np.zeros_like(smooth)
         for i in range(2, len(smooth)):
             cycle[i] = (1 - 0.5 * alpha)**2 * (smooth.iloc[i] - 2 * smooth.iloc[i-1] + smooth.iloc[i-2]) + \

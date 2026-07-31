@@ -15,6 +15,7 @@ import numpy as np
 from ..config import SI_CFG, RISK_CFG
 from ..neural_network.trainer  import Trainer
 from ..neural_network.validator import Validator
+from ..utils.logger import get_logger
 from ..neural_network.model_manager import ModelManager, ModelBundle
 from .trade_journal import TradeJournal
 
@@ -63,7 +64,15 @@ class Retrainer:
         if len(va) < 5:
             return RetrainResult(False, "", 0.0, "validation set too small")
 
-        # 1. Init trainer
+        # 1. Init trainer — always match the actual feature width of the
+        # journal data (seeded demo journals may use a different width than
+        # the live engine's feature vector).
+        actual_dim = int(X.shape[1])
+        if actual_dim != self.input_dim:
+            log = get_logger("retrainer")
+            log.info(f"journal feature width {actual_dim} != engine input_dim "
+                     f"{self.input_dim}; training at {actual_dim}")
+            self.input_dim = actual_dim
         self.trainer = Trainer(input_dim=self.input_dim)
 
         # 2. Load existing weights (warm start) if any

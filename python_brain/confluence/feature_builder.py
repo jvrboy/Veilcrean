@@ -30,9 +30,13 @@ class FeatureBuilder:
         features: Dict[str, float] = {}
 
         # 1. Top-level per-tool scores and confidences
+        # Non-finite values (a tool's math glitch) must never poison the
+        # feature vector that feeds the neural networks.
         for name, res in tool_results.items():
-            features[f"{name}__score"]      = float(np.clip(res.score, -1, 1))
-            features[f"{name}__confidence"] = float(np.clip(res.confidence, 0, 1))
+            score = float(np.nan_to_num(res.score, nan=0.0, posinf=1.0, neginf=-1.0))
+            conf = float(np.nan_to_num(res.confidence, nan=0.0, posinf=1.0, neginf=0.0))
+            features[f"{name}__score"]      = float(np.clip(score, -1, 1))
+            features[f"{name}__confidence"] = float(np.clip(conf, 0, 1))
 
         # 2. Per-tool inner features (RSI/MACD/slopes/...)
         for name, res in tool_results.items():

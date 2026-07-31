@@ -7,6 +7,8 @@ Uses parallel MLP branches to process technical features from different
 timeframes (M1, M15, H1) and fuses them into a single cross-TF reasoning.
 """
 from __future__ import annotations
+from typing import Dict
+
 import torch
 import torch.nn as nn
 

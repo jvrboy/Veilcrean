@@ -25,7 +25,10 @@ class CyberCycleTool(BaseTool):
         
         # Pre-smoothing (Ehlers Smooth)
         smooth = (prices + 2 * prices.shift(1) + 2 * prices.shift(2) + prices.shift(3)) / 6
-        
+        # shift() introduces leading NaNs — remove them so the recursive
+        # cycle never gets poisoned with NaN values.
+        smooth = smooth.ffill().bfill()
+
         cycle = np.zeros_like(smooth)
         for i in range(2, len(smooth)):
             cycle[i] = (1 - 0.5 * alpha)**2 * (smooth.iloc[i] - 2 * smooth.iloc[i-1] + smooth.iloc[i-2]) + \
