@@ -3,6 +3,12 @@
 Run:  python examples/demo_full_agent.py
 """
 
+import os
+import sys
+
+# Make the package importable when running from the examples/ directory.
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import numpy as np
 
 from neurosense import Brain

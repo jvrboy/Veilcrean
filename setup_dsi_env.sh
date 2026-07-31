@@ -5,8 +5,10 @@ echo "Setting up Veilcrean DSI Master Environment..."
 python3 -m venv .venv
 source .venv/bin/activate
 
-# Install requirements
-pip install pandas numpy torch websockets deriv-api scipy scikit-learn python-dotenv
+# Install requirements (deriv-api is not on PyPI; the repo talks to Deriv
+# directly over WebSockets via the `websockets` package)
+pip install --upgrade pip
+pip install -r requirements.brain.txt
 
 # Instructions
 echo "===================================================="

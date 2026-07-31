@@ -32,6 +32,7 @@ class MultiTaskNet(nn.Module):
     def forward(self, x: torch.Tensor):
         h = self.backbone(x)
         logits = self.direction_head(h)
-        vol = torch.softplus(self.volatility_head(h))
+        # `torch.softplus` does not exist — use the functional form.
+        vol = torch.nn.functional.softplus(self.volatility_head(h))
         regime = self.regime_head(h)
         return logits, vol, regime

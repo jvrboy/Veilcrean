@@ -4,6 +4,14 @@ train_dsi_offline.py
 Trains the bot's Neural Networks using historical DSI data.
 Iterates until a profitability threshold is met in backtest.
 """
+import os
+import sys
+
+# Make the repository importable no matter where this script is run from.
+_REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _REPO not in sys.path:
+    sys.path.insert(0, _REPO)
+
 import pandas as pd
 import numpy as np
 import torch

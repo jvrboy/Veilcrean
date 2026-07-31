@@ -3,6 +3,12 @@
 Run:  python examples/demo_learning.py
 """
 
+import os
+import sys
+
+# Make the package importable when running from the examples/ directory.
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from neurosense import Brain
 
 GRID = 5           # 5x5 grid; start (0,0), goal (4,4)

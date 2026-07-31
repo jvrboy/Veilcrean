@@ -119,6 +119,29 @@ Veilcrean/
 
 ## 🚀 Quick Start
 
+### 0. Run in Google Colab (no local setup needed)
+
+The entire research/training/backtesting stack runs in a free Colab notebook —
+no token, no local Python required:
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jvrboy/Veilcrean/blob/main/colab/Veilcrean_Colab_Starter.ipynb)
+
+```bash
+# or clone manually and run the notebook:
+git clone https://github.com/jvrboy/Veilcrean.git
+cd Veilcrean
+# open colab/Veilcrean_Colab_Starter.ipynb in Google Colab and run all cells
+```
+
+The notebook will:
+1. Clone the repo and install `requirements.brain.txt` (Colab already ships numpy/pandas/torch).
+2. Run the test suite + end-to-end smoke test.
+3. Train a model **offline** on the committed Deriv historical data (`data/historical_deriv/`).
+4. Backtest walk-forward, generate signals, and optionally fetch live data from Deriv's public API.
+
+> ⚠️ Live trading (`python run.py`) needs the MT5 Expert Advisor + ZMQ bridge on
+> a local machine — Colab is for training, backtesting and research.
+
 ### 1. Install Python Dependencies
 
 ```bash

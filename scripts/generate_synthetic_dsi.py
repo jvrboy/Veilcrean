@@ -1,9 +1,18 @@
 """
 generate_synthetic_dsi.py
 =========================
-Generates synthetic Drift Switch Index data for training when the API 
+Generates synthetic Drift Switch Index data for training when the API
 is unavailable.
 """
+import os
+import sys
+
+# Make the repository importable no matter where this script is run from
+# (directly, via a Makefile, or from a Google Colab notebook).
+_REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _REPO not in sys.path:
+    sys.path.insert(0, _REPO)
+
 import pandas as pd
 import numpy as np
 import time

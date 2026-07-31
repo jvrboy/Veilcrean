@@ -4,7 +4,14 @@ ai_critique.py
 Uses Gemini or Groq to provide a detailed technical critique of a
 specific trade from the journal or a current market setup.
 """
+import os
 import sys
+
+# Make the repository importable no matter where this script is run from.
+_REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _REPO not in sys.path:
+    sys.path.insert(0, _REPO)
+
 import argparse
 from pathlib import Path
 from python_brain.config import JOURNAL_DB, LLM_CFG

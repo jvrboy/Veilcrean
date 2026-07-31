@@ -25,7 +25,7 @@ import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from training.deriv_client import DerivClient, get_all_instruments, get_all_timeframes, TIMEFRAMES
+from training.deriv_client import DerivClient, get_all_instruments, get_all_timeframes, TIMEFRAMES, DERIV_WS_URL
 from training.signal_generator import generate_signal, Signal
 from training.trade_simulator import simulate_trade, TradeOutcome
 from training.learning_engine import LearningEngine
@@ -390,7 +390,16 @@ async def run_single_run(run_id: int, engine: LearningEngine,
 
     all_results = []
     client = DerivClient()
-    await client.connect()
+    try:
+        await client.connect()
+    except Exception as e:
+        raise ConnectionError(
+            f"Could not connect to the Deriv WebSocket API ({DERIV_WS_URL}): {e}\n"
+            "This trainer needs internet access to fetch live market data. "
+            "If you are offline, use the offline pipeline instead:\n"
+            "  python scripts/train_single.py 1HZ50V 5 150\n"
+            "  python scripts/backtest.py --bars 2000 --n-trades 50"
+        ) from e
 
     try:
         combo_idx = 0

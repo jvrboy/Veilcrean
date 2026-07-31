@@ -4,11 +4,26 @@ visualize_features.py
 Analyzes the trade journal and computes feature importance for the
 trained models. Helps understand which tools are driving decisions.
 """
+import os
 import sqlite3
+import sys
+
+# Make the repository importable no matter where this script is run from.
+_REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _REPO not in sys.path:
+    sys.path.insert(0, _REPO)
+
 import pandas as pd
 import numpy as np
+import matplotlib
+matplotlib.use("Agg")  # headless-safe (works on servers and Colab)
 import matplotlib.pyplot as plt
-import seaborn as sns
+
+try:
+    import seaborn as sns  # noqa: F401  (optional styling)
+except ImportError:  # pragma: no cover
+    sns = None
+
 from pathlib import Path
 
 from python_brain.config import JOURNAL_DB, MODELS_DIR
@@ -20,7 +35,11 @@ def run_analysis():
 
     # 1. Load data from journal
     conn = sqlite3.connect(str(JOURNAL_DB))
-    df = pd.read_sql_query("SELECT * FROM trades WHERE status = 'CLOSED'", conn)
+    # The schema lives in python_brain/database/migrations/001_initial.sql:
+    # the table is `trade_journal` and closed trades have closed_at set.
+    df = pd.read_sql_query(
+        "SELECT * FROM trade_journal WHERE closed_at IS NOT NULL", conn
+    )
     conn.close()
 
     if df.empty:
