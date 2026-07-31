@@ -1,26 +1,180 @@
 {
-  "timestamp": "2026-07-31T00:39:12.901958+00:00",
+  "timestamp": "2026-07-31T05:25:50.655091+00:00",
   "runs": [
     {
       "run_id": 1,
-      "total_signals": 101,
-      "total_wins": 40,
-      "total_losses": 61,
-      "total_pnl": -353.41,
-      "patterns_learned": 45,
-      "best_win_streak": 5,
-      "worst_loss_streak": 9,
-      "win_rate": 39.6
+      "total_signals": 2077,
+      "total_wins": 1214,
+      "total_losses": 593,
+      "total_pnl": -2327.6,
+      "patterns_learned": 261,
+      "best_win_streak": 24,
+      "worst_loss_streak": 19,
+      "win_rate": 58.45
+    },
+    {
+      "run_id": 2,
+      "total_signals": 2066,
+      "total_wins": 1211,
+      "total_losses": 591,
+      "total_pnl": -2315.64,
+      "patterns_learned": 262,
+      "best_win_streak": 24,
+      "worst_loss_streak": 19,
+      "win_rate": 58.62
+    },
+    {
+      "run_id": 3,
+      "total_signals": 2115,
+      "total_wins": 1246,
+      "total_losses": 599,
+      "total_pnl": -2274.7599999999998,
+      "patterns_learned": 262,
+      "best_win_streak": 24,
+      "worst_loss_streak": 20,
+      "win_rate": 58.91
+    },
+    {
+      "run_id": 4,
+      "total_signals": 2074,
+      "total_wins": 1208,
+      "total_losses": 587,
+      "total_pnl": -2269.5599999999995,
+      "patterns_learned": 262,
+      "best_win_streak": 24,
+      "worst_loss_streak": 20,
+      "win_rate": 58.24
+    },
+    {
+      "run_id": 5,
+      "total_signals": 2071,
+      "total_wins": 1196,
+      "total_losses": 586,
+      "total_pnl": -2250.47,
+      "patterns_learned": 263,
+      "best_win_streak": 24,
+      "worst_loss_streak": 20,
+      "win_rate": 57.75
+    },
+    {
+      "run_id": 6,
+      "total_signals": 2071,
+      "total_wins": 1196,
+      "total_losses": 586,
+      "total_pnl": -2254.2,
+      "patterns_learned": 263,
+      "best_win_streak": 24,
+      "worst_loss_streak": 20,
+      "win_rate": 57.75
+    },
+    {
+      "run_id": 7,
+      "total_signals": 2110,
+      "total_wins": 1228,
+      "total_losses": 593,
+      "total_pnl": -2211.83,
+      "patterns_learned": 263,
+      "best_win_streak": 24,
+      "worst_loss_streak": 21,
+      "win_rate": 58.2
+    },
+    {
+      "run_id": 8,
+      "total_signals": 2110,
+      "total_wins": 1228,
+      "total_losses": 593,
+      "total_pnl": -2217.27,
+      "patterns_learned": 263,
+      "best_win_streak": 24,
+      "worst_loss_streak": 21,
+      "win_rate": 58.2
+    },
+    {
+      "run_id": 9,
+      "total_signals": 2036,
+      "total_wins": 1176,
+      "total_losses": 580,
+      "total_pnl": -2324.02,
+      "patterns_learned": 263,
+      "best_win_streak": 24,
+      "worst_loss_streak": 21,
+      "win_rate": 57.76
+    },
+    {
+      "run_id": 10,
+      "total_signals": 2036,
+      "total_wins": 1176,
+      "total_losses": 580,
+      "total_pnl": -2324.02,
+      "patterns_learned": 263,
+      "best_win_streak": 24,
+      "worst_loss_streak": 21,
+      "win_rate": 57.76
+    },
+    {
+      "run_id": 11,
+      "total_signals": 2075,
+      "total_wins": 1209,
+      "total_losses": 587,
+      "total_pnl": -2270.29,
+      "patterns_learned": 263,
+      "best_win_streak": 24,
+      "worst_loss_streak": 21,
+      "win_rate": 58.27
+    },
+    {
+      "run_id": 12,
+      "total_signals": 2075,
+      "total_wins": 1209,
+      "total_losses": 587,
+      "total_pnl": -2270.29,
+      "patterns_learned": 263,
+      "best_win_streak": 24,
+      "worst_loss_streak": 21,
+      "win_rate": 58.27
+    },
+    {
+      "run_id": 13,
+      "total_signals": 2072,
+      "total_wins": 1196,
+      "total_losses": 587,
+      "total_pnl": -2270.43,
+      "patterns_learned": 263,
+      "best_win_streak": 24,
+      "worst_loss_streak": 21,
+      "win_rate": 57.72
+    },
+    {
+      "run_id": 14,
+      "total_signals": 2072,
+      "total_wins": 1196,
+      "total_losses": 587,
+      "total_pnl": -2272.42,
+      "patterns_learned": 263,
+      "best_win_streak": 24,
+      "worst_loss_streak": 21,
+      "win_rate": 57.72
+    },
+    {
+      "run_id": 15,
+      "total_signals": 2154,
+      "total_wins": 1269,
+      "total_losses": 605,
+      "total_pnl": -2189.59,
+      "patterns_learned": 263,
+      "best_win_streak": 24,
+      "worst_loss_streak": 21,
+      "win_rate": 58.91
     }
   ],
   "final_stats": {
-    "total_signals": 101,
-    "total_wins": 40,
-    "total_losses": 61,
-    "total_pnl": -353.40999999999997,
-    "win_rate": 0.39603960396039606,
-    "best_win_streak": 5,
-    "worst_loss_streak": 9,
-    "patterns_learned": 45
+    "total_signals": 41635,
+    "total_wins": 26545,
+    "total_losses": 15090,
+    "total_pnl": -46091.799999999865,
+    "win_rate": 0.6375645490572835,
+    "best_win_streak": 24,
+    "worst_loss_streak": 21,
+    "patterns_learned": 263
   }
 }

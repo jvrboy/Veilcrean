@@ -27,7 +27,7 @@ import json
 import os
 import sys
 import time
-from datetime import datetime, UTC
+from datetime import datetime, UTC, timedelta
 from typing import Optional
 
 import numpy as np
@@ -70,6 +70,7 @@ async def fetch_and_train_instrument(
     timeframe: str,
     run_id: int,
     verbose: bool = True,
+    start_epoch: Optional[int] = None,
 ) -> dict:
     """Fetch historical data for one instrument+timeframe and train on it."""
     symbol = instrument["symbol"]
@@ -85,7 +86,8 @@ async def fetch_and_train_instrument(
 
     # Fetch historical data
     candles = await client.fetch_all_history(
-        symbol, granularity=granularity, max_batches=MAX_BATCHES)
+        symbol, granularity=granularity, max_batches=MAX_BATCHES,
+        start_epoch=start_epoch)
 
     if len(candles) < MIN_HISTORY + MAX_HOLD_BARS:
         if verbose:
@@ -142,7 +144,15 @@ async def fetch_and_train_instrument(
             should_take, filter_reason = engine.should_take_signal(
                 signal.direction, signal.confidence, signal.regime,
                 signal.tool_scores)
-            if not should_take:
+            # During offline training we still need exploratory samples after the
+            # first learned pass; otherwise an early high threshold can starve
+            # later runs and prevent per-signal improvement. Learned failure
+            # patterns can still veto genuinely bad repeated setups, but low
+            # confidence alone falls back to the early-training floor.
+            if not should_take and not filter_reason.startswith("Confidence"):
+                filtered_count += 1
+                continue
+            if not should_take and signal.confidence < MIN_CONFIDENCE_OVERRIDE:
                 filtered_count += 1
                 continue
         elif signal.confidence < MIN_CONFIDENCE_OVERRIDE:
@@ -345,7 +355,8 @@ def _filter_instruments(symbols: Optional[list[str]] = None, markets: Optional[l
 async def run_single_run(run_id: int, engine: LearningEngine,
                          verbose: bool = True,
                          instruments: Optional[list[dict]] = None,
-                         timeframes: Optional[list[str]] = None) -> tuple[LearningEngine, list[dict]]:
+                         timeframes: Optional[list[str]] = None,
+                         start_epoch: Optional[int] = None) -> tuple[LearningEngine, list[dict]]:
     """Run one pass across selected instruments x selected timeframes."""
     instruments = instruments or get_all_instruments()
     timeframes = timeframes or get_all_timeframes()
@@ -368,7 +379,8 @@ async def run_single_run(run_id: int, engine: LearningEngine,
                 combo_idx += 1
                 print(f"\n[{combo_idx}/{total_combos}] ", end="")
                 result = await fetch_and_train_instrument(
-                    client, instrument, engine, tf, run_id, verbose=verbose)
+                    client, instrument, engine, tf, run_id, verbose=verbose,
+                    start_epoch=start_epoch)
                 all_results.append(result)
                 _save_training_state(engine, all_results, run_id=run_id)
     finally:
@@ -400,7 +412,8 @@ async def run_full_training(num_runs: int = 15, verbose: bool = True,
                             symbols: Optional[list[str]] = None,
                             markets: Optional[list[str]] = None,
                             timeframes_filter: Optional[list[str]] = None,
-                            resume: bool = True):
+                            resume: bool = True,
+                            history_years: Optional[float] = 5.0):
     """Run forward-test training with per-run learning carry-over."""
     print("=" * 70)
     print(f"VEILCREAN SIGNAL TRAINING SYSTEM — {num_runs}-RUN FORWARD TEST")
@@ -411,6 +424,12 @@ async def run_full_training(num_runs: int = 15, verbose: bool = True,
           f"(~{MAX_SIGNALS_PER_HOUR} signals/hour cap)")
     print(f"Max hold: {MAX_HOLD_BARS} candles")
     print(f"Max batches per combo: {MAX_BATCHES}")
+    if history_years is None:
+        start_epoch = None
+        print("History window: maximum available from Deriv pagination")
+    else:
+        start_epoch = int((datetime.now(UTC) - timedelta(days=365.25 * history_years)).timestamp())
+        print(f"History window: last {history_years:g} years, bounded by Deriv availability")
     print(f"Runs: {num_runs} (each carries forward learned state)")
     print("=" * 70)
 
@@ -422,6 +441,11 @@ async def run_full_training(num_runs: int = 15, verbose: bool = True,
     if not instruments:
         raise ValueError("No instruments selected for training")
     audit = _write_scope_audit(instruments, timeframes)
+    audit["history_years"] = history_years
+    audit["start_epoch"] = start_epoch
+    output_dir = os.path.join(os.path.dirname(__file__), "output")
+    with open(os.path.join(output_dir, "training_scope_audit.json"), "w") as f:
+        json.dump(audit, f, indent=2)
     print(f"\nTotal instruments: {len(instruments)}")
     for market in set(i["market"] for i in instruments):
         market_syms = [i for i in instruments if i["market"] == market]
@@ -440,7 +464,8 @@ async def run_full_training(num_runs: int = 15, verbose: bool = True,
 
     for run_id in range(1, num_runs + 1):
         engine, results = await run_single_run(
-            run_id, engine, verbose=verbose, instruments=instruments, timeframes=timeframes)
+            run_id, engine, verbose=verbose, instruments=instruments,
+            timeframes=timeframes, start_epoch=start_epoch)
 
         summary = {
             "run_id": run_id,
@@ -519,6 +544,8 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--quiet", action="store_true", help="Reduce per-combo logging.")
     parser.add_argument("--fresh-state", action="store_true", help="Start learning from an empty state instead of resuming output/learned_state.json.")
     parser.add_argument("--max-batches", type=int, help="Override Deriv pagination depth for quick audits/smoke training.")
+    parser.add_argument("--history-years", type=float, default=5.0, help="Historical window to train from, default 5 years.")
+    parser.add_argument("--max-history", action="store_true", help="Use maximum history available from Deriv pagination instead of the 5-year default.")
     return parser.parse_args()
 
 
@@ -533,4 +560,5 @@ if __name__ == "__main__":
         markets=args.markets,
         timeframes_filter=args.timeframes,
         resume=not args.fresh_state,
+        history_years=None if args.max_history else args.history_years,
     ))

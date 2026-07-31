@@ -1,19 +1,27 @@
 {
-  "timestamp": "2026-07-31T00:38:57.672392+00:00",
+  "timestamp": "2026-07-31T05:26:27.383922+00:00",
   "instrument_count": 1,
   "timeframes": [
-    "1h"
+    "1m",
+    "2m",
+    "5m",
+    "15m",
+    "30m",
+    "1h",
+    "4h",
+    "8h",
+    "24h"
   ],
-  "timeframe_count": 1,
-  "combo_count": 1,
+  "timeframe_count": 9,
+  "combo_count": 9,
   "markets": {
     "forex": {
       "count": 1,
       "submarkets": {
         "majors": [
           {
-            "symbol": "frxEURUSD",
-            "display_name": "EUR/USD"
+            "symbol": "frxGBPUSD",
+            "display_name": "GBP/USD"
           }
         ]
       }
@@ -25,5 +33,7 @@
   "min_history": 50,
   "max_hold_bars": 20,
   "signal_interval": 2,
-  "max_signals_per_hour": 50
+  "max_signals_per_hour": 50,
+  "history_years": 5.0,
+  "start_epoch": 1627687587
 }

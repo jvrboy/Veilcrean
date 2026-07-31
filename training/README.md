@@ -22,7 +22,7 @@ This module trains the Veilcrean trading agent by simulating signals on real his
 ```
 
 1. **Audit** the selected instrument/timeframe scope and save it to `output/training_scope_audit.json`
-2. **Fetch** historical candle data from Deriv for every configured timeframe
+2. **Fetch** real historical candle data from Deriv for every configured timeframe, bounded to the last 5 years by default or maximum paginated history with `--max-history`
 3. **Walk forward** candle-by-candle from oldest to newest
 4. **Generate** a signal at each interval using 20+ technical indicators
 5. **Simulate** the trade on future candles (TP/SL/max-hold)
@@ -52,6 +52,19 @@ python -m training.training_runner --runs 1 --symbols frxEURUSD --timeframes 24h
 
 # Resume broader scoped training, e.g. all volatility synthetics on 1m and 5m
 python -m training.training_runner --runs 15 --markets volatility --timeframes 1m 5m
+
+# Full requested scope in one process: all 44 configured instruments x all 9
+# timeframes x 15 runs, using the last 5 years of real Deriv history where
+# available. This is very large and saves state after every combo.
+python -m training.training_runner --runs 15 --history-years 5
+
+# Recommended operational full run: process the next pending 1-3 instruments
+# across all 9 timeframes for 15 runs, then re-run until progress says complete.
+python -m training.chunked_full_training --batch-size 3 --runs 15 --history-years 5
+
+# Use maximum Deriv paginated history instead of the 5-year cap.
+python -m training.training_runner --runs 15 --max-history
+python -m training.chunked_full_training --batch-size 3 --runs 15 --max-history
 ```
 
 ## Training Results (First Run)
@@ -82,3 +95,7 @@ python -m training.training_runner --runs 15 --markets volatility --timeframes 1
 - `output/learned_patterns.json` — All learned failure patterns with avoidance rules
 - `output/learned_thresholds.json` — Adaptive confidence thresholds per regime
 - `output/training_results.json` — Per-instrument training results
+
+## Resumable Full-Training Progress
+
+`python -m training.chunked_full_training --batch-size 3 --runs 15 --history-years 5` trains the next pending instrument batch using real Deriv candles, carries forward the learned state, and records completed symbols plus cumulative stats in `output/full_training_progress.json`. Re-run the same command until `status` becomes `complete`.
