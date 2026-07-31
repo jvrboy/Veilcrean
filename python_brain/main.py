@@ -56,6 +56,7 @@ from .self_improvement          import (
 )
 from .risk_management           import PositionSizer, DrawdownGuard, ExposureManager, TrailingManager
 from .agents.coordinator_agent  import CoordinatorAgent
+from .integrations              import VercelSupabaseBridge
 from .utils                     import get_logger, Alerter, Visualizer
 from .communication.data_parser import mid_price
 
@@ -167,6 +168,7 @@ class VeilcreanBrain:
 
         # misc
         self.vis = Visualizer()
+        self.cloud = VercelSupabaseBridge()
         self.running = True
         self.last_feature_names: list = []
         self.last_decision: dict = {}
@@ -381,6 +383,23 @@ class VeilcreanBrain:
             feature_vec = self.decision_input_to_list(),
         )
         self.journal.open_trade(rec)
+        self.cloud.send_trade({
+            "trade_id": rec.trade_id,
+            "symbol": rec.symbol,
+            "direction": rec.direction,
+            "status": "open",
+            "opened_at": datetime.fromtimestamp(rec.opened_at, tz=timezone.utc).isoformat(),
+            "entry_price": rec.entry_price,
+            "sl": rec.sl,
+            "tp": rec.tp,
+            "lots": rec.lots,
+            "confidence": rec.confidence,
+            "regime": rec.regime,
+            "session": rec.session,
+            "weekday": rec.weekday,
+            "strategy_tag": rec.strategy_tag,
+            "command": cmd,
+        })
         alerter.trade_open(snapshot.symbol, decision["action"], cmd["lot_size"],
                            cmd["sl"], cmd["tp"], decision["confidence"])
 
@@ -426,6 +445,7 @@ class VeilcreanBrain:
             "confidence":   decision.get("confidence", 0.0) if decision else 0.0,
         }
         self.zmq.publish_status(status)
+        self.cloud.send_status(status)
 
 
 # ============================================================================

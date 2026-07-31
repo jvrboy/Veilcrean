@@ -1,0 +1,5 @@
+# Minimal dependencies for the Vercel serverless API only.
+# Do not use the repo-root requirements.txt on Vercel; it contains the full
+# trading brain stack with PyTorch/ZMQ and is too heavy for Vercel Functions.
+fastapi==0.115.6
+uvicorn==0.34.0
