@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-07-31T00:39:12.901958+00:00",
+  "runs": [
+    {
+      "run_id": 1,
+      "total_signals": 101,
+      "total_wins": 40,
+      "total_losses": 61,
+      "total_pnl": -353.41,
+      "patterns_learned": 45,
+      "best_win_streak": 5,
+      "worst_loss_streak": 9,
+      "win_rate": 39.6
+    }
+  ],
+  "final_stats": {
+    "total_signals": 101,
+    "total_wins": 40,
+    "total_losses": 61,
+    "total_pnl": -353.40999999999997,
+    "win_rate": 0.39603960396039606,
+    "best_win_streak": 5,
+    "worst_loss_streak": 9,
+    "patterns_learned": 45
+  }
+}

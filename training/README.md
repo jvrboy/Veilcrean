@@ -21,16 +21,16 @@ This module trains the Veilcrean trading agent by simulating signals on real his
                                                               └──────────────┘
 ```
 
-1. **Fetch** historical candle data from Deriv (1-minute or 5-minute granularity)
-2. **Walk forward** candle-by-candle from oldest to newest
-3. **Generate** a signal at each interval using 20+ technical indicators
-4. **Simulate** the trade on future candles (TP/SL/max-hold)
-5. **Analyze** why the trade succeeded or failed
-6. **Learn** an avoidance rule and update adaptive thresholds via Q-learning
-7. **Apply** learned patterns to filter future signals
-8. **Save** all data to Supabase and JSON files
+1. **Audit** the selected instrument/timeframe scope and save it to `output/training_scope_audit.json`
+2. **Fetch** historical candle data from Deriv for every configured timeframe
+3. **Walk forward** candle-by-candle from oldest to newest
+4. **Generate** a signal at each interval using 20+ technical indicators
+5. **Simulate** the trade on future candles (TP/SL/max-hold)
+6. **Analyze** why the trade succeeded or failed
+7. **Learn** an avoidance rule and update adaptive thresholds via Q-learning
+8. **Apply** learned patterns to filter future signals and save JSON outputs
 
-## Instruments (40 total)
+## Instruments (44 total)
 
 - **Forex Majors (7)**: EUR/USD, GBP/USD, USD/JPY, USD/CHF, AUD/USD, USD/CAD, NZD/USD
 - **Forex Minors (7)**: EUR/GBP, EUR/JPY, GBP/JPY, EUR/CHF, AUD/JPY, EUR/AUD, CAD/CHF
@@ -39,12 +39,19 @@ This module trains the Veilcrean trading agent by simulating signals on real his
 - **Volatility Indices (10)**: R_10-R_100, JD_10-JD_100
 - **Boom/Crash (4)**: Boom 500/1000, Crash 500/1000
 - **Range Break (1)**: Step Range Break
+- **Drift Switch (5)**: Drift Switch 10/25/50/75/100
 
 ## Running
 
 ```bash
 pip install numpy pandas websockets
 python -m training.training_runner
+
+# Audited smoke run on one real Deriv market/timeframe
+python -m training.training_runner --runs 1 --symbols frxEURUSD --timeframes 24h --quiet
+
+# Resume broader scoped training, e.g. all volatility synthetics on 1m and 5m
+python -m training.training_runner --runs 15 --markets volatility --timeframes 1m 5m
 ```
 
 ## Training Results (First Run)
@@ -70,6 +77,7 @@ python -m training.training_runner
 
 ## Output Files
 
+- `output/training_scope_audit.json` — Selected markets, symbols, timeframes, and combo counts
 - `output/learned_state.json` — Full learning engine state (Q-table, patterns, TP/SL adjustments)
 - `output/learned_patterns.json` — All learned failure patterns with avoidance rules
 - `output/learned_thresholds.json` — Adaptive confidence thresholds per regime
