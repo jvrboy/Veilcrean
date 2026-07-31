@@ -15,11 +15,11 @@
     "cf:secret:gemini": "wrangler secret put GEMINI_API_KEY"
   },
   "dependencies": {
-    "@cloudflare/containers": "^0.2.0"
+    "@cloudflare/containers": "^0.3.7"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20260731.0",
+    "@cloudflare/workers-types": "^5.20260731.1",
     "typescript": "^5.5.0",
-    "wrangler": "^4.26.0"
+    "wrangler": "^4.117.0"
   }
 }
