@@ -1,7 +1,7 @@
 import { Container, getContainer } from "@cloudflare/containers";
 
 export interface Env {
-  VEILCREAN_CONTAINER: DurableObjectNamespace;
+  VEILCREAN_CONTAINER: DurableObjectNamespace<VeilcreanContainer>;
 
   // Non-secret vars from wrangler.jsonc
   PORT?: string;
