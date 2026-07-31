@@ -65,9 +65,12 @@ class MCPServer:
     async def run(self):
         """Stdio loop: read JSON-RPC requests, write JSON-RPC responses."""
         print(f"Veilcrean MCP Server '{self.name}' starting...", file=sys.stderr)
+        loop = asyncio.get_running_loop()
         reader = asyncio.StreamReader()
         protocol = asyncio.StreamReaderProtocol(reader)
-        await asyncio.get_event_loop().connect_stdio(protocol)
+        # `loop.connect_stdio` does not exist — use the standard read-pipe
+        # connection so the server works on Python 3.8+ (incl. Google Colab).
+        await loop.connect_read_pipe(lambda: protocol, sys.stdin)
 
         while True:
             line = await reader.readline()

@@ -12,8 +12,8 @@ torch>=2.1.0
 scikit-learn>=1.3.0
 
 # Data sources / technical indicators
-ta>=0.11.0
-pandas-ta>=0.3.14b0
+# (ta / pandas_ta were listed historically but nothing imports them; both
+#  are uninstallable on Python 3.11, so they are intentionally omitted.)
 
 # Communication
 pyzmq>=25.1.0

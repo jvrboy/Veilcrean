@@ -7,6 +7,8 @@ A meta-learner that takes outputs from multiple models (MLP, CNN, LSTM)
 and learns to weight them based on current market conditions.
 """
 from __future__ import annotations
+from typing import List
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F

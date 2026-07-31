@@ -25,7 +25,7 @@ import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from training.deriv_client import DerivClient, get_all_instruments, get_all_timeframes, TIMEFRAMES
+from training.deriv_client import DerivClient, get_all_instruments, get_all_timeframes, TIMEFRAMES, DERIV_WS_URL
 from training.signal_generator import generate_signal, Signal
 from training.trade_simulator import simulate_trade, TradeOutcome
 from training.learning_engine import LearningEngine
@@ -390,7 +390,16 @@ async def run_single_run(run_id: int, engine: LearningEngine,
 
     all_results = []
     client = DerivClient()
-    await client.connect()
+    try:
+        await client.connect()
+    except Exception as e:
+        raise ConnectionError(
+            f"Could not connect to the Deriv WebSocket API ({DERIV_WS_URL}): {e}\n"
+            "This trainer needs internet access to fetch live market data. "
+            "If you are offline, use the offline pipeline instead:\n"
+            "  python scripts/train_single.py 1HZ50V 5 150\n"
+            "  python scripts/backtest.py --bars 2000 --n-trades 50"
+        ) from e
 
     try:
         combo_idx = 0
@@ -499,7 +508,7 @@ async def run_full_training(num_runs: int = 15, verbose: bool = True,
         total_wins = sum(r["wins"] for r in results)
         total_losses = sum(r["losses"] for r in results)
         total_pnl = sum(r["pnl_pips"] for r in results)
-        total_tp = sum(r.get("avg_win", 0) * r["wins"] for r in all_results if r.get("wins", 0) > 0) if 'all_results' in dir() else sum(r.get("avg_win", 0) * r["wins"] for r in results if r.get("wins", 0) > 0)
+        total_tp = sum(r.get("avg_win", 0) * r["wins"] for r in results if r.get("wins", 0) > 0)
         total_sl = sum(r.get("avg_loss", 0) * r["losses"] for r in results if r.get("losses", 0) > 0)
         avg_w = total_tp / max(total_wins, 1)
         avg_l = total_sl / max(total_losses, 1)

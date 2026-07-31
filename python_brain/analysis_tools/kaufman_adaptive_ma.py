@@ -22,13 +22,16 @@ class KAMATool(BaseTool):
         if df is None or len(df) < 10:
             return result
 
-        close = df["close"].values
+        close = df["close"]
         n = 10
         
         # Efficiency Ratio (ER)
-        change = np.abs(close[1:] - close[:-1])
-        volatility = pd.Series(change).rolling(n).sum()
-        direction = np.abs(pd.Series(close).diff(n))
+        # Keep everything on the close Series' index — a length-mismatched
+        # `close[1:] - close[:-1]` silently misaligns against `direction`
+        # (300 vs 299 rows) and yields NaN at the tail.
+        change = close.diff().abs()
+        volatility = change.rolling(n).sum()
+        direction = close.diff(n).abs()
         er = direction / (volatility + 1e-9)
         
         # Smoothing Constant (SC)
@@ -37,9 +40,9 @@ class KAMATool(BaseTool):
         sc = (er * (fast_sc - slow_sc) + slow_sc)**2
         
         kama = np.zeros_like(close)
-        kama[n] = close[n]
+        kama[n] = close.iloc[n]
         for i in range(n + 1, len(close)):
-            kama[i] = kama[i-1] + sc.iloc[i] * (close[i] - kama[i-1])
+            kama[i] = kama[i-1] + sc.iloc[i] * (close.iloc[i] - kama[i-1])
             
         last_kama = kama[-1]
         prev_kama = kama[-2]

@@ -35,9 +35,12 @@ class REITool(BaseTool):
         
         rei_num = np.where(cond1 & cond2, num, 0)
         
-        rei = 100 * pd.Series(rei_num).rolling(8).sum() / pd.Series(den).rolling(8).sum()
+        den_sum = pd.Series(den).rolling(8).sum().replace(0, np.nan)
+        rei = 100 * pd.Series(rei_num).rolling(8).sum() / den_sum
         
         last_rei = rei.iloc[-1]
+        if not np.isfinite(last_rei):
+            last_rei = 0.0
         
         # Scoring: Reversal bias above 60 or below -60
         result.score = -float(np.tanh(last_rei / 60.0))

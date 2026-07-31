@@ -11,9 +11,16 @@ import argparse
 import asyncio
 import json
 import os
+import sys
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+
+# Make the repository importable no matter where this file is run from
+# (module import, direct execution, or a Colab notebook).
+_REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _REPO not in sys.path:
+    sys.path.insert(0, _REPO)
 
 from training.deriv_client import get_all_instruments, get_all_timeframes
 from training.training_runner import run_full_training
@@ -116,10 +123,14 @@ def parse_args() -> argparse.Namespace:
 
 if __name__ == "__main__":
     args = parse_args()
-    asyncio.run(run_next_batch(
-        batch_size=args.batch_size,
-        runs=args.runs,
-        history_years=None if args.max_history else args.history_years,
-        max_batches=args.max_batches,
-        quiet=args.quiet,
-    ))
+    try:
+        asyncio.run(run_next_batch(
+            batch_size=args.batch_size,
+            runs=args.runs,
+            history_years=None if args.max_history else args.history_years,
+            max_batches=args.max_batches,
+            quiet=args.quiet,
+        ))
+    except ConnectionError as e:
+        print(f"\n{e}", file=sys.stderr)
+        raise SystemExit(1) from e

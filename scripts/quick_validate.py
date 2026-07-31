@@ -9,8 +9,16 @@ from training.trade_simulator import simulate_trade
 from training.learning_engine import LearningEngine
 
 async def main():
-    client = DerivClient()
-    await client.connect()
+    try:
+        client = DerivClient()
+        await client.connect()
+    except Exception as e:
+        print(f"\nCould not connect to the Deriv WebSocket API: {e}")
+        print("This script needs internet access to wss://ws.derivws.com (app_id 1089, no token).")
+        print("If you are offline, run an offline pipeline instead, e.g.:")
+        print("  python scripts/train_single.py 1HZ50V 5 150")
+        print("  python scripts/backtest.py --bars 2000 --n-trades 50")
+        return 1
     engine = LearningEngine()
     
     # Test on 3 instruments x 1 timeframe with real data
@@ -98,4 +106,4 @@ async def main():
     print(f'\nTo run full training: python scripts/run_v2_train.py')
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    sys.exit(asyncio.run(main()))

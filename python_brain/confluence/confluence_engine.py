@@ -14,6 +14,7 @@ from ..analysis_tools import ALL_TOOLS, ToolResult
 from ..analysis_tools.base_tool import BaseTool
 from ..communication.data_parser import MarketSnapshot
 from ..communication.data_parser import mid_price
+from ..preprocessor.buffer_manager import safe_frame
 from .feature_builder import FeatureBuilder
 
 
@@ -27,6 +28,10 @@ class ConfluenceEngine:
     # ------------------------------------------------------------------ API
     def run(self, snapshot: MarketSnapshot, buffers, extra_ctx: Optional[dict] = None) -> Dict:
         """Run all tools, build feature vector, return everything."""
+        # Tools use `buffers.get("M15") or buffers.get("H1")` fallbacks, which
+        # need a well-defined DataFrame truthiness — plain frames raise
+        # "ValueError: truth value ambiguous" in boolean context.
+        buffers = {k: safe_frame(v) for k, v in (buffers or {}).items()}
         price = mid_price(snapshot)
         pip_size = self._infer_pip_size(price)
 
@@ -64,12 +69,15 @@ class ConfluenceEngine:
 
         feature_vec = self.builder.build(results, ctx)
 
-        # Aggregate score = simple weighted average
+        # Aggregate score = simple weighted average (non-finite scores ignored)
         agg = 0.0
         total_w = 0.0
         for name, res in results.items():
-            w = max(0.1, res.confidence)
-            agg += res.score * w
+            score = res.score
+            if score is None or not np.isfinite(score):
+                continue
+            w = max(0.1, res.confidence if np.isfinite(res.confidence) else 0.0)
+            agg += score * w
             total_w += w
         agg_score = agg / max(total_w, 1e-9)
 

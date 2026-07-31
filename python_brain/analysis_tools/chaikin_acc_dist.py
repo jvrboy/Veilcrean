@@ -33,4 +33,4 @@ class ChaikinADTool(BaseTool):
         
         res.score = float(np.tanh(slope))
         res.features = {"cad_val": float(ad.iloc[-1]), "cad_slope": res.score}
-        return result
+        return res

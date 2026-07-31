@@ -157,9 +157,30 @@ def main():
     with open(OUT / "v3_learned_state_best.json", "w") as f:
         json.dump(le.to_dict(), f, indent=2, default=str)
 
-    # Save results
-    with open(OUT / "v3_all_results.json", "a") as f:
-        f.write(json.dumps(all_results, default=str) + "\n")
+    # Save results — maintain a valid JSON document (list of run snapshots).
+    # Older versions appended raw JSON lines, so tolerate JSONL input too.
+    results_path = OUT / "v3_all_results.json"
+    history: list = []
+    if results_path.exists():
+        raw = results_path.read_text(encoding="utf-8").strip()
+        if raw:
+            try:
+                parsed = json.loads(raw)
+                history = parsed if isinstance(parsed, list) else [parsed]
+            except json.JSONDecodeError:
+                # Legacy JSON-lines file: one JSON object per line.
+                history = []
+                for line in raw.splitlines():
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        history.append(json.loads(line))
+                    except json.JSONDecodeError:
+                        pass
+    history.append(all_results)
+    with open(results_path, "w") as f:
+        json.dump(history, f, indent=2, default=str)
 
     total_sigs = sum(r.get("sigs", 0) for r in all_results.values())
     total_w = sum(r.get("w", 0) for r in all_results.values())

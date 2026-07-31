@@ -43,6 +43,13 @@ class ModelManager:
         ts = time.strftime("%Y%m%d_%H%M%S")
         version = f"{SI_CFG.model_version_prefix}{ts}"
         path = self.dir / f"bundle_{version}.pt"
+        metadata = dict(metadata or {})
+        # Record the network input dimension so loaders can skip incompatible
+        # bundles instead of failing with a confusing state_dict error.
+        if "input_dim" not in metadata:
+            weight = trade.state_dict().get("backbone.0.weight")
+            if weight is not None:
+                metadata["input_dim"] = int(weight.shape[1])
         bundle = ModelBundle(
             version=version,
             path=str(path),

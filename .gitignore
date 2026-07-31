@@ -1,5 +1,7 @@
 # Python
 __pycache__/
+node_modules/
+npm-debug.log*
 *.py[cod]
 *$py.class
 *.so
@@ -63,6 +65,7 @@ desktop.ini
 # Notebooks
 .ipynb_checkpoints/
 *.ipynb
+!colab/*.ipynb
 
 # Coverage
 .coverage
