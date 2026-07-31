@@ -1,0 +1,58 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "veilcrean-production",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-31",
+  "workers_dev": true,
+  "observability": {
+    "enabled": true
+  },
+  "triggers": {
+    "crons": ["*/5 * * * *"]
+  },
+  "vars": {
+    "PORT": "8080",
+    "VEIL_ENV": "production",
+    "VEIL_START_BRAIN": "true",
+    "VEIL_EXIT_ON_BRAIN_STOP": "true",
+    "VEIL_BRAIN_AUTO_RESTART": "false",
+    "VEIL_BRAIN_CMD": "python -m python_brain.main",
+    "VEIL_REQUIRE_API_KEY": "true",
+
+    // Defaults only work when the MT5/EA ZMQ bridge runs in the same container.
+    // For a remote bridge, change these to reachable TCP endpoints.
+    "VEIL_ZMQ_PUB": "tcp://127.0.0.1:5555",
+    "VEIL_ZMQ_PULL": "tcp://127.0.0.1:5556",
+    "VEIL_ZMQ_STATUS": "tcp://127.0.0.1:5557",
+    "VEIL_ZMQ_RECV_TIMEOUT_MS": "1000",
+    "VEIL_ZMQ_SEND_TIMEOUT_MS": "1000",
+
+    "DERIV_APP_ID": "",
+    "DERIV_ENABLED": "false",
+    "DERIV_IS_DEMO": "true",
+    "VEIL_LLM_PROVIDER": "groq",
+    "VEIL_LLM_ENABLED": "false"
+  },
+  "containers": [
+    {
+      "class_name": "VeilcreanContainer",
+      "image": "./Dockerfile.cloudflare",
+      "max_instances": 1,
+      "instance_type": "standard-2"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "VEILCREAN_CONTAINER",
+        "class_name": "VeilcreanContainer"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["VeilcreanContainer"]
+    }
+  ]
+}

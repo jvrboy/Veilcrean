@@ -1,0 +1,25 @@
+{
+  "name": "veilcrean-cloudflare",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "cf:login": "wrangler login",
+    "cf:containers": "wrangler containers list",
+    "cf:images": "wrangler containers images list",
+    "cf:secret:status": "wrangler secret put VEIL_STATUS_API_KEY",
+    "cf:secret:deriv": "wrangler secret put DERIV_API_TOKEN",
+    "cf:secret:groq": "wrangler secret put GROQ_API_KEY",
+    "cf:secret:gemini": "wrangler secret put GEMINI_API_KEY"
+  },
+  "dependencies": {
+    "@cloudflare/containers": "^0.2.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260731.0",
+    "typescript": "^5.5.0",
+    "wrangler": "^4.26.0"
+  }
+}

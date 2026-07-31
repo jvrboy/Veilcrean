@@ -1,0 +1,62 @@
+# =============================================================================
+# Veilcrean — Cloudflare Containers production image
+# =============================================================================
+# Cloudflare Containers require a linux/amd64-compatible image. This image starts
+# a small HTTP health/status server on PORT=8080 and supervises the Veilcrean
+# Python Brain as a child process.
+
+FROM python:3.11-slim AS runtime
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PORT=8080 \
+    VEIL_ENV=production \
+    VEIL_CF_MODE=true \
+    VEIL_START_BRAIN=true \
+    VEIL_EXIT_ON_BRAIN_STOP=true \
+    VEIL_BRAIN_AUTO_RESTART=false
+
+WORKDIR /app
+
+# build-essential is needed by some scientific Python wheels when a wheel is not
+# available. libgomp1 is commonly required by scikit-learn/scipy.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        build-essential \
+        ca-certificates \
+        curl \
+        git \
+        libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.cloudflare.txt ./requirements.cloudflare.txt
+
+# Use the PyTorch CPU wheel index to avoid CUDA/GPU dependencies in the image.
+RUN python -m pip install --upgrade pip setuptools wheel \
+    && python -m pip install \
+        --extra-index-url https://download.pytorch.org/whl/cpu \
+        -r requirements.cloudflare.txt
+
+COPY . .
+
+# Install local packages so imports work from anywhere.
+RUN python -m pip install --no-deps ./neurosense \
+    && python -m pip install --no-deps .
+
+# Run as non-root.
+RUN useradd --uid 10001 --create-home --shell /usr/sbin/nologin veilcrean \
+    && mkdir -p /app/data /app/data/historical /app/data/backtest_results /app/models /app/logs \
+    && chown -R veilcrean:veilcrean /app
+
+USER veilcrean
+
+EXPOSE 8080
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
+  CMD python -c "from urllib.request import urlopen; urlopen('http://127.0.0.1:8080/healthz', timeout=3).read()"
+
+CMD ["python", "cloudflare/entrypoint.py"]

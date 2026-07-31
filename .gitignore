@@ -50,6 +50,9 @@ mt5_ea/MQL5/Logs/
 # Environment
 .env
 .env.local
+.env.*.local
+.dev.vars
+.dev.vars.*
 *.local
 config.local.yaml
 
