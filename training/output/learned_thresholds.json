@@ -1,11 +1,11 @@
 {
   "TRENDING": {
-    "threshold": 0.4,
-    "updates": 28527
+    "threshold": 0.65,
+    "updates": 0
   },
   "RANGING": {
     "threshold": 0.65,
-    "updates": 12566
+    "updates": 0
   },
   "VOLATILE": {
     "threshold": 0.65,
@@ -17,7 +17,7 @@
   },
   "BREAKOUT": {
     "threshold": 0.65,
-    "updates": 542
+    "updates": 0
   },
   "UNKNOWN": {
     "threshold": 0.65,

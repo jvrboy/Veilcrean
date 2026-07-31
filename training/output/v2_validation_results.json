@@ -1,0 +1,51 @@
+{
+  "results": [
+    {
+      "symbol": "frxEURUSD",
+      "signals": 61,
+      "wr": 27.9,
+      "avg_w": 6.4,
+      "avg_l": 3.7,
+      "exp": -0.2,
+      "pf": 0.91,
+      "pnl": -9.3
+    },
+    {
+      "symbol": "R_100",
+      "signals": 58,
+      "wr": 19.0,
+      "avg_w": 3154.8,
+      "avg_l": 1585.1,
+      "exp": -248.9,
+      "pf": 0.71,
+      "pnl": -14435.7
+    },
+    {
+      "symbol": "frxXAUUSD",
+      "signals": 64,
+      "wr": 18.8,
+      "avg_w": 1626.8,
+      "avg_l": 770.0,
+      "exp": -128.1,
+      "pf": 0.7,
+      "pnl": -8198.2
+    }
+  ],
+  "stats": {
+    "total_signals": 183,
+    "total_wins": 41,
+    "total_losses": 99,
+    "total_breakevens": 43,
+    "total_pnl": -22643.230000000007,
+    "total_tp_pips": 54334.18,
+    "total_sl_pips": 76977.41,
+    "win_rate": 0.22404371584699453,
+    "avg_win": 1325.2239024390244,
+    "avg_loss": 777.549595959596,
+    "expectancy": -123.73349726775962,
+    "profit_factor": 0.7058457799502477,
+    "best_win_streak": 4,
+    "worst_loss_streak": 9,
+    "patterns_learned": 152
+  }
+}

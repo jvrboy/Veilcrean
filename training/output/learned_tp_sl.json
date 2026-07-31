@@ -1,0 +1,112 @@
+{
+  "frxEURUSD_5m_TRENDING": {
+    "regime": "TRENDING",
+    "instrument": "frxEURUSD",
+    "timeframe": "5m",
+    "tp_mult": 1.84,
+    "sl_mult": 2.5,
+    "trailing_enabled": false,
+    "win_count": 49,
+    "loss_count": 63,
+    "expectancy": 0.49142857142857066
+  },
+  "frxEURUSD_5m_BREAKOUT": {
+    "regime": "BREAKOUT",
+    "instrument": "frxEURUSD",
+    "timeframe": "5m",
+    "tp_mult": 2.3000000000000003,
+    "sl_mult": 1.1664,
+    "trailing_enabled": false,
+    "win_count": 3,
+    "loss_count": 3,
+    "expectancy": 0.8333333333333335
+  },
+  "frxEURUSD_1h_TRENDING": {
+    "regime": "TRENDING",
+    "instrument": "frxEURUSD",
+    "timeframe": "1h",
+    "tp_mult": 1.557376,
+    "sl_mult": 1.3604889600000003,
+    "trailing_enabled": false,
+    "win_count": 7,
+    "loss_count": 7,
+    "expectancy": 1.0542857142857143
+  },
+  "frxEURUSD_1h_BREAKOUT": {
+    "regime": "BREAKOUT",
+    "instrument": "frxEURUSD",
+    "timeframe": "1h",
+    "tp_mult": 2.5,
+    "sl_mult": 1.08,
+    "trailing_enabled": false,
+    "win_count": 0,
+    "loss_count": 1,
+    "expectancy": -3.0
+  },
+  "frxXAUUSD_5m_TRENDING": {
+    "regime": "TRENDING",
+    "instrument": "frxXAUUSD",
+    "timeframe": "5m",
+    "tp_mult": 0.8176858760152979,
+    "sl_mult": 2.5,
+    "trailing_enabled": false,
+    "win_count": 115,
+    "loss_count": 40,
+    "expectancy": 40.171870967741896
+  },
+  "frxXAUUSD_5m_BREAKOUT": {
+    "regime": "BREAKOUT",
+    "instrument": "frxXAUUSD",
+    "timeframe": "5m",
+    "tp_mult": 2.3000000000000003,
+    "sl_mult": 1.8509302102818825,
+    "trailing_enabled": false,
+    "win_count": 5,
+    "loss_count": 9,
+    "expectancy": -2.3085714285714225
+  },
+  "frxXAUUSD_5m_VOLATILE": {
+    "regime": "VOLATILE",
+    "instrument": "frxXAUUSD",
+    "timeframe": "5m",
+    "tp_mult": 1.3800000000000001,
+    "sl_mult": 1.296,
+    "trailing_enabled": false,
+    "win_count": 2,
+    "loss_count": 2,
+    "expectancy": 233.90999999999997
+  },
+  "frxXAUUSD_1h_TRENDING": {
+    "regime": "TRENDING",
+    "instrument": "frxXAUUSD",
+    "timeframe": "1h",
+    "tp_mult": 1.84,
+    "sl_mult": 1.08,
+    "trailing_enabled": false,
+    "win_count": 2,
+    "loss_count": 2,
+    "expectancy": 48.214999999999996
+  },
+  "frxXAUUSD_1h_BREAKOUT": {
+    "regime": "BREAKOUT",
+    "instrument": "frxXAUUSD",
+    "timeframe": "1h",
+    "tp_mult": 2.1160000000000005,
+    "sl_mult": 1.0,
+    "trailing_enabled": false,
+    "win_count": 4,
+    "loss_count": 2,
+    "expectancy": 191.54666666666665
+  },
+  "frxXAUUSD_1h_VOLATILE": {
+    "regime": "VOLATILE",
+    "instrument": "frxXAUUSD",
+    "timeframe": "1h",
+    "tp_mult": 1.1680320000000002,
+    "sl_mult": 1.7631936921600002,
+    "trailing_enabled": false,
+    "win_count": 12,
+    "loss_count": 8,
+    "expectancy": 203.7025
+  }
+}
