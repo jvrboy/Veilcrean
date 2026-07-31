@@ -23,6 +23,34 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import List, Tuple
 
+
+def _env_bool(name: str, default: bool = False) -> bool:
+    """Parse boolean environment variables for production deployments."""
+    raw = os.getenv(name)
+    if raw is None:
+        return default
+    return raw.strip().lower() in {"1", "true", "yes", "y", "on"}
+
+
+def _env_int(name: str, default: int) -> int:
+    raw = os.getenv(name)
+    if raw is None or raw == "":
+        return default
+    try:
+        return int(raw)
+    except ValueError:
+        return default
+
+
+def _env_float(name: str, default: float) -> float:
+    raw = os.getenv(name)
+    if raw is None or raw == "":
+        return default
+    try:
+        return float(raw)
+    except ValueError:
+        return default
+
 # ---------------------------------------------------------------------------
 # 1. Paths
 # ---------------------------------------------------------------------------
@@ -51,8 +79,8 @@ class ZMQConfig:
     trade_command_endpoint: str = os.getenv("VEIL_ZMQ_PULL", "tcp://127.0.0.1:5556")
     # Optional: dashboard can subscribe to brain status
     brain_status_endpoint:  str = os.getenv("VEIL_ZMQ_STATUS", "tcp://127.0.0.1:5557")
-    recv_timeout_ms: int = 1000
-    send_timeout_ms: int = 1000
+    recv_timeout_ms: int = _env_int("VEIL_ZMQ_RECV_TIMEOUT_MS", 1000)
+    send_timeout_ms: int = _env_int("VEIL_ZMQ_SEND_TIMEOUT_MS", 1000)
 
 # ---------------------------------------------------------------------------
 # 3. Data handling
@@ -185,8 +213,8 @@ class LLMConfig:
     gemini_model: str = "gemini-1.5-pro"
     
     # Cadence
-    reason_every_n_ticks: int = 50 # LLMs are slow/expensive, don't run every tick
-    enabled: bool = False # Disabled by default unless keys are provided
+    reason_every_n_ticks: int = _env_int("VEIL_LLM_REASON_EVERY_N_TICKS", 50) # LLMs are slow/expensive, don't run every tick
+    enabled: bool = _env_bool("VEIL_LLM_ENABLED", False) # Disabled by default unless explicitly enabled
 
 # ---------------------------------------------------------------------------
 # 10. Deriv API Configuration
@@ -194,10 +222,10 @@ class LLMConfig:
 @dataclass
 class DerivConfig:
     """Settings for trading directly on Deriv."""
-    app_id: int = int(os.getenv("DERIV_APP_ID", 0))
+    app_id: int = _env_int("DERIV_APP_ID", 0)
     api_token: str = os.getenv("DERIV_API_TOKEN", "")
-    is_demo: bool = True
-    enabled: bool = False
+    is_demo: bool = _env_bool("DERIV_IS_DEMO", True)
+    enabled: bool = _env_bool("DERIV_ENABLED", False)
 
 # ---------------------------------------------------------------------------
 # Bundle

@@ -1,0 +1,47 @@
+name: Deploy Veilcrean to Cloudflare Containers
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - "src/**"
+      - "cloudflare/**"
+      - "python_brain/**"
+      - "neurosense/**"
+      - "requirements.cloudflare.txt"
+      - "Dockerfile.cloudflare"
+      - "wrangler.jsonc"
+      - "package.json"
+      - "tsconfig.json"
+      - ".github/workflows/cloudflare-deploy.yml"
+
+concurrency:
+  group: cloudflare-veilcrean-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Worker dependencies
+        run: npm install
+
+      - name: Verify Docker is available
+        run: docker version
+
+      - name: Deploy Worker and Container
+        run: npx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

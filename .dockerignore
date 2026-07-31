@@ -1,0 +1,76 @@
+# Git / local state
+.git
+.gitignore
+.github
+
+# Python local/dev artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+dist/
+build/
+.eggs/
+*.egg-info/
+
+# Node / Cloudflare local artifacts
+node_modules/
+.wrangler/
+.dev.vars
+.dev.vars.*
+
+# Secrets / local config
+.env
+.env.*
+*.local
+config.local.yaml
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Generated runtime data. Persist these outside the container in production.
+logs/*
+!logs/.gitkeep
+models/*.pt
+models/*.pth
+models/*.onnx
+!models/.gitkeep
+data/*.db
+data/trade_journal.db
+data/backtest_results/*
+!data/backtest_results/.gitkeep
+
+# Historical/training data can make images large. Remove these exclusions if you
+# intentionally want to bake historical data into the image.
+data/historical/*.csv
+data/historical/*.parquet
+data/historical_deriv/
+training/output/
+
+# Notebooks / compiled MT5 outputs
+.ipynb_checkpoints/
+*.ipynb
+mt5_ea/*.ex5

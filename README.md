@@ -214,6 +214,7 @@ Veilcrean enforces **hard limits** that the neural networks can never override:
 - `docs/MQ5_ZMQ_SETUP.md` — ZMQ DLL installation
 - `docs/SELF_IMPROVEMENT.md` — How the bot learns over time
 - `docs/SAFETY.md` — Risk controls reference
+- `docs/CLOUDFLARE_DEPLOYMENT.md` — Production Cloudflare Containers deployment
 - `neurosense/README.md` — NeuroSense cognitive architecture docs
 
 ---
